@@ -10,14 +10,14 @@ class Bot {
     private final Map map;
 
 
-    public Bot() {  
+    public Bot(Map map , Time time ) {  
         this.types_of_zombies = new ArrayList<>();
         this.total_attack_time = 0;
         this.total_attack_remain_time = 100; /////?
         this.number_of_zombies_per_10_second = 1; /////?
         this.how_often_is_sun_produce = 5; ///?
-        this.time = new Time();
-        this.map = new Map();
+        this.time = time;
+        this.map = map;
         
      
     } 

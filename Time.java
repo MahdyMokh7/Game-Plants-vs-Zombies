@@ -5,7 +5,7 @@ public class Time {
     public Time() {
         this.passed_time = 0;
     }
-÷
+
     // Copy Constructor
     public Time(Time other) {
         this.passed_time = other.passed_time;

@@ -1,12 +1,14 @@
 class UI {  
-    private string winning_massage;
-    private string winning_massage;
+    private String winning_massage;
+    private String losing_massage;
     private final Time time;
     private final Map map;
 
-    public UI(string winning_massage, string losing_massage) {  
-        this.winning_massage = winning_massage
+    public UI(String winning_massage, String losing_massage , Map map , Time time) {  
+        this.winning_massage = winning_massage;
         this.losing_massage = losing_massage;   
+        this.time = time;
+        this.map = map;
     }  
 
     public void print_winning_massage() {  
