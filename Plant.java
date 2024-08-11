@@ -10,10 +10,14 @@ abstract public class Plant {
     private final int x_position;
     private final int y_position;
 
-    public Plant(int health, int cool_down, int price) {  
+    public Plant(int health, int cool_down, int price , int x_pos , int y_pos , Map map , Time time ) {  
         this.health = health;  
         this.cool_down = cool_down;  
         this.price = price;  
+        this.x_position = x_pos;
+        this.y_position = y_pos;
+        this.time = time;
+        this.map = map;
     }  
 
     abstract public void get_type();
@@ -37,8 +41,8 @@ abstract class AttackerPlant extends Plant {
     protected int speed;  
     protected boolean attack;  
 
-    public AttackerPlant(int health, int cool_down, int price, int damage, int hit_rate, int speed) {  
-        super(health, cool_down, price);  
+    public AttackerPlant(int health, int cool_down, int price, int damage, int hit_rate, int speed , int x_pos , int y_pos , Map map , Time time ) {  
+        super(health, cool_down, price , x_pos , y_pos , map , time );  
         this.damage = damage;  
         this.hit_rate = hit_rate;  
         this.speed = speed;  
@@ -59,8 +63,8 @@ abstract class ProviderPlant extends Plant {
     protected int production_time_left;  
 
 
-    public ProviderPlant(int health, int cool_down, int price, int hit_rate) {  
-        super(health, cool_down, price);  
+    public ProviderPlant(int health, int cool_down, int price, int hit_rate , int x_pos , int y_pos , Map map , Time time ) {  
+        super(health, cool_down, price , x_pos , y_pos , map , time );  
         this.hit_rate = hit_rate;  
     }  
 
@@ -74,25 +78,25 @@ abstract class ProviderPlant extends Plant {
 ////////////////////////////////////////////////////////////////////////////////////
 abstract class DefenderPlant extends Plant {    
 
-    public DefenderPlant(int health, int cool_down, int price) {  
-        super(health, cool_down, price);  
+    public DefenderPlant(int health, int cool_down, int price , int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, x_pos , y_pos , map , time);  
     }  
 }  
 ////////////////////////////////////////////////////////////////////////////////////
 abstract class OtherPlant extends Plant {    
 
-    public OtherPlant(int health, int cool_down, int price) {  
-        super(health, cool_down, price);  
+    public OtherPlant(int health, int cool_down, int price , int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, x_pos , y_pos , map , time);  
     }  
 } 
 ////////////////////////////////////////////////////////////////////////////////////
 
 // Subclass for attackerPlant 
-class PeaShooter extends attackerPlant {  
+class PeaShooter extends AttackerPlant {  
 
-    public peaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed) {  
-        super(health, cool_down, price, damage, hit_rate, speed);   
-    }  
+    public PeaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed , int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, damage, hit_rate, speed, x_pos , y_pos , map , time);   
+    } 
 
     @Override  
     public void shoot() {  
@@ -101,10 +105,10 @@ class PeaShooter extends attackerPlant {
     }  
 }  
 
-class SnowPeaShooter extends attackerPlant {  
+class SnowPeaShooter extends AttackerPlant {  
 
-    public SnowPeaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed) {  
-        super(health, cool_down, price, damage, hit_rate, speed);   
+    public SnowPeaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed , int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, damage, hit_rate, speed, x_pos , y_pos , map , time);   
     }  
 
     @Override  
@@ -114,18 +118,18 @@ class SnowPeaShooter extends attackerPlant {
     }  
 }  
 /////////////////////////////////////////////////////////////////////////////////////
-class Sunflower extends providerPlant {  
+class Sunflower extends ProviderPlant {  
 
-    public Sunflowers(int health, int cool_down, int price, int hit_rate) {  
-        super(health, cool_down, price, hit_rate);   
+    public Sunflower(int health, int cool_down, int price, int hit_rate, int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, hit_rate, x_pos , y_pos , map , time);   
     }  
  
 }  
 /////////////////////////////////////////////////////////////////////////////////////
-class Sibzamini extends defenderPlant {  
+class Sibzamini extends DefenderPlant {  
 
-    public sibzamini(int health, int cool_down, int price) {  
-        super(health, cool_down, price);  
+    public Sibzamini(int health, int cool_down, int price, int x_pos , int y_pos , Map map , Time time) {  
+        super(health, cool_down, price, x_pos , y_pos , map , time);  
     } 
  
 }  

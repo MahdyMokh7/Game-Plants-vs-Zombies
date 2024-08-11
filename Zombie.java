@@ -9,11 +9,13 @@ abstract public class Zombie {
     private final Time time;
     private final Map map;
 
-    public Zombie(int damage, int health, int hit_rate, int speed) {  
+    public Zombie(int damage, int health, int hit_rate, int speed , Map map , Time time ) {  
         this.damage = damage;
         this.health = health;  
         this.hit_rate = hit_rate;  
         this.speed = speed;  
+        this.time = time;
+        this.map = map;
     }  
 
     public boolean is_still_alive() {  
@@ -30,8 +32,8 @@ abstract public class Zombie {
 //////////////////////////////////////////////////////////////////////////////////////// 
 class RegularZombie extends Zombie {  
     
-    public RegularZombie(int damage, int health, int hit_rate, int speed) {  
-        super(damage, health, hit_rate, speed);  
+    public RegularZombie(int damage, int health, int hit_rate, int speed, Map map , Time time) {  
+        super(damage, health, hit_rate, speed, map , time);  
         
     }  
 
@@ -43,8 +45,8 @@ class RegularZombie extends Zombie {
 ///////////////////////////////////////////////////////////////////////////////////
 class GiantZombie extends Zombie {  
    
-    public GiantZombie(int damage, int health, int hit_rate, int speed) {  
-        super(damage, health, hit_rate, speed);  
+    public GiantZombie(int damage, int health, int hit_rate, int speed, Map map , Time time) {  
+        super(damage, health, hit_rate, speed, map , time);  
         
     }  
     

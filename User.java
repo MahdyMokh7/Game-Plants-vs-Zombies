@@ -7,9 +7,9 @@ class User {
     private final Map map;
 
 
-    public User() {  
-        this.time = new Time();
-        this.map = new Map();
+    public User(Map map , Time time ) {  
+        this.time = time;
+        this.map = map;
         this.is_brain_eaten = false;
         this.nums_of_sun = 0;
      
