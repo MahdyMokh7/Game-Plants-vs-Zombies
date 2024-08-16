@@ -1,5 +1,6 @@
 //package com;
 
+import java.util.jar.Attributes.Name;
 
 abstract public class Plant {  
     protected int health;  
@@ -20,7 +21,7 @@ abstract public class Plant {
         this.map = map;
     }  
 
-    abstract public void get_type();
+    abstract public String get_type();
 
     public boolean is_alive() {  
         if(this.health == 0){
@@ -30,7 +31,9 @@ abstract public class Plant {
     
     }  
 
-    abstract public void got_hit();
+    public void got_hit() {
+
+    }
     
 }  
 
@@ -68,8 +71,8 @@ abstract class ProviderPlant extends Plant {
         this.hit_rate = hit_rate;  
     }  
 
-    private boolean is_time_to_produce() {  
-         
+    protected boolean is_time_to_produce() {  
+        
     }  
 
     abstract public void produce();
@@ -93,6 +96,8 @@ abstract class OtherPlant extends Plant {
 
 // Subclass for attackerPlant 
 class PeaShooter extends AttackerPlant {  
+    public static final String NAME = "PeaShooter";
+    private static final String IMG_PATH = "Image files/";  ///////////////
 
     public PeaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed , int x_pos , int y_pos , Map map , Time time) {  
         super(health, cool_down, price, damage, hit_rate, speed, x_pos , y_pos , map , time);   
@@ -100,12 +105,20 @@ class PeaShooter extends AttackerPlant {
 
     @Override  
     public void shoot() {  
-        super.shoot();  //?
          
-    }  
+    }
+
+    @Override
+    public String get_type() {
+        return PeaShooter.NAME;
+    }
+
 }  
 
 class SnowPeaShooter extends AttackerPlant {  
+
+    public static String NAME = "SnowPeaShooter";
+    private static final String IMG_PATH = "Image files/";  ///////////////
 
     public SnowPeaShooter(int health, int cool_down, int price, int damage, int hit_rate, int speed , int x_pos , int y_pos , Map map , Time time) {  
         super(health, cool_down, price, damage, hit_rate, speed, x_pos , y_pos , map , time);   
@@ -113,24 +126,57 @@ class SnowPeaShooter extends AttackerPlant {
 
     @Override  
     public void shoot() {  
-        //super.shoot();  //?
          
-    }  
+    }
+
+    @Override
+    public String get_type() {
+        return SnowPeaShooter.NAME;
+    }
+
 }  
+
 /////////////////////////////////////////////////////////////////////////////////////
 class Sunflower extends ProviderPlant {  
+
+    public static String NAME = "Sunflower";
+    private static final String IMG_PATH = "Image files/";  ///////////////
 
     public Sunflower(int health, int cool_down, int price, int hit_rate, int x_pos , int y_pos , Map map , Time time) {  
         super(health, cool_down, price, hit_rate, x_pos , y_pos , map , time);   
     }  
+
+    @Override
+    public String get_type() {
+        return Sunflower.NAME;
+    }
+
+    @Override
+    public void produce() {
+        if (!super.is_time_to_produce()) {
+
+        }
+        else {
+
+        }
+    }
  
 }  
+
 /////////////////////////////////////////////////////////////////////////////////////
 class Sibzamini extends DefenderPlant {  
+
+    public static String NAME = "Sibzamini";
+    private static final String IMG_PATH = "Image files/";  ///////////////
 
     public Sibzamini(int health, int cool_down, int price, int x_pos , int y_pos , Map map , Time time) {  
         super(health, cool_down, price, x_pos , y_pos , map , time);  
     } 
+
+    @Override
+    public String get_type() {
+        return Sibzamini.NAME;
+    }
  
 }  
 

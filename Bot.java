@@ -27,7 +27,11 @@ class Bot {
     }  
 
     public boolean is_time_to_create_zombie() {  
-        
+        Boolean ans = true;
+
+
+
+        return ans;
     } 
 
     public void crate_random_zombie() {  
@@ -38,8 +42,11 @@ class Bot {
         
     }  
 
-    public  boolean is_time_to_produce_sun() {  
-        
+    public boolean is_time_to_produce_sun() {  
+        Boolean ans = true;
+
+
+        return ans;
     }  
 
     public void crate_sun() {  
