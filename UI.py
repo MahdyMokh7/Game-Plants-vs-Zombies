@@ -2,14 +2,15 @@ import pygame
 import time
 import math
 from Time import Time
+import os
 
 
 class UI:
 
-    START_PAGE_IAMGE_PATH = "Image files/start_img.png"
-    LAYOUT_PAGE_IMAGE_PATH = "Image files/layout_page_image1.png"
-    iN_GAME_PAGE_IAMGE_PATH = "Image files/background_img.png"
-    MENU_BAR_PAGE_IMAGE_PATH = "Image files/menu_bar_image.png"
+    START_PAGE_IAMGE_PATH = os.path.join("Image files" , "start_img.png")
+    LAYOUT_PAGE_IMAGE_PATH = os.path.join("Image files", "layout_page_image1.png")
+    iN_GAME_PAGE_IAMGE_PATH = os.path.join("Image files", "background_img.png")
+    MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image.png")
 
     START_PAGE = "start_section"
     LAYOUT_PAGE = "layout_page"

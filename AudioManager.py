@@ -1,5 +1,7 @@
 import pygame
 import time
+import os
+
 
 class AudioManager:
     VICTORY = "victory"
@@ -9,12 +11,12 @@ class AudioManager:
     EATING_PLANT = "eating_plant"
     LAYOUT_PAGE_MUSIC = "layout_page_music"
 
-    VICTORY_AUDIO_PATH = "Audio files/plants-vs-zombies-victory-theme-made-with-Voicemod.mp3"
-    DEFEAT_AUDIO_PATH = "Audio files/game-over-from-plants-vs-zombies-made-with-Voicemod.mp3"
-    IN_GAME_AUDIO_PATH = "Audio files/Plants_vs_Zombies_Soundtrack_(Day_Stage).mp3"
-    LAYOUT_PAGE_MUSIC_AUDIO_PATH = "Audio files/plants-vs-zombies-main-theme-made-with-Voicemod.mp3"
-    SUN_PICKUP_EFFECT_PATH = "Audio files/plants-vs-zombies-sun-pickup.mp3"
-    EATING_PLANT_EFFECT_PATH = "Audio files/plants-vs-zombies-eating-sfx-made-with-Voicemod.mp3"
+    VICTORY_AUDIO_PATH = os.path.join("Audio files", "plants-vs-zombies-victory-theme-made-with-Voicemod.mp3")
+    DEFEAT_AUDIO_PATH = os.path.join("Audio files", "game-over-from-plants-vs-zombies-made-with-Voicemod.mp3")
+    IN_GAME_AUDIO_PATH = os.path.join("Audio files", "Plants_vs_Zombies_Soundtrack_(Day_Stage).mp3")
+    LAYOUT_PAGE_MUSIC_AUDIO_PATH = os.path.join("Audio files", "plants-vs-zombies-main-theme-made-with-Voicemod.mp3")
+    SUN_PICKUP_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-sun-pickup.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-eating-sfx-made-with-Voicemod.mp3")
 
 
     def __init__(self):
