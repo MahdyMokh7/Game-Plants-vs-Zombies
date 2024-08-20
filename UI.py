@@ -5,10 +5,23 @@ from Time import Time
 
 
 class UI:
-    def __init__(self, winning_message, losing_message, time):
-        self.winning_message = winning_message
-        self.losing_message = losing_message
+
+    START_PAGE_IAMGE_PATH = "Image files/start_img.png"
+    LAYOUT_PAGE_IMAGE_PATH = "Image files/layout_page_image1.png"
+    iN_GAME_PAGE_IAMGE_PATH = "Image files/background_img.png"
+    MENU_BAR_PAGE_IMAGE_PATH = "Image files/menu_bar_image.png"
+
+    START_PAGE = "start_section"
+    LAYOUT_PAGE = "layout_page"
+    iN_GAME_PAGE = "in_game_page"
+    MENU_BAR_PAGE = "menu_bar_page"
+
+    WINNING_MESSAGE = "Congrats! You won :)"
+    LOSSING_MESSAGE = "HaHaHa! You lost :("
+
+    def __init__(self, time, maap):
         self.time = time
+        self.maap = maap
 
     def draw_timer(self, screen):
         """Draw the timer in the upper right corner of the screen."""
@@ -32,7 +45,7 @@ if __name__ == "__main__" :
 
     # Instantiate the classes
     game_timer = Time()
-    ui = UI("Winning!", "Losing!", game_timer)
+    ui = UI(game_timer, 12)
 
     # Start the timer
     game_timer.start_time_counting()
@@ -48,7 +61,7 @@ if __name__ == "__main__" :
         ui.draw_timer(screen)  # Draw the timer
         
         pygame.display.flip()  # Update the screen
-        clock.tick(60)  # Limit the frame rate to 30 FPS
+        clock.tick(60)  # Limit the frame rate to 60 FPS
 
     # Quit Pygame
     pygame.quit()

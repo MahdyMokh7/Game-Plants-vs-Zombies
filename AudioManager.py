@@ -6,13 +6,16 @@ class AudioManager:
     DEFEAT = "defeat"
     IN_GAME = "in_game"
     SUN_PICKUP = "sun_pickup"
+    EATING_PLANT = "eating_plant"
+    LAYOUT_PAGE_MUSIC = "layout_page_music"
 
     VICTORY_AUDIO_PATH = "Audio files/plants-vs-zombies-victory-theme-made-with-Voicemod.mp3"
     DEFEAT_AUDIO_PATH = "Audio files/game-over-from-plants-vs-zombies-made-with-Voicemod.mp3"
     IN_GAME_AUDIO_PATH = "Audio files/Plants_vs_Zombies_Soundtrack_(Day_Stage).mp3"
+    LAYOUT_PAGE_MUSIC_AUDIO_PATH = "Audio files/plants-vs-zombies-main-theme-made-with-Voicemod.mp3"
     SUN_PICKUP_EFFECT_PATH = "Audio files/plants-vs-zombies-sun-pickup.mp3"
+    EATING_PLANT_EFFECT_PATH = "Audio files/plants-vs-zombies-eating-sfx-made-with-Voicemod.mp3"
 
-    PEE_SHOOTER_IMAGE_PATH = "Image files/pee_shooter.png"
 
     def __init__(self):
         self.is_sound_enable = True
@@ -28,7 +31,7 @@ class AudioManager:
             pygame.mixer.unpause()
             print("Audio unmuted.")
 
-    def play_music(self, music_type, loop=False):  # if the loop is True it will loop indefinitely
+    def play_music(self, music_type, loop=True):  # if the loop is True it will loop indefinitely
         if not self.is_sound_enable:
             return
 
@@ -36,6 +39,7 @@ class AudioManager:
             AudioManager.VICTORY: AudioManager.VICTORY_AUDIO_PATH,
             AudioManager.DEFEAT: AudioManager.DEFEAT_AUDIO_PATH,
             AudioManager.IN_GAME: AudioManager.IN_GAME_AUDIO_PATH,
+            AudioManager.LAYOUT_PAGE_MUSIC: AudioManager.LAYOUT_PAGE_MUSIC_AUDIO_PATH
         }.get(music_type, None)
 
         if audio_file_path is None:
@@ -55,7 +59,8 @@ class AudioManager:
             return
 
         sound_effect_path = {
-            AudioManager.SUN_PICKUP: AudioManager.SUN_PICKUP_EFFECT_PATH
+            AudioManager.SUN_PICKUP: AudioManager.SUN_PICKUP_EFFECT_PATH,
+            AudioManager.EATING_PLANT: AudioManager.EATING_PLANT_EFFECT_PATH
             ####
         }.get(sound_effect_type, None)
 
@@ -75,6 +80,9 @@ class AudioManager:
 if __name__ == "__main__":
     audio_manager = AudioManager()
     audio_manager.play_music(AudioManager.IN_GAME, loop=True)  # Play in-game music in a loop
+    time.sleep(6)
+
+    audio_manager.play_music(AudioManager.LAYOUT_PAGE_MUSIC, loop=True)  # Play layout-page music in a loop
     time.sleep(3)
 
     # Play a sound effect while the music is still playing
