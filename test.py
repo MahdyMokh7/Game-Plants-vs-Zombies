@@ -3,8 +3,8 @@ import pygame
 import sys
 
 # Constants
-SCREEN_WIDTH = 750
-SCREEN_HEIGHT = 440
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 700
 
 def main():
     # Initialize Pygame
