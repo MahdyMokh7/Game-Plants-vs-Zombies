@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 class Map {  
-    private String[][] map;
+    private String[][] maap;
     private ArrayList<ArrayList<Plant>> plants;
    // private final Time time;
 
@@ -17,7 +17,7 @@ class Map {
             {" ", " ", " ", " ", " ", " ", " ", " "}  
         };  
 
-        this.map = mapp;
+        this.maap = mapp;
         //this.time = time;
    
     }
