@@ -1,7 +1,24 @@
+import os
 from abc import ABC, abstractmethod  
+
+REGULAR_ZOMBIE_DAMAGE = 10
+GIANT_ZOMBIE_DAMAGE = 20
+
+REGULAR_ZOMBIE_HEALTH = 50
+GIANT_ZOMBIE_HEALTH = 80
+
+REGULAR_ZOMBIE_HIT_RATE = 5
+GIANT_ZOMBIE_HIT_RATE = 6
+
+REGULAR_ZOMBIE_SPEED = 7
+GIANT_ZOMBIE_SPEED = 5
 
 
 class Zombie(ABC):  
+
+    REGULAR_ZOMBIE_PATH = os.path.join("Image files/regular zombie.png")
+    GIANT_ZOMBIE_PATH = os.path.join("Image files/giant zombie.png")
+
     def __init__(self, damage, health, hit_rate, speed, map, time):  
         self.damage = damage  
         self.health = health  
@@ -18,16 +35,16 @@ class Zombie(ABC):
         pass  
 
 class RegularZombie(Zombie):  
-    def __init__(self, damage, health, hit_rate, speed, map_instance, time_instance):  
-        super().__init__(damage, health, hit_rate, speed, map_instance, time_instance)  
+    def __init__(self, REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time):  
+        super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time)  
 
     def hit(self):  
         # Implement the hit logic for RegularZombie  
         pass  
 
 class GiantZombie(Zombie):  
-    def __init__(self, damage, health, hit_rate, speed, map_instance, time_instance):  
-        super().__init__(damage, health, hit_rate, speed, map_instance, time_instance)  
+    def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time):  
+        super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time)  
 
     def hit(self):  
         # Implement the hit logic for GiantZombie  
