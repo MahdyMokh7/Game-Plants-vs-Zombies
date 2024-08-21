@@ -3,6 +3,8 @@ import time
 import os
 
 
+### if the loads take much time optimize them to load only once but can be palyed multiple times
+
 class AudioManager:
     VICTORY = "victory"
     DEFEAT = "defeat"
@@ -18,9 +20,9 @@ class AudioManager:
     SUN_PICKUP_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-sun-pickup.mp3")
     EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-eating-sfx-made-with-Voicemod.mp3")
 
-
     def __init__(self):
         self.is_sound_enable = True
+        self.already_playing = False  # New field to track if music is playing
         pygame.mixer.init()
 
     def play_pause_sound(self):
@@ -34,8 +36,16 @@ class AudioManager:
             print("Audio unmuted.")
 
     def play_music(self, music_type, loop=True):  # if the loop is True it will loop indefinitely
+
+        # dont run the function if it is mute
         if not self.is_sound_enable:
             return
+
+        # dont run the function if a music is already playing
+        if self.already_playing:
+            return 
+        else:
+            self.already_playing = True
 
         audio_file_path = {
             AudioManager.VICTORY: AudioManager.VICTORY_AUDIO_PATH,
@@ -51,6 +61,7 @@ class AudioManager:
         try:
             pygame.mixer.music.load(audio_file_path)
             pygame.mixer.music.play(-1 if loop else 0)  # Loop indefinitely if loop is True
+            self.already_playing = True  # Set to True when music starts playing
             print("Playing background music...")
 
         except pygame.error as e:
@@ -63,7 +74,6 @@ class AudioManager:
         sound_effect_path = {
             AudioManager.SUN_PICKUP: AudioManager.SUN_PICKUP_EFFECT_PATH,
             AudioManager.EATING_PLANT: AudioManager.EATING_PLANT_EFFECT_PATH
-            ####
         }.get(sound_effect_type, None)
 
         if sound_effect_path is None:
@@ -78,6 +88,12 @@ class AudioManager:
         except pygame.error as e:
             print("Error playing the sound effect:", e)
 
+    def stop_music(self):
+        """Stop the currently playing music."""
+        pygame.mixer.music.stop()
+        self.already_playing = False
+        print("Music stopped.")
+
 # Example usage
 if __name__ == "__main__":
     audio_manager = AudioManager()
@@ -90,8 +106,8 @@ if __name__ == "__main__":
     # Play a sound effect while the music is still playing
     audio_manager.play_sound_effect(AudioManager.SUN_PICKUP)
 
-    # Attempt to play defeat music without interrupting the background music
-    # audio_manager.play_music(AudioManager.DEFEAT)  # This will not play if in-game music is active
+    # Stop the currently playing music
+    audio_manager.stop_music()
 
     print("Music and sound effects are playing in the background.")
     

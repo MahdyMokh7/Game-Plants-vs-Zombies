@@ -1,10 +1,24 @@
 import os
 import pygame
 import sys
+from UI import UI
 
 # Constants
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 700
+
+# Define the rectangle position using a dictionary
+rectangle_position = {
+    "x_left_pos": 458,
+    "y_up_pos": 398,
+    "x_right_pos": 738,
+    "y_down_pos": 485
+}
+
+def is_mouse_within_rectangle(mouse_pos, rect_pos):
+    """Check if the mouse is within the rectangle defined by rect_pos."""
+    return rect_pos["x_left_pos"] <= mouse_pos[0] <= rect_pos["x_right_pos"] and \
+           rect_pos["y_up_pos"] <= mouse_pos[1] <= rect_pos["y_down_pos"]
 
 def main():
     # Initialize Pygame
@@ -14,8 +28,8 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("1200x700 Window with Background Image")
 
-    # Use os.path.join to create the correct path
-    image_path = os.path.join("Image files", "background_image.png")
+    # Use os.path.join to create the correct path from UI class
+    image_path = UI.START_PAGE_IMAGE_PATH
 
     # Load the background image
     background_image = pygame.image.load(image_path)
@@ -30,19 +44,24 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-            # Handle mouse movement (hover) - just pass
             elif event.type == pygame.MOUSEMOTION:
-                pass
-
-            # Handle mouse click to print the position
-            elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
-                print(f"Mouse clicked at position: {mouse_pos}")
+                if is_mouse_within_rectangle(mouse_pos, rectangle_position):
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-            # Handle the Esc key to minimize the window
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.display.iconify()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Left click
+                    mouse_pos = event.pos
+                    if is_mouse_within_rectangle(mouse_pos, rectangle_position):
+                        print("Clicked inside the rectangle")
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:  # Left click
+                    mouse_pos = event.pos
+                    if is_mouse_within_rectangle(mouse_pos, rectangle_position):
+                        print("yes")
 
         # Draw the background image
         screen.blit(background_image, (0, 0))
