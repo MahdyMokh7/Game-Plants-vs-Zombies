@@ -1,53 +1,23 @@
 import os
 from abc import ABC, abstractmethod  
-
-PEA_SHOOTER_DAMAGE = 5
-SNOW_PEA_SHOOTER_DAMAGE = 8
-SUN_FLOWER_DAMAGE = 0
-SIB_ZAMINI_DAMAGE = 0
+from Consts import *
+import pygame
 
 
-PEA_SHOOTER_HEALTH = 40
-SNOW_PEA_SHOOTER_HEALTH = 30
-SUN_FLOWER_HEALTHE = 30
-SIB_ZAMINI_HEALTH = 200
+class Plant(ABC): 
 
-PEA_SHOOTER_COOL_DOWN = 5
-SNOW_PEA_SHOOTER_COOL_DOWN = 9
-SUN_FLOWER_COOL_DOWN = 10
-SIB_ZAMINI_COOL_DOWN = 10
-
-PEA_SHOOTER_HIT_RATE = 5
-SNOW_PEA_SHOOTER_HIT_RATE = 5
-SUN_FLOWER_HIT_RATE = 12
-SIB_ZAMINI_HIT_RATE = 0
-
-PEA_SHOOTER_SPEED = 7
-SNOW_PEA_SHOOTER_SPEED = 5
-SUN_FLOWER_SPEED = 0
-SIB_ZAMINI_SPEED = 0
-
-PEA_SHOOTER_PRICE = 4
-SNOW_PEA_SHOOTER_PRICE = 6
-SUN_FLOWER_PRICE = 2
-SIB_ZAMINI_PRICE = 2
-
-class Plant(ABC):  
-    
-    PEA_SHOOTER_PATH = os.path.join("Image files/pea shooter.png")
-    SNOW_PEA_SHOOTER_PATH = os.path.join("Image files/snow pea shooter.png")
-    SUN_FLOWER_PATH = os.path.join("Image files/sun flower.png")
-    SIB_ZAMINI_PATH = os.path.join("Image files/sib zamini.png")
-
-
-    def __init__(self, health, cool_down, price, x_pos, y_pos, map, time):  
+    def __init__(self, health, cool_down, price, x_pos, y_pos, maap, time):  
         self.health = health  
         self.cool_down = cool_down  
         self.price = price  
         self.x_position = x_pos  
         self.y_position = y_pos  
         self.time = time  
-        self.map = map
+        self.maap = maap
+
+    @abstractmethod
+    def show_plant(self):
+        pass
 
     @abstractmethod  
     def get_type(self):  
@@ -72,6 +42,10 @@ class AttackerPlant(Plant):
     def should_plant_shoot(self):  
         pass  
 
+    @abstractmethod
+    def show_plant(self):
+        pass
+
     @abstractmethod  
     def shoot(self):  
         pass  
@@ -93,6 +67,10 @@ class ProviderPlant(Plant):
     def is_time_to_produce(self):  
         pass  
 
+    @abstractmethod
+    def show_plant(self):
+        pass
+
     @abstractmethod  
     def produce(self):  
         pass  
@@ -102,16 +80,33 @@ class DefenderPlant(Plant):
     def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
         super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
 
+    @abstractmethod
+    def show_plant(self):
+        pass
+
 
 class OtherPlant(Plant):  
     def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
         super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
 
+    @abstractmethod
+    def show_plant(self):
+        pass
+
 
 # Subclass for AttackerPlant  
 class PeaShooter(AttackerPlant):  
+
+    IMAGE_PATH = os.path.join("Image files", "pea shooter.png")
+    image = pygame.image.load(IMAGE_PATH)
+
     def __init__(self, PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
-        super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)  
+        super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)
+        self.image = None
+
+
+    def show_plant(self):
+        pass
 
     def shoot(self):  
         # Implement shooting logic here  
@@ -126,6 +121,9 @@ class PeaShooter(AttackerPlant):
 
 
 class SnowPeaShooter(AttackerPlant):  
+
+    IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
+
     def __init__(self, SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
         super().__init__(SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)  
 
@@ -141,6 +139,9 @@ class SnowPeaShooter(AttackerPlant):
         print("dd") 
 
 class Sunflower(ProviderPlant):  
+
+    PATH = os.path.join("Image files", "sun flower.png")
+
     def __init__(self, SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time):  
         super().__init__(SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time)  
 
@@ -150,6 +151,9 @@ class Sunflower(ProviderPlant):
 
 
 class Sibzamini(DefenderPlant):  
+
+    IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
+
     def __init__(self, SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time):  
         super().__init__(SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time)
 

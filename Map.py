@@ -23,15 +23,19 @@ class Map:
         
         i = 0 
         j = 0
-        for x in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
-           # print(f"Outer Loop Value: {x}")  
-            for y in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
-               # print(f"    Inner Loop Value: {y}")  
-                tile = Tile(x , x + Tile.TILE_SIZE[0], y, y + Tile.TILE_SIZE[1], i, j)  
-                self.tiles[i][j] = tile   
+        try: 
+            for x in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
+                print(f"Outer Loop Value: {x}")  
+                for y in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
+                    print(f"    Inner Loop Value: {y}")  
+                    tile = Tile(x , x + Tile.TILE_SIZE[0], y, y + Tile.TILE_SIZE[1], i, j)  
+                    self.tiles[i][j] = tile   
+                    i += 1
                 j += 1
-            i += 1
-            j = 0
+                i = 0
+        except Exception as e:
+            print(e)
+            print(i, j)
 
     def calc_tile_which_mouse_is_left_in_its_range(self, x_mos_pos , y_mos_pos) -> Tile:
         i_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]

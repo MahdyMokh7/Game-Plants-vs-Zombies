@@ -7,11 +7,29 @@ import os
 
 class UI:
 
-    START_PAGE_START_BAR_RECTANGLE_POSITION = rectangle_position = {
+    START_PAGE_START_BAR_RECTANGLE_POSITION = {
         "x_left_pos": 458,
         "x_right_pos": 738,
         "y_up_pos": 398,
         "y_down_pos": 485
+    }
+    LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION = {
+        "x_left_pos": 615,
+        "x_right_pos": 1084,
+        "y_up_pos": 96,
+        "y_down_pos": 228
+    }
+    LAYOUT_PAGE_QUIT_BAR_RECTANGLE_POSITION = {
+        "x_left_pos": 1065,
+        "x_right_pos": 1165,
+        "y_up_pos": 560,
+        "y_down_pos": 630
+    }
+    LAYOUT_PAGE_OPTIONS_BAR_RECTANGLE_POSITION = {
+        "x_left_pos": 846,
+        "x_right_pos": 959,
+        "y_up_pos": 550,
+        "y_down_pos": 607
     }
 
     # Image paths
@@ -67,7 +85,7 @@ class UI:
         text_surface = font.render(time_str, True, (255, 255, 255))  # White color text
         self.screen.blit(text_surface, (self.screen.get_width() - text_surface.get_width() - 10, 10))  # Draw in upper right
 
-    def draw_start_page(self, screen):
+    def draw_start_page(self):
         """Draw the start page background."""
         self.screen.blit(self.start_image, (0, 0))
         self.current_page = self.START_PAGE

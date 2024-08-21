@@ -5,10 +5,7 @@ from typing import override
 
 class BulletObject(ABC):
 
-    PEA_PATH = os.path.join("Image files/pea.png")
-    SNOW_PEA_PATH = os.path.join("Image files/snow pea.png")
-
-    def __init__(self, map, time, speed):
+    def __init__(self, time, speed, maap):
         self.speed = speed
         self.time = time
         self.maap = maap
@@ -29,6 +26,9 @@ class BulletObject(ABC):
 
 ###################################################
 class Pee(BulletObject):
+    
+    PEA_IMAGE_PATH = os.path.join("Image files", "pea.png")
+
     def __init__(self, map, time, speed):
         super().__init__(map, time, speed)
 
@@ -40,6 +40,9 @@ class Pee(BulletObject):
 
 #####################################################
 class SnowPee(BulletObject):
+
+    SNOW_PEA_IMAGE_PATH = os.path.join("Image files", "snow pea.png")
+
     def __init__(self, map, time, speed):
         super().__init__(map, time, speed)
 

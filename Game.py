@@ -36,36 +36,77 @@ class Game:
                 self.run_page(event)
 
     @staticmethod
-    def is_mouse_within_rectangle(mouse_pos, rect_pos):
-        """Check if the mouse is within the rectangle defined by rect_pos."""
-        return rect_pos["x_left_pos"] <= mouse_pos[0] <= rect_pos["x_right_pos"] and \
-            rect_pos["y_up_pos"] <= mouse_pos[1] <= rect_pos["y_down_pos"]
+    def is_mouse_within_rectangles(mouse_pos, *rect_positions):
+        """Check if the mouse is within any of the rectangles defined by rect_positions."""
+        for rect_pos in rect_positions:
+            if (rect_pos["x_left_pos"] <= mouse_pos[0] <= rect_pos["x_right_pos"] and
+                    rect_pos["y_up_pos"] <= mouse_pos[1] <= rect_pos["y_down_pos"]):
+                return True
+        return False
 
     def run_start_page(self, event):
         self.ui.draw_start_page()
-        self.audioManager.play_music(AudioManager.DEFEAT)
+        # self.audioManager.play_music(AudioManager.DEFEAT)
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
-            if Game.is_mouse_within_rectangle(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+            if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:   ### delete
+            if event.button == 1:  # Left click
+                mouse_pos = event.pos
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+                    self.ui.set_current_page(UI.LAYOUT_PAGE)
+                    print("Clicked inside the rectangle")
+
+        if event.type == pygame.MOUSEBUTTONUP:  
+            if event.button == 1:  # Left click
+                mouse_pos = event.pos
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+                    self.ui.set_current_page(UI.LAYOUT_PAGE)
+                    print("start")
+
+
+    def run_layout_page(self, event):
+        self.ui.draw_layout_page()
+        self.audioManager.play_music(AudioManager.LAYOUT_PAGE_MUSIC)
+        if event.type == pygame.MOUSEMOTION:
+            mouse_pos = event.pos
+            if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION, 
+                                              UI.LAYOUT_PAGE_OPTIONS_BAR_RECTANGLE_POSITION, 
+                                              UI.LAYOUT_PAGE_QUIT_BAR_RECTANGLE_POSITION):
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:  #### delete
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
-                if Game.is_mouse_within_rectangle(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
                     print("Clicked inside the rectangle")
 
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
-                if Game.is_mouse_within_rectangle(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
-                    self.ui.set_current_page(UI.LAYOUT_PAGE)
-                    print("yes")
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION):  # adventure
+                    self.ui.set_current_page(UI.IN_GAME_PAGE)
+                    self.audioManager.stop_music()
+                    print("adventure")
 
-    def run_layout_page(self, event):
-        return "Function Two executed!"
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_OPTIONS_BAR_RECTANGLE_POSITION):  # options
+                    self.ui.set_current_page(UI.MENU_BAR_PAGE)
+                    print("options")
+
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_QUIT_BAR_RECTANGLE_POSITION):  # quit
+                    self.running = False  ### pygame.quit()
+                    print("quit")
+    
+    def run_menu_page(self, event):
+        pass
+
 
     def run_in_game(self, event):
         return "Function Three executed!"
@@ -75,7 +116,8 @@ class Game:
         switcher = {
             UI.START_PAGE: self.run_start_page,
             UI.LAYOUT_PAGE: self.run_layout_page,
-            UI.IN_GAME_PAGE: self.run_in_game
+            UI.IN_GAME_PAGE: self.run_in_game,
+            UI.MENU_BAR_PAGE: self.run_menu_page
         }
         func = switcher.get(option, lambda: "ERROR: Invalid option to run page")
         return func(event)
@@ -88,7 +130,6 @@ class Game:
         # Main Loop
         self.running = True
         clock = pygame.time.Clock()  # Initialize the clock for framerate control
-        state = self.ui.get_current_page()  # Initial state to start with the start page
         while self.running:
             self.handle_events()
 

@@ -29,7 +29,7 @@ def main():
     pygame.display.set_caption("1200x700 Window with Background Image")
 
     # Use os.path.join to create the correct path from UI class
-    image_path = UI.START_PAGE_IMAGE_PATH
+    image_path = UI.LAYOUT_PAGE_IMAGE_PATH
 
     # Load the background image
     background_image = pygame.image.load(image_path)
@@ -52,6 +52,7 @@ def main():
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                print(event.pos)
                 if event.button == 1:  # Left click
                     mouse_pos = event.pos
                     if is_mouse_within_rectangle(mouse_pos, rectangle_position):
