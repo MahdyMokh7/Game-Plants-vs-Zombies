@@ -20,7 +20,7 @@ class Map:
         self.all_zombies_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
         self.all_bullets_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
         self.all_suns_1d = []
-        self.all_plants_2d = [[None for _ in range(Map. NUM_OF_COLS)]  for _ in range(Map. NUM_OF_ROWS)]
+        self.all_plants_2d = [[]  for _ in range(Map. NUM_OF_ROWS)]
         self.__add_tiles()
 
     def __add_tiles(self):  
@@ -85,10 +85,7 @@ class Map:
     def add_plant(self, plant, row_num):
         self.all_plants_2d[row_num].append(plant)
 
-    def remove_plant(self, plant):  
-         for row_index, row in enumerate(self.all_plants_2d):  
-            for col_index, all_plants_2d in enumerate(row):  
-                if plant in self.all_plants_2d:  
-                    self.all_plants_2d.remove(plant) 
-
+    def remove_plant(self, plant, row_num):  
+        
+        self.all_plants_2d[row_num].remove(plant)
 

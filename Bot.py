@@ -136,7 +136,7 @@ class Bot:
         for row_num in range(Map.NUM_OF_ROWS):
             for zombie in self.maap.all_zombies_2d[row_num]:
                 for plant in self.maap.all_plants_2d[row_num]:
-                    if zombie.did_it_colide(plant):   ######################
+                    if zombie.did_colide(plant):   ######################
                         zombie.hit(plant)
 
     

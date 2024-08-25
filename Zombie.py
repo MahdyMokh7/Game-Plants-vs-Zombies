@@ -18,7 +18,6 @@ class Zombie(ABC):
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.row_num = row_num
-        self.rect = None  ########################
 
     def is_still_alive(self):  
         return self.health != 0  
@@ -49,10 +48,10 @@ class Zombie(ABC):
     def is_alive(self):
         return self.health > 0
     
-    def did_it_colide(self, plant):
+    def did_colide(self, plant):
 
-        return plant.get_rect().colliderect(self.rect)  ######################نرگس: اگر یکسان بودند ایکس ها، ترو میشود
-    
+        return plant.get_rect().colliderect(self.get_rect())  ######################x jeloye zambie manzor نرگس: اگر یکسان بودند ایکس ها، ترو میشود
+                                  
     def get_rect(self):
         return self.rect   ######################
         

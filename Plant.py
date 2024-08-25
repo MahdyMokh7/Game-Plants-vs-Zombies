@@ -19,8 +19,13 @@ class Plant(ABC):
         self.y_pos = y_pos  
         self.time = time  
         self.maap = maap
-        self.rect = None  ##### comlete the rect with image rect
+        rectt = calc_rect()
+        self.rect = rectt  ##### comlete the rect with image rect
 
+    def calc_rect(self):
+        rectt = self.x_pos + (WIDTH // 2)  #35 pixel
+        return rectt
+    
     @abstractmethod
     def show_plant(self):
         pass
@@ -193,6 +198,7 @@ class Sibzamini(DefenderPlant):
     def plant_died_handle(self):
         ################
         # remove from list plant in map
+        self.maap.remove_plant(self , self.row_num)
     
 
 if __name__ == "__main__":  
