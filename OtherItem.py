@@ -5,16 +5,21 @@ from Consts import *
 
 class OtherItem(ABC):
 
-    def __init__(self, speed, interval, time, map):
+    def __init__(self, time, maap, speed):
         self.speed = speed
-        self.interval = interval
-        self.time = time  # Assuming Time is defined elsewhere
-        self.map = map    # Assuming Map is defined elsewhere
+        self.time = time  
+        self.maap = maap    
 
 
 class Sun(OtherItem):
 
     SUN_PATH = os.path.join("Image files", "sun.png")
 
-    def __init__(self, SPEED, INTERVAL, time, map):
-        super().__init__(SPEED, INTERVAL, time, map)
+    def __init__(self, time, maap, sun_speed, x_pos, y_pos):
+        super().__init__(time, maap, sun_speed)
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+
+    def move(self):
+        self.y_pos += self.speed
+

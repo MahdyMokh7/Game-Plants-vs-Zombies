@@ -1,3 +1,13 @@
+import json
+
+# Open the JSON file
+with open("consts.json", "r") as file:
+    # Load the JSON data
+    salam = json.load(file)
+
+# Access a value from the JSON data
+# print(salam["mahdy"])
+
 
 
 # Plants
@@ -49,5 +59,21 @@ GIANT_ZOMBIE_SPEED = 5
 
 
 # OtherItems
-SPEED = 10
-INTERVAL = 10
+SUN_SPEED = 10
+SUN_INTERVAL = 10
+
+
+# scale
+SCALE = 1
+
+# dict row -> y_pos
+DICT_ROW_Y_POS = {
+    0: 155,
+    1: 265,
+    2: 375,
+    3: 485,
+    4: 595
+}
+
+# game time (sc)
+GAME_TIME_IN_SEC = 100

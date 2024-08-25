@@ -20,6 +20,13 @@ def is_mouse_within_rectangle(mouse_pos, rect_pos):
     return rect_pos["x_left_pos"] <= mouse_pos[0] <= rect_pos["x_right_pos"] and \
            rect_pos["y_up_pos"] <= mouse_pos[1] <= rect_pos["y_down_pos"]
 
+def apply_blur(surface, scale_factor=0.4):
+    """Apply a simple blur effect by scaling down and back up."""
+    print(surface)
+    small_surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale_factor), int(surface.get_height() * scale_factor)))
+    blurred_surface = pygame.transform.smoothscale(small_surface, surface.get_size())
+    return blurred_surface
+
 def main():
     # Initialize Pygame
     pygame.init()
@@ -29,14 +36,22 @@ def main():
     pygame.display.set_caption("1200x700 Window with Background Image")
 
     # Use os.path.join to create the correct path from UI class
-    image_path = UI.LAYOUT_PAGE_IMAGE_PATH
+    background_image_path = UI.IN_GAME_PAGE_IMAGE_PATH  
+    image_path2 = UI.MENU_BAR_PAGE_IMAGE_PATH
 
-    # Load the background image
-    background_image = pygame.image.load(image_path)
+    # Load the images
+    background_image = pygame.image.load(background_image_path)
+    foreground_image = pygame.image.load(image_path2)
 
-    # Scale the image to fit the screen size
+    # Scale and blur the background image
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    blurred_background_image = apply_blur(background_image)
 
+    # Get the rect of the foreground image for positioning
+    image_rect = foreground_image.get_rect()
+    x_position = (screen.get_width() - image_rect.width) // 2  # Center horizontally
+    y_position = (screen.get_height() - image_rect.height) // 2  # Center vertically
+    
     # Main loop
     running = True
     while running:
@@ -64,8 +79,11 @@ def main():
                     if is_mouse_within_rectangle(mouse_pos, rectangle_position):
                         print("yes")
 
-        # Draw the background image
-        screen.blit(background_image, (0, 0))
+        # Draw the blurred background image
+        screen.blit(blurred_background_image, (0, 0))
+
+        # Draw the foreground image on top of the blurred background
+        screen.blit(foreground_image, (x_position, y_position))
 
         # Update the display
         pygame.display.flip()
@@ -74,5 +92,20 @@ def main():
     pygame.quit()
     sys.exit()
 
+
+def class_test():
+    class a:
+        def __init__(self):
+            self.q = 10
+            print("hi")
+    class b:
+        def __init__(self):
+            self.q = 21
+            print("hey")
+
+    listt = [a, b]
+    c = listt[1]()
+
 if __name__ == "__main__":
     main()
+    # class_test()

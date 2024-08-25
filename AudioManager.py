@@ -28,11 +28,11 @@ class AudioManager:
     def play_pause_sound(self):
         if self.is_sound_enable:
             self.is_sound_enable = False
-            pygame.mixer.pause()
+            pygame.mixer.music.pause()
             print("Audio muted.")
         else:
             self.is_sound_enable = True
-            pygame.mixer.unpause()
+            pygame.mixer.music.unpause()
             print("Audio unmuted.")
 
     def play_music(self, music_type, loop=True):  # if the loop is True it will loop indefinitely
@@ -99,15 +99,17 @@ if __name__ == "__main__":
     audio_manager = AudioManager()
     audio_manager.play_music(AudioManager.IN_GAME, loop=True)  # Play in-game music in a loop
     time.sleep(6)
+    audio_manager.stop_music()
 
     audio_manager.play_music(AudioManager.LAYOUT_PAGE_MUSIC, loop=True)  # Play layout-page music in a loop
-    time.sleep(3)
+    time.sleep(5)
+    audio_manager.play_pause_sound()
+    time.sleep(5)
+    audio_manager.play_pause_sound()
+    time.sleep(2)
 
     # Play a sound effect while the music is still playing
     audio_manager.play_sound_effect(AudioManager.SUN_PICKUP)
-
-    # Stop the currently playing music
-    audio_manager.stop_music()
 
     print("Music and sound effects are playing in the background.")
     
