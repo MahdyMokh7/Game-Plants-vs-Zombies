@@ -31,12 +31,30 @@ class UI:
         "y_up_pos": 550,
         "y_down_pos": 607
     }
+    MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION = {
+        "x_left_pos": 518,
+        "x_right_pos": 671,
+        "y_up_pos": 408,
+        "y_down_pos": 479
+    }
+    MENU_PAGE_MUTE_BAR_RECTABGLE_POSITION = {
+        "x_left_pos": 521,
+        "x_right_pos": 671,
+        "y_up_pos": 233,
+        "y_down_pos": 284
+    }
+    MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION = {
+        "x_left_pos": 521,
+        "x_right_pos": 671,
+        "y_up_pos": 301,
+        "y_down_pos": 352
+    }
 
     # Image paths
     START_PAGE_IMAGE_PATH = os.path.join("Image files", "start_img.png")
     LAYOUT_PAGE_IMAGE_PATH = os.path.join("Image files", "layout_page_image1.png")
     IN_GAME_PAGE_IMAGE_PATH = os.path.join("Image files", "background_image.png")
-    MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image1.png")
+    MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image5.png")
 
     # Page identifiers
     START_PAGE = "start_section"
@@ -51,7 +69,8 @@ class UI:
     def __init__(self, time, maap):
         self.time = time
         self.maap = maap
-        self.current_page = None  # Track the current pages
+        self.current_page = None  # Track the current page
+        self.prev_page = None  # Tarck the previous page
         self.screen = None
 
     def __initialization(self):
@@ -65,6 +84,14 @@ class UI:
         self.in_game_image = pygame.transform.scale(self.in_game_image, (self.screen.get_width(), self.screen.get_height()))
 
         self.menu_bar_image = pygame.image.load(self.MENU_BAR_PAGE_IMAGE_PATH)
+
+        # Dict page -> image
+        self.page_image_dict = {
+            UI.START_PAGE: self.start_image,
+            UI.LAYOUT_PAGE: self.layout_image,
+            UI.IN_GAME_PAGE: self.in_game_image,
+            UI.MENU_BAR_PAGE: self.menu_bar_image
+        } 
 
 
     def set_up_window(self):
@@ -85,6 +112,12 @@ class UI:
         text_surface = font.render(time_str, True, (255, 255, 255))  # White color text
         self.screen.blit(text_surface, (self.screen.get_width() - text_surface.get_width() - 10, 10))  # Draw in upper right
 
+    def apply_blur(self, surface, scale_factor=0.1):
+        """Apply a simple blur effect by scaling down and back up."""
+        small_surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale_factor), int(surface.get_height() * scale_factor)))
+        blurred_surface = pygame.transform.smoothscale(small_surface, surface.get_size())
+        return blurred_surface
+
     def draw_start_page(self):
         """Draw the start page background."""
         self.screen.blit(self.start_image, (0, 0))
@@ -102,19 +135,32 @@ class UI:
 
     def draw_menu_bar_page(self):
         """Draw the menu bar image on top of the current background without scaling."""
+        background_image = self.page_image_dict[self.prev_page]
+        background_image = self.apply_blur(background_image)
+
         image_rect = self.menu_bar_image.get_rect()
-        
+
         x_position = (self.screen.get_width() - image_rect.width) // 2  # Center horizontally
         y_position = (self.screen.get_height() - image_rect.height) // 2  # Center vertically
-        
+
+        self.screen.blit(background_image, (0, 0))
         self.screen.blit(self.menu_bar_image, (x_position, y_position))
         self.current_page = self.MENU_BAR_PAGE
+
+    def draw_given_image(self, image, x_pos, y_pos):  # (x, y) are the center posiotn of image
+        self.screen.blit(image, (x_pos - image.get_width() // 2, y_pos - image.get_height() // 2))
 
     def get_current_page(self):
         return self.current_page
     
     def set_current_page(self, page):
         self.current_page = page
+
+    def get_prev_page(self):
+        return self.prev_page
+    
+    def set_prev_page(self, page):
+        self.prev_page = page
 
 
 

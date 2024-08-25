@@ -17,6 +17,10 @@ class Map:
 
     def __init__(self):   
         self.tiles = [[None for _ in range(9)] for _ in range(5)]  # Create a two-dimensional array  
+        self.all_zombies_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
+        self.all_bullets_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
+        self.all_suns_1d = []
+        self.all_plants_2d = [[None for _ in range(Map. NUM_OF_COLS)]  for _ in range(Map. NUM_OF_ROWS)]
         self.__add_tiles()
 
     def __add_tiles(self):  
@@ -59,4 +63,32 @@ class Map:
             pass
         
         tile.set_plant(plant=plant)
+
+    def did_bullet_hit_in_this_pos(self, x_pos, row_num):
+        for index, zombie in enumerate(self.all_zombies_2d[row_num]):
+            if zombie.did_bullet_hit():
+                zombie.bullet_hit()
+                if not zombie.is_alive():
+
+
+                    return True
+                
+    def add_zombie(self, zombie, row_num):
+        self.all_zombies_2d[row_num].append(zombie)
+
+    def add_sun(self, sun):
+        self.all_suns_1d.append(sun)
+
+    def add_bullet(self, bullet, row_num):
+        self.all_bullets_2d[row_num].append(bullet)
+
+    def add_plant(self, plant, row_num):
+        self.all_plants_2d[row_num].append(plant)
+
+    def remove_plant(self, plant):  
+         for row_index, row in enumerate(self.all_plants_2d):  
+            for col_index, all_plants_2d in enumerate(row):  
+                if plant in self.all_plants_2d:  
+                    self.all_plants_2d.remove(plant) 
+
 

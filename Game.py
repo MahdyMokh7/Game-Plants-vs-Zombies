@@ -8,8 +8,8 @@ from AudioManager import AudioManager
 class Game:
     def __init__(self):
         self.running = False
-        self.users = []  
-        self.bots = []     
+        # self.users = []  
+        # self.bots = []     
         self.time = Time() 
         self.maap = Map()
         self.ui = UI(time=self.time, maap=self.maap)   
@@ -60,14 +60,12 @@ class Game:
                 mouse_pos = event.pos
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
                     self.ui.set_current_page(UI.LAYOUT_PAGE)
+                    self.ui.set_prev_page(UI.START_PAGE)
                     print("Clicked inside the rectangle")
 
         if event.type == pygame.MOUSEBUTTONUP:  
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
-                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
-                    self.ui.set_current_page(UI.LAYOUT_PAGE)
-                    print("start")
 
 
     def run_layout_page(self, event):
@@ -82,30 +80,60 @@ class Game:
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-        if event.type == pygame.MOUSEBUTTONDOWN:  #### delete
-            if event.button == 1:  # Left click
-                mouse_pos = event.pos
-                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
-                    print("Clicked inside the rectangle")
-
-        if event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONDOWN:  
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION):  # adventure
                     self.ui.set_current_page(UI.IN_GAME_PAGE)
+                    self.ui.set_prev_page(UI.LAYOUT_PAGE)
                     self.audioManager.stop_music()
                     print("adventure")
 
                 elif Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_OPTIONS_BAR_RECTANGLE_POSITION):  # options
                     self.ui.set_current_page(UI.MENU_BAR_PAGE)
+                    self.ui.set_prev_page(UI.LAYOUT_PAGE)
                     print("options")
 
                 elif Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_QUIT_BAR_RECTANGLE_POSITION):  # quit
                     self.running = False  ### pygame.quit()
                     print("quit")
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:  # Left click
+                mouse_pos = event.pos
     
+
     def run_menu_page(self, event):
-        pass
+        self.ui.draw_menu_bar_page()
+        if event.type == pygame.MOUSEMOTION:
+            mouse_pos = event.pos
+            if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION, 
+                                              UI.MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION, 
+                                              UI.MENU_PAGE_MUTE_BAR_RECTABGLE_POSITION):
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                mouse_pos = event.pos
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION):  # continue
+                    self.ui.set_current_page(self.ui.prev_page)
+                    print("continue")
+
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION):  # speed
+                    ############ change scale
+                    print("speed")
+
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_MUTE_BAR_RECTABGLE_POSITION):  # mute-play sound
+                    self.audioManager.play_pause_sound()
+                    print("mute/play sound")
+
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:  # Left click
+                mouse_pos = event.pos
+                
 
 
     def run_in_game(self, event):
