@@ -102,7 +102,7 @@ class PeaShooter(AttackerPlant):
 
     def __init__(self, PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
         super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)
-        self.image = None
+        
 
 
     def show_plant(self):
@@ -123,9 +123,15 @@ class PeaShooter(AttackerPlant):
 class SnowPeaShooter(AttackerPlant):  
 
     IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
+    image = pygame.image.load(IMAGE_PATH)
 
     def __init__(self, SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
         super().__init__(SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)  
+        
+
+
+    def show_plant(self):
+        pass
 
     def shoot(self):  
         # Implement shooting logic here  
@@ -141,9 +147,14 @@ class SnowPeaShooter(AttackerPlant):
 class Sunflower(ProviderPlant):  
 
     PATH = os.path.join("Image files", "sun flower.png")
+    image = pygame.image.load(PATH)
 
     def __init__(self, SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time):  
         super().__init__(SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time)  
+        
+
+    def show_plant(self):
+        pass
 
     def produce(self):  
         # Implement produce logic here  
@@ -153,12 +164,14 @@ class Sunflower(ProviderPlant):
 class Sibzamini(DefenderPlant):  
 
     IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
+    image = pygame.image.load(IMAGE_PATH)
 
     def __init__(self, SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time):  
         super().__init__(SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time)
-
+        
     
-
+    def show_plant(self):
+        pass
  
 
     
