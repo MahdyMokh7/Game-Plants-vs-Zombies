@@ -123,7 +123,7 @@ class Bot:
             for plant in plant_row:
                 if isinstance(plant, AttackerPlant):
                     if plant.is_time_to_shoot():
-                        new_bullet = plant.make_bullet()   # returns a bullet object\ # arguments remained
+                        new_bullet = plant.make_bullet()   # returns a bullet object
                         self.maap.add_bullet(new_bullet, row_num)
 
                 elif isinstance(plant, ProviderPlant):
@@ -137,9 +137,14 @@ class Bot:
             for zombie in self.maap.all_zombies_2d[row_num]:
                 for plant in self.maap.all_plants_2d[row_num]:
                     if zombie.did_colide(plant):   ######################
+                        zombie.stop_movement()   #####
                         zombie.hit(plant)
+                        
 
-    
+
+
+    def collision_bullet_with_zombie(self):
+        pass########################
 
 
     def run(self):

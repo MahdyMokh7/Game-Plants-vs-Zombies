@@ -86,6 +86,7 @@ class Map:
         self.all_plants_2d[row_num].append(plant)
 
     def remove_plant(self, plant, row_num):  
-        
         self.all_plants_2d[row_num].remove(plant)
+        for tile in self.tiles[row_num]:
+            tile.is_position_in_this_tile(plant.get_x_pos(), plant.get_y_pos())
 

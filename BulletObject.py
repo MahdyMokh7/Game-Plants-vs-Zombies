@@ -2,6 +2,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import override
 from Consts import SCALE
+import pygame
 
 
 class Bullet(ABC):
@@ -43,7 +44,7 @@ class Pea(Bullet):
     
     IMAGE_PATH = os.path.join("Image files", "pea.png")
     SPEED = 7
-    image = pygame.image.load(PEA_IMAGE_PATH)
+    image = pygame.image.load(IMAGE_PATH)
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num):
         super().__init__(speed, time, maap, x_pos, y_pos, row_num)
@@ -61,7 +62,7 @@ class SnowPea(Bullet):
 
     IMAGE_PATH = os.path.join("Image files", "snow pea.png")
     SPEED = 5
-    image = pygame.image.load(SNOW_PEA_IMAGE_PATH)
+    image = pygame.image.load(IMAGE_PATH)
 
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num):

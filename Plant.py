@@ -11,20 +11,22 @@ from OtherItem import Sun
 
 class Plant(ABC): 
 
-    def __init__(self, health, cool_down, price, x_pos, y_pos, maap: Map, time: Time):  
+    def __init__(self, health, cool_down, price, x_pos, y_pos, maap: Map, time: Time, row_num, col_num):  
         self.health = health  
         self.cool_down = cool_down  
         self.price = price  
         self.x_pos = x_pos  
         self.y_pos = y_pos  
+        self.row_num = row_num
+        self.col_num = col_num
         self.time = time  
         self.maap = maap
-        rectt = calc_rect()
-        self.rect = rectt  ##### comlete the rect with image rect
-
-    def calc_rect(self):
-        rectt = self.x_pos + (WIDTH // 2)  #35 pixel
-        return rectt
+    
+    def get_row_num(self):
+        return self.row_num
+    
+    def get_col_num(self):
+        return self.col_num
     
     @abstractmethod
     def show_plant(self):
@@ -43,9 +45,9 @@ class Plant(ABC):
     def get_y_pos(self):
         return self.y_pos
     
-
-    def get_rect(self):   #############
-        return self.rect
+    @abstractmethod
+    def get_rect(self):  
+        pass
 
 
 class AttackerPlant(Plant):  
@@ -72,6 +74,10 @@ class AttackerPlant(Plant):
     def got_hit(self):  
         pass  
 
+    @abstractmethod
+    def get_rect(self):  
+        pass
+
 class ProviderPlant(Plant):  
     def __init__(self, health, cool_down, price, hit_rate, x_pos, y_pos, map_instance, time_instance):  
         super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
@@ -89,6 +95,10 @@ class ProviderPlant(Plant):
     def update_last_production_time(self):  
         self.last_production_time = self.time.get_current_time()
 
+    @abstractmethod
+    def get_rect(self):  
+        pass
+
 
 class DefenderPlant(Plant):  
     def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
@@ -98,6 +108,10 @@ class DefenderPlant(Plant):
     def show_plant(self):
         pass
 
+    @abstractmethod
+    def get_rect(self):  
+        pass
+
 
 class OtherPlant(Plant):  
     def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
@@ -105,6 +119,10 @@ class OtherPlant(Plant):
 
     @abstractmethod
     def show_plant(self):
+        pass
+
+    @abstractmethod
+    def get_rect(self):  
         pass
 
 
@@ -138,6 +156,9 @@ class PeaShooter(AttackerPlant):
 
     def get_type(self) -> str:
         return PeaShooter.NAME
+    
+    def get_rect(self):  
+        return PeaShooter.image.get_rect()
 
 
 class SnowPeaShooter(AttackerPlant):  
@@ -159,11 +180,15 @@ class SnowPeaShooter(AttackerPlant):
 
     def get_type(self) -> str:
         return SnowPeaShooter.NAME
+    
+    def get_rect(self):  
+        return SnowPeaShooter.image.get_rect()
 
 
 class Sunflower(ProviderPlant):  
 
-    PATH = os.path.join("Image files", "sun flower.png")
+    IMAGE_PATH = os.path.join("Image files", "sun flower.png")
+    image = pygame.image.load(IMAGE_PATH)
     NAME = "SunFlower"
 
     def __init__(self, SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time):  
@@ -176,11 +201,15 @@ class Sunflower(ProviderPlant):
 
     def get_type(self) -> str:
         return Sunflower.NAME
+    
+    def get_rect(self):  
+        return Sunflower.image.get_rect()
 
 
 class Sibzamini(DefenderPlant):  
 
     IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
+    image = pygame.image.load(IMAGE_PATH)
     NAME = "Sibzamini"
 
     def __init__(self, SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time):  
@@ -199,6 +228,9 @@ class Sibzamini(DefenderPlant):
         ################
         # remove from list plant in map
         self.maap.remove_plant(self , self.row_num)
+
+    def get_rect(self):  
+        return Sibzamini.image.get_rect()
     
 
 if __name__ == "__main__":  

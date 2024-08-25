@@ -2,27 +2,23 @@ class Tile:
 
     TILE_SIZE = (94, 110)     #static field 94x110
 
-    def __init__(self, left_x, right_x, up_y, down_y, x_int, y_int):  
+    def __init__(self, left_x, right_x, up_y, down_y, row_num, col_num):  
         self.left_x = left_x      
         self.right_x = right_x    
         self.up_y = up_y         
-        self.down_y = down_y        
-        self.x_of_center = None     
-        self.y_of_center = None     
+        self.down_y = down_y          
         self.row_position = None  
-        self.calc_center_position()
+        self.x_of_center, self.y_of_center = self.calc_center_position()
 
-        self.x_int = x_int
-        self.y_int = y_int
+        self.row_num = row_num
+        self.col_num = col_num
 
         self.plant = None             # plant that place in this tile    
         self.is_empty = True   
 
 
     def calc_center_position(self):  
-        self.x_of_center = (self.right_x + self.left_x) // 2        # its not 2!
-        self.y_of_center = (self.up_y + self.down_y) // 2 
-        self.row_position = self.y_of_center
+        return (self.right_x + self.left_x) // 2, (self.up_y + self.down_y) // 2 
 
     def set_plant(self, plant):  
         self.plant = plant  
@@ -33,3 +29,17 @@ class Tile:
 
     def set_is_empty(self, empty: bool):
         self.is_empty = empty
+
+    def is_position_in_this_tile(self, x_pos, y_pos):
+        return (self.left_x <= x_pos <= self.right_x) and (self.up_y <= y_pos <= self.down_y)
+    
+    def remove_plant(self):
+        self.plant = None
+        self.set_is_empty(True)
+
+    def add_plant(self, plant):
+        self.plant = plant
+        self.set_is_empty(False)
+
+
+

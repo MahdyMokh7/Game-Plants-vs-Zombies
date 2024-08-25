@@ -1,14 +1,15 @@
 import os
 from abc import ABC, abstractmethod  
 from Consts import *
+import pygame
 
 
-class Zombie(ABC):  
+class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self is the class you go in or the object that calls)
 
     REGULAR_ZOMBIE_PATH = os.path.join("Image files/regular zombie.png")
     GIANT_ZOMBIE_PATH = os.path.join("Image files/giant zombie.png")
 
-    def __init__(self, damage, health, hit_rate, speed, map, time):  
+    def __init__(self, damage, health, hit_rate, speed, map, time, x_pos, y_pos, row_num):  
         self.damage = damage  
         self.health = health  
         self.hit_rate = hit_rate  
@@ -48,15 +49,21 @@ class Zombie(ABC):
     def is_alive(self):
         return self.health > 0
     
+    @abstractmethod
     def did_colide(self, plant):
-
-        return plant.get_rect().colliderect(self.get_rect())  ######################x jeloye zambie manzor نرگس: اگر یکسان بودند ایکس ها، ترو میشود
+        pass 
                                   
     def get_rect(self):
         return self.rect   ######################
         
 
 class RegularZombie(Zombie):  
+
+    NAME = "RegularZombie"
+    IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
+    image = pygame.image.load(IMAGE_PATH)
+
+
     def __init__(self, REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time):  
         super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time)  
 
@@ -65,6 +72,12 @@ class RegularZombie(Zombie):
         plant.got_hit(self.damage)   ###########
         pass  
 
+    def get_rect(self):
+        return RegularZombie.image.get_rect()
+
+    def did_colide(self, plant):
+        return plant.get_rect().colliderect(self.get_rect()) 
+
 class GiantZombie(Zombie):  
     def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time):  
         super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time)  
@@ -72,3 +85,9 @@ class GiantZombie(Zombie):
     def hit(self):  
         # Implement the hit logic for GiantZombie  
         pass
+
+    def get_rect(self):
+        return GiantZombie.image.get_rect()
+    
+    def did_colide(self, plant):
+        return plant.get_rect().colliderect(self.get_rect()) 
