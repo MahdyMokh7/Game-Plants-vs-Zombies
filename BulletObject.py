@@ -33,12 +33,17 @@ class Bullet(ABC):
         # Logic to determine the current row
         return row
     
+    @abstractmethod
+    def show_plant(self):
+        pass
+    
 
 ###################################################
 class Pea(Bullet):
     
     IMAGE_PATH = os.path.join("Image files", "pea.png")
     SPEED = 7
+    image = pygame.image.load(PEA_IMAGE_PATH)
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num):
         super().__init__(speed, time, maap, x_pos, y_pos, row_num)
@@ -48,12 +53,16 @@ class Pea(Bullet):
         # Implementation for shooting logic
         raise NotImplementedError("Unimplemented method 'run_shoot'")
 
+    def show_plant(self):
+        pass
 
 #####################################################
 class SnowPea(Bullet):
 
     IMAGE_PATH = os.path.join("Image files", "snow pea.png")
     SPEED = 5
+    image = pygame.image.load(SNOW_PEA_IMAGE_PATH)
+
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num):
         super().__init__(speed, time, maap, x_pos, y_pos, row_num)
@@ -63,6 +72,8 @@ class SnowPea(Bullet):
         # Implementation for shooting logic
         raise NotImplementedError("Unimplemented method 'run_shoot'")
 
+    def show_plant(self):
+        pass
 
 #####################################################
 class WaterMelon(Bullet):

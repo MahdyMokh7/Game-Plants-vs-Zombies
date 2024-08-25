@@ -1,6 +1,8 @@
 import os
 from abc import ABC
+from abc import ABC, abstractmethod  
 from Consts import *
+import pygame
 
 
 class OtherItem(ABC):
@@ -14,6 +16,7 @@ class OtherItem(ABC):
 class Sun(OtherItem):
 
     SUN_PATH = os.path.join("Image files", "sun.png")
+    image = pygame.image.load(SUN_PATH)
 
     def __init__(self, time, maap, sun_speed, x_pos, y_pos):
         super().__init__(time, maap, sun_speed)
