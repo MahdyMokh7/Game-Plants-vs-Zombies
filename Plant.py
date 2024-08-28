@@ -49,6 +49,9 @@ class Plant(ABC):
     def get_rect(self):  
         pass
 
+    def got_hit(self , damage):
+        self.health -= damage
+
 
 class AttackerPlant(Plant):  
     def __init__(self, health, cool_down, price, damage, hit_rate, speed, x_pos, y_pos, map_instance, time_instance):  
@@ -69,11 +72,8 @@ class AttackerPlant(Plant):
         
     def make_bullet(self):  
         self.last_shot_time = self.time.get_current_time()
-
-    @abstractmethod  
-    def got_hit(self):  
-        pass  
-
+        
+   
     @abstractmethod
     def get_rect(self):  
         pass
@@ -144,21 +144,30 @@ class PeaShooter(AttackerPlant):
     @override
     def make_bullet(self) -> Bullet:  
         super().make_bullet()
-        new_bullet = Pea(Pea.SPEED, self.time, self.maap, self.x_pos, self.y_pos, self.row_num)
+        new_bullet = Pea(Pea.SPEED, self.time, self.maap, self.x_pos, self.y_pos, self.row_num , self.damage)
         return new_bullet
     
     def get_type(self):  
         print("m") 
 
-    
-    def got_hit(self):  
-        print("dd") 
 
     def get_type(self) -> str:
         return PeaShooter.NAME
     
     def get_rect(self):  
         return PeaShooter.image.get_rect()
+    
+    def got_hit(self, damage):
+        super().got_hit(damage)
+        ##############  
+        if not self.is_alive(self):
+            self.plant_died_handle()##############
+    
+    def plant_died_handle(self):
+        ################
+        # remove from list plant in map
+        
+        self.maap.remove_plant(self , self.row_num)
 
 
 class SnowPeaShooter(AttackerPlant):  
@@ -172,19 +181,29 @@ class SnowPeaShooter(AttackerPlant):
 
     def make_bullet(self, x_pos, y_pos, row_num):  
         super().make_bullet()
-        new_bullet = SnowPea(SnowPea.SPEED, self.time, self.maap, x_pos, y_pos, row_num)
+        new_bullet = SnowPea(SnowPea.SPEED, self.time, self.maap, x_pos, y_pos, row_num , self.damage)
         return new_bullet
     
-    def got_hit(self):  
-        print("dd") 
 
     def get_type(self) -> str:
         return SnowPeaShooter.NAME
     
     def get_rect(self):  
         return SnowPeaShooter.image.get_rect()
+    
+    def got_hit(self, damage):
+        super().got_hit(damage)
+        ##############  
+        if not self.is_alive(self):
+            self.plant_died_handle()##############
+    
+    def plant_died_handle(self):
+        ################
+        # remove from list plant in map
+        
+        self.maap.remove_plant(self , self.row_num)
 
-
+    
 class Sunflower(ProviderPlant):  
 
     IMAGE_PATH = os.path.join("Image files", "sun flower.png")
@@ -205,6 +224,17 @@ class Sunflower(ProviderPlant):
     def get_rect(self):  
         return Sunflower.image.get_rect()
 
+    def got_hit(self, damage):
+        super().got_hit(damage)
+        ##############  
+        if not self.is_alive(self):
+            self.plant_died_handle()##############
+    
+    def plant_died_handle(self):
+        ################
+        # remove from list plant in map
+        
+        self.maap.remove_plant(self , self.row_num)
 
 class Sibzamini(DefenderPlant):  
 
@@ -219,14 +249,15 @@ class Sibzamini(DefenderPlant):
         return Sibzamini.NAME
     
     def got_hit(self, damage):
-        self.health -= damage
+        super().got_hit(damage)
         ##############  
         if not self.is_alive(self):
             self.plant_died_handle()##############
-
+    
     def plant_died_handle(self):
         ################
         # remove from list plant in map
+        
         self.maap.remove_plant(self , self.row_num)
 
     def get_rect(self):  
