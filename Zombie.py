@@ -80,6 +80,10 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         if self.x_pos <= Map.START_MAP_POS_X:
             return True
         return False
+    
+    @abstractmethod
+    def render(self):
+        pass
 
 class RegularZombie(Zombie):  
 
@@ -102,14 +106,20 @@ class RegularZombie(Zombie):
     def did_colide(self, plant):
         return plant.get_rect().colliderect(self.get_rect()) 
 
-    def got_hit(self , damage):
-        super().got_hit()
-        if not self.is_alive(self):
-            self.zombie_died_handle()##############
+    def got_hit(self, bullet):
+        super().got_hit(bullet.get_damage())
+        if bullet.NAME == SnowPea.NAME:
+            if self.is_using_temp_speed == False:
+                (self.speed) = (self.speed) // SnowPea.SPEED_ACCELERATE
+              
+            self.last_time_hit_by_snow_pea = self.time.get_current_time()
     
     def zombie_died_handle(self):
         ############
         self.maap.remove_zombie(self , self.row_num)
+
+    def render(self):
+        return "render"
 
 
 
@@ -136,10 +146,6 @@ class GiantZombie(Zombie):
               
             self.last_time_hit_by_snow_pea = self.time.get_current_time()
 
-            
-            
-
-
         if not self.is_alive():
             self.zombie_died_handle()##############
     
@@ -152,3 +158,7 @@ class GiantZombie(Zombie):
             if (self.time.get_current_time() - self.last_time_hit_by_snow_pea) >= SnowPea.FREEZE_TIME:
                 self.is_using_temp_speed = False
                 self.speed = self.speed * SnowPea.SPEED_ACCELERATE
+
+    def render(self):
+        return "render"
+    

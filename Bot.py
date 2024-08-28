@@ -9,6 +9,12 @@ from Plant import *
 
 
 class Bot:
+
+    TOTAL_GAME_TIME = 100  # (sc)
+    WON_STATE = "won" 
+    LOST_STATE = "lost"
+    IN_GAME_STATE = "in_game"
+
     def __init__(self, maap: Map, time: Time):
         self.types_of_zombies = {
             RegularZombie.NAME: RegularZombie,
@@ -29,6 +35,8 @@ class Bot:
         self.last_sun_production_time = 0
         self.last_zombie_production_time = 0
         self.last_10sec_update_time = 0
+        self.game_state = Bot.IN_GAME_STATE
+        self.time_spent = self.time.get_current_time()
 
     def upadate_zombie_produciton_freq(self):  # its called when the number of zombies get changed per 10 seconds
         self.zombie_production_freq = 10 / self.number_of_zombies_per_10_second
@@ -153,17 +161,39 @@ class Bot:
                         bullet.hit(zombie)
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
-    def update_all_zombies(self):
+    def update_all_zombies(self):   # returns the game state (1: still running 0: lost)
         for zombie_row in self.map_all_zombies:
             for zombie in zombie_row:
                 zombie.update()
                 if zombie.did_arrive_home():
+                    self.game_state = Bot.LOST_STATE
+
+    def get_game_state(self):
+        if self.time_spent >= Bot.TOTAL_GAME_TIME:
+            self.game_state = Bot.WON_STATE
+
+        return self.game_state
+    
+    def render_all(self):
+        for plant_row in self.maap.all_plants_2d:
+            for plant in plant_row:
+                plant.render()
+
+        for zombie_row in self.maap.all_zombies_2d:
+            for zombie in zombie_row:
+                zombie.render()
+
+        for bullet_row in self.maap.all_bullets_2d:
+            for bullet in bullet_row:
+                bullet.render()
+
+        for sun in self.maap.all_suns_1d:    
+            sun.render()
                     
-                    
 
 
 
-    def run(self):
+    def run(self):  # runs the bot and returns the game state
         """
         if its time for creating zombie or sun then create (check the condition here)
         move all the zombies and suns available
@@ -183,4 +213,8 @@ class Bot:
         self.move_all_zombies()
         self.collisions_zombie_with_plant()
         self.collisions_bullet_with_zombie()
+
+        self.render_all()
+
+        return self.get_game_state()
 

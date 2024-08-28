@@ -134,10 +134,39 @@ class Game:
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
                 
-
-
+    ###########################################333333333333333
     def run_in_game(self, event):
-        return "Function Three executed!"
+        self.ui.draw_in_game_page()
+        self.audioManager.play_music(AudioManager.IN_GAME)
+
+        if event.type == pygame.MOUSEMOTION:
+            mouse_pos = event.pos
+            if Game.is_mouse_within_rectangles():  # #######complete the arguments
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:  # sun collecting - plant picking - menu going
+            if event.button == 1:
+                mouse_pos = event.pos
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION):  # continue
+                    self.ui.set_current_page(self.ui.prev_page)
+                    print("continue")
+
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION):  # speed
+                    ############ change scale
+                    print("speed")
+
+                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_MUTE_BAR_RECTABGLE_POSITION):  # mute-play sound
+                    self.audioManager.play_pause_sound()
+                    print("mute/play sound")
+
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:  # Left click
+                mouse_pos = event.pos
+
+    ###################################################
 
     def run_page(self, event):
         option = self.ui.get_current_page()

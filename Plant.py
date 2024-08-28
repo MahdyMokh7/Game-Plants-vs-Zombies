@@ -49,8 +49,12 @@ class Plant(ABC):
     def get_rect(self):  
         pass
 
-    def got_hit(self , damage):
+    def got_hit(self, damage):
         self.health -= damage
+
+    @abstractmethod
+    def render(self):
+        pass
 
 
 class AttackerPlant(Plant):  
@@ -78,6 +82,10 @@ class AttackerPlant(Plant):
     def get_rect(self):  
         pass
 
+    @abstractmethod
+    def render(self):
+        pass
+
 class ProviderPlant(Plant):  
     def __init__(self, health, cool_down, price, hit_rate, x_pos, y_pos, map_instance, time_instance):  
         super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
@@ -99,6 +107,10 @@ class ProviderPlant(Plant):
     def get_rect(self):  
         pass
 
+    @abstractmethod
+    def render(self):
+        pass
+
 
 class DefenderPlant(Plant):  
     def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
@@ -110,6 +122,10 @@ class DefenderPlant(Plant):
 
     @abstractmethod
     def get_rect(self):  
+        pass
+
+    @abstractmethod
+    def render(self):
         pass
 
 
@@ -125,6 +141,10 @@ class OtherPlant(Plant):
     def get_rect(self):  
         pass
 
+    @abstractmethod
+    def render(self):
+        pass
+
 
 # Subclass for AttackerPlant  
 class PeaShooter(AttackerPlant):  
@@ -136,7 +156,6 @@ class PeaShooter(AttackerPlant):
     def __init__(self, PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
         super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)
         self.image = None
-
 
     def show_plant(self):
         pass
@@ -169,6 +188,9 @@ class PeaShooter(AttackerPlant):
         
         self.maap.remove_plant(self , self.row_num)
 
+    def render(self):
+        return "render"
+
 
 class SnowPeaShooter(AttackerPlant):  
 
@@ -196,6 +218,9 @@ class SnowPeaShooter(AttackerPlant):
         ##############  
         if not self.is_alive(self):
             self.plant_died_handle()##############
+
+    def render(self):
+        return "render"
     
     def plant_died_handle(self):
         ################
@@ -236,6 +261,9 @@ class Sunflower(ProviderPlant):
         
         self.maap.remove_plant(self , self.row_num)
 
+    def render(self):
+        return "render"
+
 class Sibzamini(DefenderPlant):  
 
     IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
@@ -262,6 +290,9 @@ class Sibzamini(DefenderPlant):
 
     def get_rect(self):  
         return Sibzamini.image.get_rect()
+    
+    def render(self):
+        return "render"
     
 
 if __name__ == "__main__":  

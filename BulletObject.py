@@ -45,6 +45,11 @@ class Bullet(ABC):
 
     def get_damage(self):
         return self.damage
+    
+    @abstractmethod
+    def render(self):
+        pass
+
 ###################################################
 class Pea(Bullet):
     
@@ -66,6 +71,9 @@ class Pea(Bullet):
 
     def hit(self , zombie):
         zombie.got_hit(self)
+
+    def render(self):
+        return "render"
 
 #####################################################
 class SnowPea(Bullet):
@@ -91,6 +99,9 @@ class SnowPea(Bullet):
     def hit(self , zombie):
         zombie.got_hit(self)
 
+    def render(self):
+        return "render"
+
 #####################################################
 class WaterMelon(Bullet):
     NAME = "WaterMelon"
@@ -101,3 +112,6 @@ class WaterMelon(Bullet):
     def run_shoot(self):
         # Implementation for shooting logic
         raise NotImplementedError("Unimplemented method 'run_shoot'")
+
+    def render(self):
+        return "render"

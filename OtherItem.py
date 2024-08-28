@@ -12,6 +12,10 @@ class OtherItem(ABC):
         self.time = time  
         self.maap = maap    
 
+    @abstractmethod
+    def render(self):
+        pass
+
 
 class Sun(OtherItem):
 
@@ -25,4 +29,7 @@ class Sun(OtherItem):
 
     def move(self):
         self.y_pos += self.speed
+
+    def render(self):
+        return "render"
 
