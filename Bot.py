@@ -132,19 +132,35 @@ class Bot:
                         self.maap.add_sun(new_sun)
 
 
-    def collision_zombie_with_plant(self):
+    def collisions_zombie_with_plant(self):
         for row_num in range(Map.NUM_OF_ROWS):
             for zombie in self.maap.all_zombies_2d[row_num]:
                 for plant in self.maap.all_plants_2d[row_num]:
                     if zombie.did_colide(plant):   ######################
                         zombie.stop_movement()   #####
                         zombie.hit(plant)
+                        if not plant.is_alive():
+                            zombie.start_movement()
                         
 
 
 
-    def collision_bullet_with_zombie(self):
-        pass########################
+    def collisions_bullet_with_zombie(self):
+        for row_num in range(Map.NUM_OF_ROWS):
+            for bullet in self.maap.all_bullets_2d[row_num]:
+                for zombie in self.maap.all_zombies_2d[row_num]:
+                    if bullet.did_colide(zombie):   ######################
+                        bullet.hit(zombie)
+                        self.maap.remove_bullet(bullet, row_num)   #####
+                        
+    def update_all_zombies(self):
+        for zombie_row in self.map_all_zombies:
+            for zombie in zombie_row:
+                zombie.update()
+                if zombie.did_arrive_home():
+                    
+                    
+
 
 
     def run(self):
@@ -161,9 +177,10 @@ class Bot:
         
 
         self.check_all_plants()
-        self.move_all_zombies()
         self.move_all_suns()
         self.move_all_bullets()
-
-        
+        self.update_all_zombies()
+        self.move_all_zombies()
+        self.collisions_zombie_with_plant()
+        self.collisions_bullet_with_zombie()
 
