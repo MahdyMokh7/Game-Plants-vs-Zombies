@@ -131,7 +131,6 @@ class Bot:
                         new_sun = plant.make_sun()
                         self.maap.add_sun(new_sun)
 
-
     def collision_zombie_with_plant(self):
         for row_num in range(Map.NUM_OF_ROWS):
             for zombie in self.maap.all_zombies_2d[row_num]:
@@ -139,9 +138,6 @@ class Bot:
                     if zombie.did_colide(plant):   ######################
                         zombie.stop_movement()   #####
                         zombie.hit(plant)
-                        
-
-
 
     def collision_bullet_with_zombie(self):
         pass########################
