@@ -2,6 +2,8 @@ import os
 from abc import ABC, abstractmethod  
 from Consts import *
 import pygame
+from BulletObject import *
+from Map import Map
 
 
 class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self is the class you go in or the object that calls)
@@ -19,6 +21,9 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.row_num = row_num
+        self.is_moving = True
+        self.last_time_hit_by_snow_pea = 0
+        self.is_using_temp_speed = False
 
     def is_still_alive(self):  
         return self.health != 0  
@@ -32,7 +37,8 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         pass
     
     def move(self):
-        self.x_pos -= self.speed
+        if self.is_moving:
+            self.x_pos -= self.speed
         # did zombie approached any plant 
         # did zombie went to the house
         # if the zombie is still eating the plant dont move
@@ -57,6 +63,24 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         return self.rect   ######################
         
 
+    def stop_movement(self):
+        self.is_moving = False
+
+    def start_movement(self):
+        self.is_moving = True
+
+    def got_hit(self, damage):
+        self.health-=damage
+
+    @abstractmethod
+    def update(self):
+        pass
+
+    def did_arrive_home(self):
+        if self.x_pos <= Map.START_MAP_POS_X:
+            return True
+        return False
+
 class RegularZombie(Zombie):  
 
     NAME = "RegularZombie"
@@ -70,13 +94,24 @@ class RegularZombie(Zombie):
     def hit(self, plant):  
         ############
         plant.got_hit(self.damage)   ###########
-        pass  
+
 
     def get_rect(self):
         return RegularZombie.image.get_rect()
 
     def did_colide(self, plant):
         return plant.get_rect().colliderect(self.get_rect()) 
+
+    def got_hit(self , damage):
+        super().got_hit()
+        if not self.is_alive(self):
+            self.zombie_died_handle()##############
+    
+    def zombie_died_handle(self):
+        ############
+        self.maap.remove_zombie(self , self.row_num)
+
+
 
 class GiantZombie(Zombie):  
     def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time):  
@@ -91,3 +126,29 @@ class GiantZombie(Zombie):
     
     def did_colide(self, plant):
         return plant.get_rect().colliderect(self.get_rect()) 
+    
+
+    def got_hit(self , bullet):
+        super().got_hit(bullet.get_damage())
+        if bullet.NAME == SnowPea.NAME:
+            if self.is_using_temp_speed == False:
+                (self.speed) = (self.speed)//SnowPea.SPEED_ACCELERATE
+              
+            self.last_time_hit_by_snow_pea = self.time.get_current_time()
+
+            
+            
+
+
+        if not self.is_alive():
+            self.zombie_died_handle()##############
+    
+    def zombie_died_handle(self):
+        ############
+        self.maap.remove_zombie(self , self.row_num)
+
+    def update(self):
+        if self.is_using_temp_speed == True:
+            if (self.time.get_current_time() - self.last_time_hit_by_snow_pea) >= SnowPea.FREEZE_TIME:
+                self.is_using_temp_speed = False
+                self.speed = self.speed * SnowPea.SPEED_ACCELERATE

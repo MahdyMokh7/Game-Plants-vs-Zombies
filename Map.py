@@ -88,5 +88,15 @@ class Map:
     def remove_plant(self, plant, row_num):  
         self.all_plants_2d[row_num].remove(plant)
         for tile in self.tiles[row_num]:
-            tile.is_position_in_this_tile(plant.get_x_pos(), plant.get_y_pos())
+            if tile.is_position_in_this_tile(plant.get_x_pos(), plant.get_y_pos()):
+                tile.remove_plant()
+                break
+
+    def remove_bullet(self, bullet, row_num):
+        self.all_bullets_2d[row_num].remove(bullet)
+
+    def remove_zombie(self ,zombie, row_num):
+        self.all_zombies_2d[row_num].remove(zombie)
+
+
 
