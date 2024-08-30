@@ -327,7 +327,7 @@ class Sunflower(ProviderPlant):
 
 class Sibzamini(DefenderPlant):  
 
-    IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
+    IMAGE_PATH = os.path.join("Image files", "sib zamini.png")
     image = pygame.image.load(IMAGE_PATH)
     IMAGE_SIZE = (70, 90)
     image = pygame.transform.scale(image, IMAGE_SIZE)

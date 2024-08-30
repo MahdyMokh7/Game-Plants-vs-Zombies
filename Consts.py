@@ -1,9 +1,9 @@
-# import json
+import json
 
-# # Open the JSON file
-# with open("consts.json", "r") as file:
-#     # Load the JSON data
-#     salam = json.load(file)
+# Open the JSON file
+with open("consts.json", "r") as file:
+    # Load the JSON data
+    salam = json.load(file)
 
 # Access a value from the JSON data
 # print(salam["mahdy"])

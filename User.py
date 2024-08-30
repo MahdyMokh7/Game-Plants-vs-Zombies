@@ -4,11 +4,12 @@ from Plant import *
 
 class User:
 
-    def __init__(self, maap, time):
+    def __init__(self, maap, time, ui):
         self.is_brain_eaten = False
         self.nums_of_sun = 0
         self.time = time
         self.maap = maap
+        self.ui = ui
 
     def place_the_plant(self, plant_type, pos_x, pos_y):
         new_plant = None
