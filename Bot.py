@@ -15,13 +15,12 @@ class Bot:
     LOST_STATE = "lost"
     IN_GAME_STATE = "in_game"
 
-    def __init__(self, maap: Map, time: Time , ui):
+    def __init__(self, maap: Map, time: Time, ui):
         self.types_of_zombies = {
             RegularZombie.NAME: RegularZombie,
             GiantZombie.NAME: GiantZombie
         }  # Dictionary to hold types of zombies
 
-        self.user = User()
 
         self.weighted_zombie_list = self.__creat_weighted_zombie_list()
         self.total_attack_time = 0
@@ -50,16 +49,14 @@ class Bot:
 
 
     def __creat_weighted_zombie_list(self):
-        return [RegularZombie.NAME * 3 +  GiantZombie.NAME]
+        return [RegularZombie.NAME] * 3 +  [GiantZombie.NAME]
 
     def calc_amount_of_increasment_number_of_zombies_per_10_second(self):
         # Logic to calculate the increase in number of zombies
         pass
 
     def is_time_to_produce_zombie(self):
-        ans = True
-        # Logic to determine if it's time to create a zombie
-        return ans
+        return self.time.get_current_time() - self.last_zombie_production_time >= self.zombie_production_freq
 
     def create_zombie(self):
         try: 
@@ -67,6 +64,7 @@ class Bot:
             new_zombie = self.create_random_zombie()(
                 self.maap, self.time, Zombie.X_START_POS, DICT_ROW_Y_POS[row_num], row_num, self.ui)
             self.maap.add_zombie(zombie=new_zombie, row_num=row_num)
+            self.last_zombie_production_time = self.time.get_current_time()
         except Exception as e:
             print(e)
             print("ERROR:  Could not create random zombie")
@@ -75,6 +73,7 @@ class Bot:
         
     def create_random_zombie(self):
         zombie_name = random.choice(self.weighted_zombie_list)
+        print("debog:  ", zombie_name)#####33###3##333  
         if zombie_name == RegularZombie.NAME:
             return RegularZombie
         elif zombie_name == GiantZombie.NAME:
@@ -91,6 +90,7 @@ class Bot:
         pass
 
     def is_time_to_produce_sun(self):
+        print(self.time.get_current_time() ,  self.last_sun_production_time ,  self.sun_production_freq)
         return self.time.get_current_time() - self.last_sun_production_time >= self.sun_production_freq
     
 
@@ -108,7 +108,7 @@ class Bot:
         pass
 
     def move_all_zombies(self):
-        for zombie_row in self.map_all_zombies:
+        for zombie_row in self.maap.all_zombies_2d:
             for zombie in zombie_row:
                 zombie.move()
 
@@ -163,7 +163,7 @@ class Bot:
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
     def update_all_zombies(self):   # returns the game state (1: still running 0: lost)
-        for zombie_row in self.map_all_zombies:
+        for zombie_row in self.maap.all_zombies_2d:
             for zombie in zombie_row:
                 zombie.update()
                 if zombie.did_arrive_home():
@@ -202,8 +202,10 @@ class Bot:
         
         """
         if self.is_time_to_produce_sun():
+            print("sun added")
             self.create_sun()
         if self.is_time_to_produce_zombie():
+            print("zombie added")
             self.create_zombie()
         
 
