@@ -1,8 +1,11 @@
 import pygame
+import sys
 from Time import Time
 from UI import UI
 from Map import Map
 from AudioManager import AudioManager
+from Bot import Bot
+from Plant import *
 
 
 class Game:
@@ -14,6 +17,10 @@ class Game:
         self.maap = Map()
         self.ui = UI(time=self.time, maap=self.maap)   
         self.audioManager = AudioManager()
+        self.bot = Bot(time=self.time, maap=self.maap)
+
+        self.is_picture_on_hold = False  # picture is on hold but hasnt yet be planted
+        self.selected_plant_type = None  # the picture (plant type) on hold 
 
     def handle_events(self):
         """Handle game events."""
@@ -71,6 +78,7 @@ class Game:
     def run_layout_page(self, event):
         self.ui.draw_layout_page()
         self.audioManager.play_music(AudioManager.LAYOUT_PAGE_MUSIC)
+
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
             if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION, 
@@ -101,7 +109,7 @@ class Game:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
-    
+
 
     def run_menu_page(self, event):
         self.ui.draw_menu_bar_page()
@@ -139,33 +147,105 @@ class Game:
         self.ui.draw_in_game_page()
         self.audioManager.play_music(AudioManager.IN_GAME)
 
+
         if event.type == pygame.MOUSEMOTION:
-            mouse_pos = event.pos
-            if Game.is_mouse_within_rectangles():  # #######complete the arguments
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-            else:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-
-        if event.type == pygame.MOUSEBUTTONDOWN:  # sun collecting - plant picking - menu going
-            if event.button == 1:
+            if not self.is_picture_on_hold:
                 mouse_pos = event.pos
-                if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION):  # continue
-                    self.ui.set_current_page(self.ui.prev_page)
-                    print("continue")
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_MENU_BAR, 
+                                                   UI.IN_GAME_PAGE_PEASHOOTER_BAR, 
+                                                   UI.IN_GAME_PAGE_SIBZAMINI_BAR, 
+                                                   UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR,
+                                                   UI.IN_GAME_PAGE_SUNFLOWER_BAR):
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            else:
+                intended_image = Plant.get_image_by_type(self.selected_plant_type)
+                self.ui.draw_portable_image(intended_image, mouse_pos.x, mouse_pos.y)
 
-                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION):  # speed
-                    ############ change scale
-                    print("speed")
+        if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
+            if not self.is_picture_on_hold:
+                if event.button == 1:  # Left click
+                    mouse_pos = event.pos
+                    if Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_MENU_BAR):  # menu-bar
+                        self.ui.set_current_page(UI.MENU_BAR_PAGE)
+                        self.ui.set_prev_page(UI.IN_GAME_PAGE)
+                        # self.audioManager.stop_music()
+                        print("menu-bar")
 
-                elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_MUTE_BAR_RECTABGLE_POSITION):  # mute-play sound
-                    self.audioManager.play_pause_sound()
-                    print("mute/play sound")
+                    elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_PEASHOOTER_BAR):  # pea-shooter-select
+                        if PeaShooter.is_available():   # get gray when not available
+                            self.is_picture_on_hold = True
+                            self.selected_plant_type = PeaShooter.NAME
+                            PeaShooter.last_time_selected = Time.get_global_time()
+                            print("pea-shooter-select")
+
+                    elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR):  # snowpeashooter-select
+                        if SnowPeaShooter.is_available():
+                            self.is_picture_on_hold = True
+                            self.selected_plant_type = SnowPeaShooter.NAME
+                            SnowPeaShooter.last_time_selected = Time.get_global_time()
+                            print("snowpeashooter-select")
+                        
+                    elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sunflower-select
+                        if Sunflower.is_available():
+                            self.is_picture_on_hold = True
+                            self.selected_plant_type = Sunflower.NAME
+                            Sunflower.last_time_selected = Time.get_global_time()
+                            print("sunflower-select")
+
+                    elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sibzamini-select
+                        if Sibzamini.is_available():
+                            self.is_picture_on_hold = True
+                            self.selected_plant_type = Sibzamini.NAME
+                            Sibzamini.last_time_selected = Time.get_global_time()
+                            print("sibzamini-select")
+
+            else:
+                if event.button == 1:  # Left click
+                    mouse_pos = event.pos
+
+                    if PeaShooter.NAME == self.selected_plant_type:   # get gray when not available  # pea-shooter-select
+                        PeaShooter.last_time_selected = Time.get_global_time()
+                        print("peashooter-planted")
+
+                    elif SnowPeaShooter.NAME == self.selected_plant_type:  # snowpeashooter-select
+                        SnowPeaShooter.last_time_selected = Time.get_global_time()
+                        print("snowpeashooter-planted")
+                    
+                    elif Sunflower.NAME == self.selected_plant_type:  # sunflower-select
+                        Sunflower.last_time_selected = Time.get_global_time()
+                        print("sunflower-planted")
+
+                    elif Sibzamini.NAME == self.selected_plant_type:  # sibzamini-select
+                        Sibzamini.last_time_selected = Time.get_global_time()
+                        print("sibzamini-planted")
+
+                    else:
+                        print("ERROR: not a plant type got selected in the plant type select section!")
+                        sys.exit()
+
+                    self.user.place_the_plant(self.selected_plant_type, mouse_pos.x, mouse_pos.y)
+                    self.is_picture_on_hold = True
+                    self.selected_plant_type = None
 
 
-        if event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONUP:   
             if event.button == 1:  # Left click
                 mouse_pos = event.pos
+    
 
+        status = self.bot.run()
+        if status == Bot.WON_STATE:
+            print("Victory")  # needs page dev. and work to do
+            pygame.quit()
+            sys.exit()
+        elif status == Bot.LOST_STATE:
+            print("Lost")  # needs page dev. and work to do  
+            pygame.quit()
+            sys.exit()
+        else:
+            pass
     ###################################################
 
     def run_page(self, event):

@@ -18,7 +18,7 @@ SIB_ZAMINI_DAMAGE = 0
 
 PEA_SHOOTER_HEALTH = 40
 SNOW_PEA_SHOOTER_HEALTH = 30
-SUN_FLOWER_HEALTHE = 30
+SUN_FLOWER_HEALTH = 30
 SIB_ZAMINI_HEALTH = 200
 
 PEA_SHOOTER_COOL_DOWN = 5
@@ -73,6 +73,15 @@ DICT_ROW_Y_POS = {
     2: 375,
     3: 485,
     4: 595
+}
+
+# dict row -> y_pos
+DICT_Y_POS_ROW = {
+    155: 0,
+    265: 1,
+    375: 2,
+    485: 3,
+    595: 4
 }
 
 # game time (sc)

@@ -83,7 +83,9 @@ def main():
         screen.blit(blurred_background_image, (0, 0))
 
         # Draw the foreground image on top of the blurred background
-        screen.blit(foreground_image, (x_position, y_position))
+        # screen.blit(foreground_image, (x_position, y_position))
+
+        screen.blit(background_image, (0, 0))
 
         # Update the display
         pygame.display.flip()
@@ -106,6 +108,15 @@ def class_test():
     listt = [a, b]
     c = listt[1]()
 
+def test2():
+    class a:
+        d = 10
+    
+    print(a.d)
+    a.d = 20
+    print(a.d)
+
 if __name__ == "__main__":
-    main()
+    # main()
     # class_test()
+    test2()

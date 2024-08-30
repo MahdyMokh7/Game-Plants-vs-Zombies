@@ -49,11 +49,59 @@ class UI:
         "y_up_pos": 301,
         "y_down_pos": 352
     }
+    IN_GAME_PAGE_MENU_BAR = {
+        "x_left_pos": 1025,
+        "x_right_pos": 1200,
+        "y_up_pos": 0,
+        "y_down_pos": 67
+    }
+    IN_GAME_PAGE_SUN_BAR = {
+        "x_left_pos": 170,
+        "x_right_pos": 306,
+        "y_up_pos": 12,
+        "y_down_pos": 56
+    }
+    IN_GAME_PAGE_MENU_BAR = {
+        "x_left_pos": 521,
+        "x_right_pos": 671,
+        "y_up_pos": 301,
+        "y_down_pos": 352
+    }
+    IN_GAME_PAGE_SUNFLOWER_BAR = {
+        "x_left_pos": 2,
+        "x_right_pos": 87,
+        "y_up_pos": 4,
+        "y_down_pos": 121
+    }
+    IN_GAME_PAGE_SUNFLOWER_BAR = {
+        "x_left_pos": 2,
+        "x_right_pos": 87,
+        "y_up_pos": 4,
+        "y_down_pos": 121
+    } 
+    IN_GAME_PAGE_PEASHOOTER_BAR = {
+        "x_left_pos": 2,
+        "x_right_pos": 87,
+        "y_up_pos": 126,
+        "y_down_pos": 248
+    }
+    IN_GAME_PAGE_SNOWPEASHOOTER_BAR = {
+        "x_left_pos": 2,
+        "x_right_pos": 87,
+        "y_up_pos": 253,
+        "y_down_pos": 372
+    }
+    IN_GAME_PAGE_SIBZAMINI_BAR = {
+        "x_left_pos": 2,
+        "x_right_pos": 87,
+        "y_up_pos": 376,
+        "y_down_pos": 496
+    }
 
     # Image paths
     START_PAGE_IMAGE_PATH = os.path.join("Image files", "start_img.png")
     LAYOUT_PAGE_IMAGE_PATH = os.path.join("Image files", "layout_page_image1.png")
-    IN_GAME_PAGE_IMAGE_PATH = os.path.join("Image files", "background_image.png")
+    IN_GAME_PAGE_IMAGE_PATH = os.path.join("Image files", "background_completed_img.png")
     MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image5.png")
 
     # Page identifiers
@@ -149,6 +197,9 @@ class UI:
 
     def draw_given_image(self, image, x_pos, y_pos):  # (x, y) are the center posiotn of image
         self.screen.blit(image, (x_pos - image.get_width() // 2, y_pos - image.get_height() // 2))
+
+    def draw_portable_image(self, image, x_pos_mouse, y_pos_mouse):
+        self.screen.blit(image, (x_pos_mouse - int((3 / 4) * image.get_rect().width), y_pos_mouse - int((3 / 4) * image.get_rect().height)))
 
     def get_current_page(self):
         return self.current_page

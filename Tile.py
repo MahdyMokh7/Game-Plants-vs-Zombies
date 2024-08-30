@@ -41,5 +41,15 @@ class Tile:
         self.plant = plant
         self.set_is_empty(False)
 
-
+    def get_row_num(self):
+        return self.row_num
+    
+    def get_col_num(self):
+        return self.col_num
+    
+    def get_x_center(self):
+        return self.x_of_center
+    
+    def get_y_center(self):
+        return self.y_of_center
 

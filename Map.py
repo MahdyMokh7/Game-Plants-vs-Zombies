@@ -41,7 +41,7 @@ class Map:
             print(e)
             print(i, j)
 
-    def calc_tile_which_mouse_is_left_in_its_range(self, x_mos_pos , y_mos_pos) -> Tile:
+    def find_tile_by_pos(self, x_mos_pos , y_mos_pos) -> Tile:
         i_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]
         j_int_temp = (y_mos_pos - Map.START_MAP_POS_Y) // Tile.TILE_SIZE[1]
 
@@ -52,17 +52,22 @@ class Map:
         else :
             return None
         
-    def place_the_plant(self, plant, x_pos, y_pos):  ################## not done
-        tile = self.calc_tile_which_mouse_is_left_in_its_range(x_pos, y_pos)
-        if tile is None:
-            return 
-            pass
+    def add_plant(self, new_plant, tile):
+        tile.set_plant(new_plant)
+        self.all_plants_2d[tile.get_row_num()].append(new_plant)
+
         
-        if not tile.is_tile_empty():
-            return 
-            pass
+    # def place_the_plant(self, plant, x_pos, y_pos):  ################## not done
+    #     tile = self.calc_tile_which_mouse_is_left_in_its_range(x_pos, y_pos)
+    #     if tile is None:
+    #         return 
+    #         pass
         
-        tile.set_plant(plant=plant)
+    #     if not tile.is_tile_empty():
+    #         return 
+    #         pass
+        
+    #     tile.set_plant(plant=plant)
 
     def did_bullet_hit_in_this_pos(self, x_pos, row_num):
         for index, zombie in enumerate(self.all_zombies_2d[row_num]):

@@ -21,6 +21,23 @@ class Plant(ABC):
         self.col_num = col_num
         self.time = time  
         self.maap = maap
+
+
+    @staticmethod
+    def get_image_by_type(plant_type):
+        if PeaShooter.NAME == plant_type:
+            return PeaShooter.image
+        
+        elif SnowPeaShooter.NAME == plant_type:
+            return SnowPeaShooter.image
+        
+        elif Sibzamini.NAME == plant_type:
+            return Sibzamini.image
+
+        elif Sunflower.NAME == plant_type:
+            return Sunflower.image
+        return None
+
     
     def get_row_num(self):
         return self.row_num
@@ -58,8 +75,8 @@ class Plant(ABC):
 
 
 class AttackerPlant(Plant):  
-    def __init__(self, health, cool_down, price, damage, hit_rate, speed, x_pos, y_pos, map_instance, time_instance):  
-        super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
+    def __init__(self, health, cool_down, price, damage, hit_rate, speed, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num)  
         self.damage = damage  
         self.hit_rate = hit_rate  
         self.speed = speed  
@@ -87,8 +104,8 @@ class AttackerPlant(Plant):
         pass
 
 class ProviderPlant(Plant):  
-    def __init__(self, health, cool_down, price, hit_rate, x_pos, y_pos, map_instance, time_instance):  
-        super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
+    def __init__(self, health, cool_down, price, hit_rate, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num)  
         self.hit_rate = hit_rate  
         self.provide_freq = hit_rate  ####### hit rate is estimated in seconds but something stings here
         self.last_production_time = 0  # Initialize if needed  
@@ -113,8 +130,8 @@ class ProviderPlant(Plant):
 
 
 class DefenderPlant(Plant):  
-    def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
-        super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
+    def __init__(self, health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num)  
 
     @abstractmethod
     def show_plant(self):
@@ -130,8 +147,8 @@ class DefenderPlant(Plant):
 
 
 class OtherPlant(Plant):  
-    def __init__(self, health, cool_down, price, x_pos, y_pos, map_instance, time_instance):  
-        super().__init__(health, cool_down, price, x_pos, y_pos, map_instance, time_instance)  
+    def __init__(self, health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num)  
 
     @abstractmethod
     def show_plant(self):
@@ -152,9 +169,16 @@ class PeaShooter(AttackerPlant):
     IMAGE_PATH = os.path.join("Image files", "pea shooter.png")
     image = pygame.image.load(IMAGE_PATH)
     NAME = "PeaShooter"
+    last_time_selected = 0
 
-    def __init__(self, PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
-        super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)
+    @staticmethod
+    def is_available():
+        return Time.get_global_time() - PeaShooter.last_time_selected >= PEA_SHOOTER_COOL_DOWN
+
+    def __init__(self, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(PEA_SHOOTER_HEALTH, PEA_SHOOTER_COOL_DOWN, PEA_SHOOTER_PRICE, 
+                         PEA_SHOOTER_DAMAGE, PEA_SHOOTER_HIT_RATE, PEA_SHOOTER_SPEED, 
+                         x_pos, y_pos, maap, time, row_num, col_num)
         self.image = None
 
     def show_plant(self):
@@ -197,9 +221,16 @@ class SnowPeaShooter(AttackerPlant):
     IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
     image = pygame.image.load(IMAGE_PATH)
     NAME = "SnowPeaShooter"
+    last_time_selected = 0
 
-    def __init__(self, SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time):  
-        super().__init__(SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE, SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED, x_pos, y_pos, map, time)  
+    @staticmethod
+    def is_available():
+        return Time.get_global_time() - PeaShooter.last_time_selected >= SNOW_PEA_SHOOTER_COOL_DOWN
+
+    def __init__(self, x_pos, y_pos, map, time, row_num, col_num):  
+        super().__init__(SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE,
+                          SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED,
+                            x_pos, y_pos, map, time, row_num, col_num)  
 
     def make_bullet(self, x_pos, y_pos, row_num):  
         super().make_bullet()
@@ -234,9 +265,15 @@ class Sunflower(ProviderPlant):
     IMAGE_PATH = os.path.join("Image files", "sun flower.png")
     image = pygame.image.load(IMAGE_PATH)
     NAME = "SunFlower"
+    last_time_selected = 0
 
-    def __init__(self, SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time):  
-        super().__init__(SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, SUN_FLOWER_HIT_RATE, x_pos, y_pos, map, time)  
+    @staticmethod
+    def is_available():
+        return Time.get_global_time() - PeaShooter.last_time_selected >= SUN_FLOWER_COOL_DOWN
+
+    def __init__(self, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, 
+                         SUN_FLOWER_HIT_RATE, x_pos, y_pos, maap, time, row_num, col_num)  
 
     def make_sun(self):  
         super().update_last_production_time()
@@ -269,9 +306,15 @@ class Sibzamini(DefenderPlant):
     IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
     image = pygame.image.load(IMAGE_PATH)
     NAME = "Sibzamini"
+    last_time_selected = 0
 
-    def __init__(self, SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time):  
-        super().__init__(SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, x_pos, y_pos, map, time)
+    @staticmethod
+    def is_available():
+        return Time.get_global_time() - PeaShooter.last_time_selected >= SIB_ZAMINI_COOL_DOWN
+
+    def __init__(self, x_pos, y_pos, maap, time, row_num, col_num):  
+        super().__init__(SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, 
+                         x_pos, y_pos, maap, time, row_num, col_num)
 
     def get_type(self) -> str:
         return Sibzamini.NAME

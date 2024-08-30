@@ -2,11 +2,16 @@ import time
 import datetime
 import math
 
+
 class Time:
     def __init__(self):
         self._start_time = None  # To store the start time
         self._elapsed_time = 0  # To store the accumulated elapsed time
         self._running = False   # Flag to check if the timer is running
+
+    @staticmethod
+    def get_global_time():
+        return time.time()
 
     def start_time_counting(self):
         """Start counting time."""
