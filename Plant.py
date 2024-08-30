@@ -168,6 +168,8 @@ class PeaShooter(AttackerPlant):
 
     IMAGE_PATH = os.path.join("Image files", "pea shooter.png")
     image = pygame.image.load(IMAGE_PATH)
+    IMAGE_SIZE = (70, 90)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "PeaShooter"
     last_time_selected = 0
     
@@ -217,13 +219,17 @@ class PeaShooter(AttackerPlant):
         self.maap.remove_plant(self , self.row_num)
 
     def render(self):
-        return "render"
+        x = self.x_pos - int(PeaShooter.image.get_rect().width * (1/2)) 
+        y = self.y_pos - int(PeaShooter.image.get_rect().height * (3/5))
+        self.ui.draw_object(PeaShooter.image, x, y)
 
 
 class SnowPeaShooter(AttackerPlant):  
 
     IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
     image = pygame.image.load(IMAGE_PATH)
+    IMAGE_SIZE = (70, 90)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SnowPeaShooter"
     last_time_selected = 0
 
@@ -259,7 +265,9 @@ class SnowPeaShooter(AttackerPlant):
             self.plant_died_handle()##############
 
     def render(self):
-        return "render"
+        x = self.x_pos - int(SnowPeaShooter.image.get_rect().width * (1/2)) 
+        y = self.y_pos - int(SnowPeaShooter.image.get_rect().height * (3/5))
+        self.ui.draw_object(SnowPeaShooter.image, x, y)
     
     def plant_died_handle(self):
         ################
@@ -272,6 +280,8 @@ class Sunflower(ProviderPlant):
 
     IMAGE_PATH = os.path.join("Image files", "sun flower.png")
     image = pygame.image.load(IMAGE_PATH)
+    IMAGE_SIZE = (70, 90)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SunFlower"
     last_time_selected = 0
 
@@ -311,12 +321,16 @@ class Sunflower(ProviderPlant):
         self.maap.remove_plant(self , self.row_num)
 
     def render(self):
-        return "render"
+        x = self.x_pos - int(Sunflower.image.get_rect().width * (1/2)) 
+        y = self.y_pos - int(Sunflower.image.get_rect().height * (3/5))
+        self.ui.draw_object(Sunflower.image, x, y)
 
 class Sibzamini(DefenderPlant):  
 
     IMAGE_PATH = os.path.join("Image file", "sib zamini.png")
     image = pygame.image.load(IMAGE_PATH)
+    IMAGE_SIZE = (70, 90)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "Sibzamini"
     last_time_selected = 0
 
@@ -351,7 +365,9 @@ class Sibzamini(DefenderPlant):
         return Sibzamini.image.get_rect()
     
     def render(self):
-        return "render"
+        x = self.x_pos - int(Sibzamini.image.get_rect().width * (1/2)) 
+        y = self.y_pos - int(Sibzamini.image.get_rect().height * (3/5))
+        self.ui.draw_object(Sibzamini.image, x, y)
     
 
 if __name__ == "__main__":  

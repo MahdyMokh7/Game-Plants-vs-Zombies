@@ -1,6 +1,6 @@
 class Tile:  
 
-    TILE_SIZE = (94, 110)     #static field 94x110
+    TILE_SIZE = (94, 110)     # static field 94x110
 
     def __init__(self, left_x, right_x, up_y, down_y, row_num, col_num):  
         self.left_x = left_x      

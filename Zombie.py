@@ -89,8 +89,10 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
 class RegularZombie(Zombie):  
 
     NAME = "RegularZombie"
-    IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
+    ZOMBIE_SIZE = (60,110)
+    IMAGE_PATH = os.path.join("Image files", "regular zombie.png")
     image = pygame.image.load(IMAGE_PATH)
+    image = pygame.transform.scale(image, ZOMBIE_SIZE)
 
 
     def __init__(self, REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time, ui):  
@@ -120,11 +122,20 @@ class RegularZombie(Zombie):
         self.maap.remove_zombie(self , self.row_num)
 
     def render(self):
-        return "render"
+        x = self.x_pos - int(RegularZombie.image.get_rect().width * (1/2)) 
+        y = self.y_pos - int(RegularZombie.image.get_rect().height * (1/2)) - 20
+        self.ui.draw_object(RegularZombie.image, x, y)
 
 
 
 class GiantZombie(Zombie):  
+
+    NAME = "GiantZombie"
+    ZOMBIE_SIZE = (60,110)
+    IMAGE_PATH = os.path.join("Image files", "giant zombie.png")
+    image = pygame.image.load(IMAGE_PATH)
+    image = pygame.transform.scale(image, ZOMBIE_SIZE)
+
     def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time, ui):  
         super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time, ui)  
 
@@ -161,5 +172,7 @@ class GiantZombie(Zombie):
                 self.speed = self.speed * SnowPea.SPEED_ACCELERATE
 
     def render(self):
-        return "render"
+        x = self.x_pos - int(GiantZombie.image.get_rect().width * (1/2))
+        y = self.y_pos - int(GiantZombie.image.get_rect().height * (1/2)) - 20
+        self.ui.draw_object(GiantZombie.image, x, y)
     

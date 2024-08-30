@@ -213,6 +213,9 @@ class UI:
     def set_prev_page(self, page):
         self.prev_page = page
 
+    def draw_object(self, image, x_pos, y_pos):  # x_pos and y_pos are the left-upper corner of the image
+        self.screen.blit(image, (x_pos, y_pos))
+
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ class Bullet(ABC):
         self.y_pos = y_pos
         self.row_num = row_num
         self.damage = damage
-        self.ui
+        self.ui = ui
 
     def run_shoot(self):
         self.move()
@@ -55,8 +55,10 @@ class Bullet(ABC):
 class Pea(Bullet):
     
     IMAGE_PATH = os.path.join("Image files", "pea.png")
+    IMAGE_SIZE = (30, 30)
     SPEED = 7
     image = pygame.image.load(IMAGE_PATH)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "Pea"
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage, ui):
@@ -74,14 +76,18 @@ class Pea(Bullet):
         zombie.got_hit(self)
 
     def render(self):
-        return "render"
+        x = self.x_pos - Pea.image.get_rect().width // 2
+        y = self.y_pos - Pea.image.get_rect().height // 2
+        self.ui.draw_object(Pea.image, x, y)
 
 #####################################################
 class SnowPea(Bullet):
 
     IMAGE_PATH = os.path.join("Image files", "snow pea.png")
+    IMAGE_SIZE = (30, 30)
     SPEED = 5
     image = pygame.image.load(IMAGE_PATH)
+    image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SnowPea"
     FREEZE_TIME = 5
     SPEED_ACCELERATE = 2
@@ -101,11 +107,14 @@ class SnowPea(Bullet):
         zombie.got_hit(self)
 
     def render(self):
-        return "render"
+        x = self.x_pos - SnowPea.image.get_rect().width // 2
+        y = self.y_pos - SnowPea.image.get_rect().height // 2
+        self.ui.draw_object(SnowPea.image, x, y)
 
 #####################################################
 class WaterMelon(Bullet):
     NAME = "WaterMelon"
+
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage, ui):
         super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage, ui)
 

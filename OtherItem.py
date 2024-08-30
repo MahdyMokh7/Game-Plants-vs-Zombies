@@ -7,10 +7,11 @@ import pygame
 
 class OtherItem(ABC):
 
-    def __init__(self, time, maap, speed):
+    def __init__(self, time, maap, speed, ui):
         self.speed = speed
         self.time = time  
         self.maap = maap    
+        self.ui = ui
 
     @abstractmethod
     def render(self):
@@ -19,11 +20,14 @@ class OtherItem(ABC):
 
 class Sun(OtherItem):
 
+    NAME = "Sun"
+    SUN_SIZE = (50, 50)
     SUN_PATH = os.path.join("Image files", "sun.png")
     image = pygame.image.load(SUN_PATH)
+    image = pygame.transform.scale(image, SUN_SIZE)
 
-    def __init__(self, time, maap, sun_speed, x_pos, y_pos):
-        super().__init__(time, maap, sun_speed)
+    def __init__(self, time, maap, sun_speed, x_pos, y_pos, ui):
+        super().__init__(time, maap, sun_speed, ui)
         self.x_pos = x_pos
         self.y_pos = y_pos
 
@@ -31,5 +35,7 @@ class Sun(OtherItem):
         self.y_pos += self.speed
 
     def render(self):
-        return "render"
+        x = self.x_pos
+        y = self.y_pos
+        self.ui.draw_object(Sun.image, x, y)
 

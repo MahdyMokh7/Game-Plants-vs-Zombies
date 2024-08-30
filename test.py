@@ -117,6 +117,6 @@ def test2():
     print(a.d)
 
 if __name__ == "__main__":
-    # main()
+    main()
     # class_test()
-    test2()
+    # test2()
