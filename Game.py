@@ -164,6 +164,7 @@ class Game:
                 self.ui.draw_portable_image(intended_image, mouse_pos.x, mouse_pos.y)
 
         if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
+
             if not self.is_picture_on_hold:
                 if event.button == 1:  # Left click
                     mouse_pos = event.pos
@@ -174,28 +175,28 @@ class Game:
                         print("menu-bar")
 
                     elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_PEASHOOTER_BAR):  # pea-shooter-select
-                        if PeaShooter.is_available():   # get gray when not available
+                        if PeaShooter.is_available() and PeaShooter.is_sun_enough(self.user.get_nums_of_sun()):   # get gray when not available
                             self.is_picture_on_hold = True
                             self.selected_plant_type = PeaShooter.NAME
                             PeaShooter.last_time_selected = Time.get_global_time()
                             print("pea-shooter-select")
 
                     elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR):  # snowpeashooter-select
-                        if SnowPeaShooter.is_available():
+                        if SnowPeaShooter.is_available() and SnowPeaShooter.is_sun_enough(self.user.get_nums_of_sun()):
                             self.is_picture_on_hold = True
                             self.selected_plant_type = SnowPeaShooter.NAME
                             SnowPeaShooter.last_time_selected = Time.get_global_time()
                             print("snowpeashooter-select")
                         
                     elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sunflower-select
-                        if Sunflower.is_available():
+                        if Sunflower.is_available() and Sunflower.is_sun_enough(self.user.get_nums_of_sun()):
                             self.is_picture_on_hold = True
                             self.selected_plant_type = Sunflower.NAME
                             Sunflower.last_time_selected = Time.get_global_time()
                             print("sunflower-select")
 
                     elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sibzamini-select
-                        if Sibzamini.is_available():
+                        if Sibzamini.is_available()and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
                             self.is_picture_on_hold = True
                             self.selected_plant_type = Sibzamini.NAME
                             Sibzamini.last_time_selected = Time.get_global_time()
@@ -206,19 +207,23 @@ class Game:
                     mouse_pos = event.pos
 
                     if PeaShooter.NAME == self.selected_plant_type:   # get gray when not available  # pea-shooter-select
-                        PeaShooter.last_time_selected = Time.get_global_time()
+                        PeaShooter.last_time_selected = Time.get_global_time()       
+                        self.user.dicrease_nums_of_sun(self , PEA_SHOOTER_PRICE)
                         print("peashooter-planted")
 
                     elif SnowPeaShooter.NAME == self.selected_plant_type:  # snowpeashooter-select
                         SnowPeaShooter.last_time_selected = Time.get_global_time()
+                        self.user.dicrease_nums_of_sun(self , SNOW_PEA_SHOOTER_PRICE)
                         print("snowpeashooter-planted")
                     
                     elif Sunflower.NAME == self.selected_plant_type:  # sunflower-select
                         Sunflower.last_time_selected = Time.get_global_time()
+                        self.user.dicrease_nums_of_sun(self , SUN_FLOWER_PRICE)
                         print("sunflower-planted")
 
                     elif Sibzamini.NAME == self.selected_plant_type:  # sibzamini-select
                         Sibzamini.last_time_selected = Time.get_global_time()
+                        self.user.dicrease_nums_of_sun(self , SIB_ZAMINI_PRICE)
                         print("sibzamini-planted")
 
                     else:

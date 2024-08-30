@@ -7,7 +7,7 @@ import pygame
 
 class Bullet(ABC):
 
-    def __init__(self, speed, time, maap, x_pos, y_pos, row_num , damage):
+    def __init__(self, speed, time, maap, x_pos, y_pos, row_num , damage , ui):
         self.speed = speed * SCALE
         self.time = time
         self.maap = maap
@@ -15,6 +15,7 @@ class Bullet(ABC):
         self.y_pos = y_pos
         self.row_num = row_num
         self.damage = damage
+        self.ui
 
     def run_shoot(self):
         self.move()
@@ -58,8 +59,8 @@ class Pea(Bullet):
     image = pygame.image.load(IMAGE_PATH)
     NAME = "Pea"
 
-    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage):
-        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage)
+    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage, ui):
+        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage, ui)
 
     @override
     def run_shoot(self):
@@ -85,8 +86,8 @@ class SnowPea(Bullet):
     FREEZE_TIME = 5
     SPEED_ACCELERATE = 2
 
-    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage):
-        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage)
+    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage, ui):
+        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage, ui)
 
     @override
     def run_shoot(self):
@@ -105,8 +106,8 @@ class SnowPea(Bullet):
 #####################################################
 class WaterMelon(Bullet):
     NAME = "WaterMelon"
-    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage):
-        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage)
+    def __init__(self, speed, time, maap, x_pos, y_pos, row_num, damage, ui):
+        super().__init__(speed, time, maap, x_pos, y_pos, row_num, damage, ui)
 
     @override
     def run_shoot(self):

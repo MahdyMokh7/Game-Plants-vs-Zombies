@@ -11,7 +11,7 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
     REGULAR_ZOMBIE_PATH = os.path.join("Image files/regular zombie.png")
     GIANT_ZOMBIE_PATH = os.path.join("Image files/giant zombie.png")
 
-    def __init__(self, damage, health, hit_rate, speed, map, time, x_pos, y_pos, row_num):  
+    def __init__(self, damage, health, hit_rate, speed, map, time, x_pos, y_pos, row_num, ui):  
         self.damage = damage  
         self.health = health  
         self.hit_rate = hit_rate  
@@ -24,6 +24,7 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         self.is_moving = True
         self.last_time_hit_by_snow_pea = 0
         self.is_using_temp_speed = False
+        self.ui = ui
 
     def is_still_alive(self):  
         return self.health != 0  
@@ -92,8 +93,8 @@ class RegularZombie(Zombie):
     image = pygame.image.load(IMAGE_PATH)
 
 
-    def __init__(self, REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time):  
-        super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time)  
+    def __init__(self, REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time, ui):  
+        super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, map, time, ui)  
 
     def hit(self, plant):  
         ############
@@ -124,8 +125,8 @@ class RegularZombie(Zombie):
 
 
 class GiantZombie(Zombie):  
-    def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time):  
-        super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time)  
+    def __init__(self, GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time, ui):  
+        super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, map, time, ui)  
 
     def hit(self):  
         # Implement the hit logic for GiantZombie  
