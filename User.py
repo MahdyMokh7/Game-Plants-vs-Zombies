@@ -17,26 +17,32 @@ class User:
             if tile.is_empty():
                 if plant_type == PeaShooter.NAME:
                     new_plant = PeaShooter(tile.get_x_center(), tile.get_y_center(), self.maap, 
-                                           self.time, tile.get_row_num(), tile.get_col_num())
+                                           self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
                     
                 elif plant_type == SnowPeaShooter.NAME:
                     new_plant = SnowPeaShooter(tile.get_x_center(), tile.get_y_center(), self.maap, 
-                                               self.time, tile.get_row_num(), tile.get_col_num())
+                                               self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
 
                 elif plant_type == Sibzamini.NAME:
                     new_plant = Sibzamini(tile.get_x_center(), tile.get_y_center(), self.maap, 
-                                          self.time, tile.get_row_num(), tile.get_col_num())
+                                          self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
 
                 elif plant_type == Sunflower.NAME:
                     new_plant = Sunflower(tile.get_x_center(), tile.get_y_center(), self.maap, 
-                                          self.time, tile.get_row_num(), tile.get_col_num())
+                                          self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
 
         self.maap.add_plant(new_plant, tile)
             
 
     def increment_nums_of_sun(self):
-        self.nums_of_sun += 1
+        self.nums_of_sun += SUN_VALUE
+
+    def dicrease_nums_of_sun(self , plant_price):
+        self.nums_of_sun = self.nums_of_sun - plant_price
 
     def run_game(self, event):
         pass
 
+
+    def get_nums_of_sun(self):
+        return self.nums_of_sun

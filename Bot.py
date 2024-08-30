@@ -15,7 +15,7 @@ class Bot:
     LOST_STATE = "lost"
     IN_GAME_STATE = "in_game"
 
-    def __init__(self, maap: Map, time: Time):
+    def __init__(self, maap: Map, time: Time , ui):
         self.types_of_zombies = {
             RegularZombie.NAME: RegularZombie,
             GiantZombie.NAME: GiantZombie
@@ -37,6 +37,7 @@ class Bot:
         self.last_10sec_update_time = 0
         self.game_state = Bot.IN_GAME_STATE
         self.time_spent = self.time.get_current_time()
+        self.ui = ui
 
     def upadate_zombie_produciton_freq(self):  # its called when the number of zombies get changed per 10 seconds
         self.zombie_production_freq = 10 / self.number_of_zombies_per_10_second
@@ -64,7 +65,7 @@ class Bot:
         try: 
             row_num = self.create_random_position_for_zombie()
             new_zombie = self.create_random_zombie()(
-                self.maap, self.time, Zombie.X_START_POS, DICT_ROW_Y_POS[row_num], row_num)
+                self.maap, self.time, Zombie.X_START_POS, DICT_ROW_Y_POS[row_num], row_num, self.ui)
             self.maap.add_zombie(zombie=new_zombie, row_num=row_num)
         except Exception as e:
             print(e)
@@ -99,7 +100,7 @@ class Bot:
     def create_sun(self):
         self.last_sun_production_time = self.time.get_current_time()
         x_pos = self.create_random_x_in_map()
-        new_sun = Sun(self.maap, self.time, x_pos, 0)
+        new_sun = Sun(self.maap, self.time, x_pos, 0, self.ui)
         self.maap.add_sun(new_sun)
 
     def zombies_attack(self):
