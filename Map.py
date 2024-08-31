@@ -56,6 +56,17 @@ class Map:
         tile.set_plant(new_plant)
         self.all_plants_2d[tile.get_row_num()].append(new_plant)
 
+    def remove_sun(self, mouse_pos):
+        intended_sun = None
+        for sun in self.all_suns_1d:
+            if sun.colide_with_mouse_click(mouse_pos):
+                intended_sun = sun
+                break
+            
+        if intended_sun is not None:
+            self.all_suns_1d.remove(intended_sun)
+
+
         
     # def place_the_plant(self, plant, x_pos, y_pos):  ################## not done
     #     tile = self.calc_tile_which_mouse_is_left_in_its_range(x_pos, y_pos)

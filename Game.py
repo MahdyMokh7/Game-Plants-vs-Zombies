@@ -146,8 +146,6 @@ class Game:
                 
     ###########################################333333333333333
     def run_in_game(self, event):
-        
-
         if event is not None:
             if event.type == pygame.MOUSEMOTION:
                 if not self.is_picture_on_hold:
@@ -162,7 +160,7 @@ class Game:
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 else:
                     intended_image = Plant.get_image_by_type(self.selected_plant_type)
-                    self.ui.draw_portable_image(intended_image, mouse_pos.x, mouse_pos.y)
+                    self.ui.draw_portable_image(intended_image, mouse_pos[0], mouse_pos[1])
 
             if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
 
@@ -197,11 +195,16 @@ class Game:
                                 print("sunflower-select")
 
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sibzamini-select
-                            if Sibzamini.is_available()and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
+                            if Sibzamini.is_available() and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sibzamini.NAME
                                 Sibzamini.last_time_selected = Time.get_global_time()
                                 print("sibzamini-select")
+
+                        elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):
+                            self.user.increment_nums_of_sun()
+                            self.maap.remove_sun(mouse_pos)
+                            print("sun picked")
 
                 else:
                     if event.button == 1:  # Left click
@@ -246,6 +249,8 @@ class Game:
 
         self.ui.clear_screen()
         self.ui.draw_in_game_page()
+        self.ui.draw_timer()
+        self.ui.draw_sun_bar(self.user.get_nums_of_sun())
         self.audioManager.play_music(AudioManager.IN_GAME)
         self.time.start_time_counting()
 
