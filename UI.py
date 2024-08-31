@@ -216,7 +216,9 @@ class UI:
     def draw_object(self, image, x_pos, y_pos):  # x_pos and y_pos are the left-upper corner of the image
         self.screen.blit(image, (x_pos, y_pos))
 
-
+    def clear_screen(self):
+        white = (255,255,255)
+        self.screen.fill(white)
 
 if __name__ == "__main__":
 

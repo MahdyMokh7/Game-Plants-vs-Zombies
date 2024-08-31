@@ -27,7 +27,7 @@ class Bot:
         self.number_of_zombies_per_10_second = 3  # Initial zombies per 10 seconds
         self.number_of_zombies_added_per_10_second = 1  
         self.zombie_production_freq = 10 / self.number_of_zombies_per_10_second 
-        self.sun_production_freq = 5  # Sun production frequency in (sec)
+        self.sun_production_freq = SUN_INTERVAL  # Sun production frequency in (sec)
         self.time = time
         self.maap = maap
         self.start_game_time = 0
@@ -100,7 +100,7 @@ class Bot:
     def create_sun(self):
         self.last_sun_production_time = self.time.get_current_time()
         x_pos = self.create_random_x_in_map()
-        new_sun = Sun(self.maap, self.time, x_pos, 0, self.ui)
+        new_sun = Sun(self.time ,self.maap , SUN_SPEED, x_pos, 0, self.ui)      
         self.maap.add_sun(new_sun)
 
     def zombies_attack(self):
@@ -218,6 +218,5 @@ class Bot:
         self.collisions_bullet_with_zombie()
 
         self.render_all()
-
         return self.get_game_state()
 

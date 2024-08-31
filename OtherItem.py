@@ -21,7 +21,7 @@ class OtherItem(ABC):
 class Sun(OtherItem):
 
     NAME = "Sun"
-    SUN_SIZE = (50, 50)
+    SUN_SIZE = (70, 70)
     SUN_PATH = os.path.join("Image files", "sun.png")
     image = pygame.image.load(SUN_PATH)
     image = pygame.transform.scale(image, SUN_SIZE)

@@ -8,7 +8,8 @@ with open("consts.json", "r") as file:
 # Access a value from the JSON data
 # print(salam["mahdy"])
 
-
+#scale
+SCALE = 0.1
 
 # Plants
 PEA_SHOOTER_DAMAGE = 5
@@ -31,7 +32,7 @@ SNOW_PEA_SHOOTER_HIT_RATE = 5
 SUN_FLOWER_HIT_RATE = 12
 SIB_ZAMINI_HIT_RATE = 0
 
-PEA_SHOOTER_SPEED = 7
+PEA_SHOOTER_SPEED = 7 
 SNOW_PEA_SHOOTER_SPEED = 5
 SUN_FLOWER_SPEED = 0
 SIB_ZAMINI_SPEED = 0
@@ -53,18 +54,17 @@ GIANT_ZOMBIE_HEALTH = 80
 REGULAR_ZOMBIE_HIT_RATE = 5
 GIANT_ZOMBIE_HIT_RATE = 6
 
-REGULAR_ZOMBIE_SPEED = 7
-GIANT_ZOMBIE_SPEED = 5
+REGULAR_ZOMBIE_SPEED = 7 * SCALE
+GIANT_ZOMBIE_SPEED = 5 * SCALE
 
 
 
 # OtherItems
-SUN_SPEED = 10
+SUN_SPEED = 10 * SCALE
 SUN_INTERVAL = 10
 
 
-# scale
-SCALE = 1
+
 
 # dict row -> y_pos
 DICT_ROW_Y_POS = {
@@ -89,3 +89,4 @@ GAME_TIME_IN_SEC = 100
 
 #sun value
 SUN_VALUE = 25
+
