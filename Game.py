@@ -11,9 +11,7 @@ from User import User
 
 class Game:
     def __init__(self):
-        self.running = False
-        # self.users = []  
-        # self.bots = []     
+        self.running = False   
         self.time = Time() 
         self.maap = Map()
         self.ui = UI(time=self.time, maap=self.maap)   
