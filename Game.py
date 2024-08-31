@@ -25,24 +25,24 @@ class Game:
     def handle_events(self):
         """Handle game events."""
         events = pygame.event.get()
-        if events is not None:
-            for event in events:
-                if event.type == pygame.QUIT:
-                    self.running = False  # Handle quit event
+        
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.running = False  # Handle quit event
+            
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pygame.display.iconify()  # Minimize window when ESC is pressed
                 
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    pygame.display.iconify()  # Minimize window when ESC is pressed
-                    
-                elif event.type == pygame.WINDOWMINIMIZED:
-                    print("Window minimized")  # Handle window minimize event
-                    
-                elif event.type == pygame.WINDOWRESTORED:
-                    print("Window restored")  # Handle window restore event
+            elif event.type == pygame.WINDOWMINIMIZED:
+                print("Window minimized")  # Handle window minimize event
+                
+            elif event.type == pygame.WINDOWRESTORED:
+                print("Window restored")  # Handle window restore event
 
-                else:    
-                    self.run_page(event)
-        else:
-            self.run_page(None)
+            else:    
+                self.run_page(event)
+        if self.ui.current_page == UI.IN_GAME_PAGE:
+            self.run_in_game_automatic()
 
     @staticmethod
     def is_mouse_within_rectangles(mouse_pos, *rect_positions):
@@ -146,9 +146,7 @@ class Game:
                 
     ###########################################333333333333333
     def run_in_game(self, event):
-        self.ui.draw_in_game_page()
-        self.audioManager.play_music(AudioManager.IN_GAME)
-        self.time.start_time_counting()
+        
 
         if event is not None:
             if event.type == pygame.MOUSEMOTION:
@@ -243,6 +241,14 @@ class Game:
                     mouse_pos = event.pos
         
 
+    ###################################################
+    def run_in_game_automatic(self):
+
+        self.ui.clear_screen()
+        self.ui.draw_in_game_page()
+        self.audioManager.play_music(AudioManager.IN_GAME)
+        self.time.start_time_counting()
+
         status = self.bot.run()
         if status == Bot.WON_STATE:
             print("Victory")  # needs page dev. and work to do
@@ -254,7 +260,7 @@ class Game:
             sys.exit()
         else:
             pass
-    ###################################################
+    
 
     def run_page(self, event):
         option = self.ui.get_current_page()
