@@ -132,7 +132,7 @@ class RegularZombie(Zombie):
 class GiantZombie(Zombie):  
 
     NAME = "GiantZombie"
-    ZOMBIE_SIZE = (60,110)
+    ZOMBIE_SIZE = (130,150)
     IMAGE_PATH = os.path.join("Image files", "giant zombie.png")
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, ZOMBIE_SIZE)
