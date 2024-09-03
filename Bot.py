@@ -155,8 +155,6 @@ class Bot:
                         zombie.hit(plant)
                         if not plant.is_alive():
                             zombie.start_movement()
-                        
-
 
 
     def collisions_bullet_with_zombie(self):
@@ -165,7 +163,6 @@ class Bot:
                 for zombie in self.maap.all_zombies_2d[row_num]:
                     if bullet.did_colide(zombie):   ######################
                         bullet.hit(zombie)
-                        print(zombie.health)
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
     def update_all_zombies(self):   # returns the game state (1: still running 0: lost)
@@ -198,6 +195,29 @@ class Bot:
             sun.render()
                     
 
+    def print_all_debug(self):
+        print("PLNATS PRINT:\n")
+        for plant_row in self.maap.all_plants_2d:
+            for plant in plant_row:
+                print((plant.x_pos, plant.y_pos))
+        print('---------------------------------\n')
+
+        print("ZOMBIES PRINT:\n")
+        for zombie_row in self.maap.all_zombies_2d:
+            for zombie in zombie_row:
+                print((zombie.x_pos, zombie.y_pos))
+        print('---------------------------------\n')
+
+        print("BULLETS PRINT:\n")
+        for bullet_row in self.maap.all_bullets_2d:
+            for bullet in bullet_row:
+                print((bullet.x_pos, bullet.y_pos))
+        print('---------------------------------\n')
+
+        print("SUNS PRINT:\n")
+        for sun in self.maap.all_suns_1d:
+            print((sun.x_pos, sun.y_pos))
+        print('---------------------------------\n')
 
 
     def run(self):  # runs the bot and returns the game state

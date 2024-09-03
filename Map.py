@@ -28,9 +28,9 @@ class Map:
         i = 0 
         j = 0
         try: 
-            for x in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
+            for y in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
                 #print(f"Outer Loop Value: {x}")  
-                for y in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
+                for x in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
                     #print(f"    Inner Loop Value: {y}")  
                     tile = Tile(x , x + Tile.TILE_SIZE[0], y, y + Tile.TILE_SIZE[1], i, j)     
                     self.tiles[i].append(tile)      
@@ -58,6 +58,9 @@ class Map:
         j_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]
         print("wwwwwww::",i_int_temp)
         print("wwwwwww::",j_int_temp)
+        print("y_mos_pos:  ", y_mos_pos)
+        print('x_mox_pos:  ', x_mos_pos)
+
         if 0 <= i_int_temp < Map.NUM_OF_ROWS and 0 <= j_int_temp < Map.NUM_OF_COLS:
             ###
             print("mouse_click_in_map_pos:  ", f"({i_int_temp} , {j_int_temp})")
@@ -124,7 +127,8 @@ class Map:
     def remove_bullet(self, bullet, row_num):
         self.all_bullets_2d[row_num].remove(bullet)
 
-    def remove_zombie(self ,zombie, row_num):
+    def remove_zombie(self, zombie, row_num):
+        print("remove zombie was called")
         self.all_zombies_2d[row_num].remove(zombie)
 
 

@@ -21,10 +21,14 @@ class Game:
 
         self.is_picture_on_hold = False  # picture is on hold but hasnt yet be planted
         self.selected_plant_type = None  # the picture (plant type) on hold 
+        self.selected_plant_image = None  # the image file on hold
 
     def handle_events(self):
         """Handle game events."""
         events = pygame.event.get()
+
+        if self.ui.current_page == UI.IN_GAME_PAGE:
+            self.run_in_game_automatic()
         
         for event in events:
             if event.type == pygame.QUIT:
@@ -41,8 +45,6 @@ class Game:
 
             else:    
                 self.run_page(event)
-        if self.ui.current_page == UI.IN_GAME_PAGE:
-            self.run_in_game_automatic()
 
     @staticmethod
     def is_mouse_within_rectangles(mouse_pos, *rect_positions):
@@ -160,9 +162,8 @@ class Game:
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 else:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-                    intended_image = Plant.get_image_by_type(self.selected_plant_type)
-                    print("intended image:  ", intended_image)
-                    self.ui.draw_portable_image(intended_image, mouse_pos[0], mouse_pos[1])
+                    self.ui.draw_portable_image(self.selected_plant_image, mouse_pos[0], mouse_pos[1])
+                    # print("intended image:  ", self.selected_plant_type)
 
             if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
                 mouse_pos = event.pos
@@ -178,6 +179,7 @@ class Game:
                             if PeaShooter.is_available() and PeaShooter.is_sun_enough(self.user.get_nums_of_sun()):   # get gray when not available
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = PeaShooter.NAME
+                                self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 PeaShooter.last_time_selected = Time.get_global_time()
                                 print("pea-shooter-select")
 
@@ -185,6 +187,7 @@ class Game:
                             if SnowPeaShooter.is_available() and SnowPeaShooter.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = SnowPeaShooter.NAME
+                                self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 SnowPeaShooter.last_time_selected = Time.get_global_time()
                                 print("snowpeashooter-select")
                             
@@ -192,6 +195,7 @@ class Game:
                             if Sunflower.is_available() and Sunflower.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sunflower.NAME
+                                self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 Sunflower.last_time_selected = Time.get_global_time()
                                 print("sunflower-select")
 
@@ -199,6 +203,7 @@ class Game:
                             if Sibzamini.is_available() and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sibzamini.NAME
+                                self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 Sibzamini.last_time_selected = Time.get_global_time()
                                 print("sibzamini-select")
 
@@ -238,6 +243,7 @@ class Game:
                         self.user.place_the_plant(self.selected_plant_type, mouse_pos[0], mouse_pos[1])
                         self.is_picture_on_hold = False
                         self.selected_plant_type = None
+                        self.selected_plant_image = None
 
 
             if event.type == pygame.MOUSEBUTTONUP:   
@@ -279,6 +285,12 @@ class Game:
         }
         func = switcher.get(option, lambda: "ERROR: Invalid option to run page")
         return func(event)
+    
+    def debug(self, cur_time):
+        if self.time.get_current_time() == cur_time:
+            self.bot.print_all_debug()
+            # exit()
+
 
     def run(self):
         pygame.init()
@@ -290,7 +302,7 @@ class Game:
         clock = pygame.time.Clock()  # Initialize the clock for framerate control
         while self.running:
             self.handle_events()
-
+            self.debug(20)  #################
             clock.tick(15)  # 60FPS
             pygame.display.flip()  # Update screen
 

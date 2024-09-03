@@ -14,9 +14,8 @@ class User:
     def place_the_plant(self, plant_type, pos_x, pos_y):
         new_plant = None
         tile = self.maap.find_tile_by_pos(pos_x, pos_y)
-        print("tile:  ", tile)
         if tile is not None:
-            print("tile is not none;")
+            print("tile:  ", tile.row_num, tile.col_num)
             if tile.is_tile_empty():
                 print("tile is empty")  
                 if plant_type == PeaShooter.NAME:

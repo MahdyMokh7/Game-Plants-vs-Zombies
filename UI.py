@@ -236,7 +236,8 @@ class UI:
         self.screen.blit(image, (x_pos - image.get_width() // 2, y_pos - image.get_height() // 2))
 
     def draw_portable_image(self, image, x_pos_mouse, y_pos_mouse):
-        self.screen.blit(image, (x_pos_mouse - int((3 / 4) * image.get_rect().width), y_pos_mouse - int((3 / 4) * image.get_rect().height)))
+        if image is not None:
+            self.screen.blit(image, (x_pos_mouse - int((3 / 4) * image.get_rect().width), y_pos_mouse - int((3 / 4) * image.get_rect().height)))
 
     def get_current_page(self):
         return self.current_page

@@ -29,7 +29,7 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         return self.health > 0  
 
     @abstractmethod  
-    def hit(self):  
+    def hit(self, plant):  
         pass
     
     def move(self):
@@ -97,8 +97,7 @@ class RegularZombie(Zombie):
         super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, maap, time, x_pos , y_pos, row_num , ui)  
 
     def hit(self, plant):  
-        ############
-        plant.got_hit(self.damage)   ###########
+        plant.got_hit(self.damage)
 
 
     def get_rect(self):
@@ -143,9 +142,8 @@ class GiantZombie(Zombie):
     def __init__(self, maap, time,  x_pos , y_pos, row_num, ui):  
         super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, maap, time, x_pos , y_pos, row_num, ui)  
 
-    def hit(self):  
-        # Implement the hit logic for GiantZombie  
-        pass
+    def hit(self, plant):  
+        plant.got_hit(self.damage)
 
     def get_rect(self):
         return GiantZombie.image.get_rect()
@@ -158,12 +156,11 @@ class GiantZombie(Zombie):
         super().got_hit(bullet.get_damage())
         if bullet.NAME == SnowPea.NAME:
             if self.is_using_temp_speed == False:
-                (self.speed) = (self.speed)//SnowPea.SPEED_ACCELERATE
+                (self.speed) = (self.speed) // SnowPea.SPEED_ACCELERATE
               
             self.last_time_hit_by_snow_pea = self.time.get_current_time()
 
         if not self.is_alive():
-            print("chertffjfj")
             self.zombie_died_handle()##############
             
     def zombie_died_handle(self):
