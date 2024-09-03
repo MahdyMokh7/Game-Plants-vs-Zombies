@@ -1,14 +1,14 @@
 import os
 from abc import ABC, abstractmethod
 from typing import override
-from Consts import SCALE
+from Consts import *
 import pygame
 
 
 class Bullet(ABC):
 
     def __init__(self, speed, time, maap, x_pos, y_pos, row_num , damage , ui):
-        self.speed = speed * SCALE
+        self.speed = speed
         self.time = time
         self.maap = maap
         self.x_pos = x_pos
@@ -48,6 +48,10 @@ class Bullet(ABC):
         return self.damage
     
     @abstractmethod
+    def did_colide(self):
+        pass
+    
+    @abstractmethod
     def render(self):
         pass
 
@@ -56,7 +60,7 @@ class Pea(Bullet):
     
     IMAGE_PATH = os.path.join("Image files", "pea.png")
     IMAGE_SIZE = (30, 30)
-    SPEED = 7
+    SPEED = PEA_SHOOTER_SPEED
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "Pea"
@@ -72,8 +76,12 @@ class Pea(Bullet):
     def show_plant(self):
         pass
 
-    def hit(self , zombie):
+    def hit(self, zombie):
         zombie.got_hit(self)
+
+    def did_colide(self, zombie):
+        return self.x_pos - DISTANCE_BULLET_ZOMBIE_HIT <= zombie.get_x_pos() <= self.x_pos +  DISTANCE_BULLET_ZOMBIE_HIT
+    
 
     def render(self):
         x = self.x_pos - Pea.image.get_rect().width // 2
@@ -85,7 +93,7 @@ class SnowPea(Bullet):
 
     IMAGE_PATH = os.path.join("Image files", "snow pea.png")
     IMAGE_SIZE = (30, 30)
-    SPEED = 5
+    SPEED = SNOW_PEA_SHOOTER_SPEED
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SnowPea"
@@ -105,6 +113,9 @@ class SnowPea(Bullet):
 
     def hit(self , zombie):
         zombie.got_hit(self)
+
+    def did_colide(self, zombie):
+        return self.x_pos - DISTANCE_BULLET_ZOMBIE_HIT <= zombie.get_x_pos() <= self.x_pos +  DISTANCE_BULLET_ZOMBIE_HIT
 
     def render(self):
         x = self.x_pos - SnowPea.image.get_rect().width // 2

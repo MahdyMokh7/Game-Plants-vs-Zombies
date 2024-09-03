@@ -25,7 +25,7 @@ class Tile:
         self.is_empty = False
 
     def is_tile_empty(self) -> bool:
-        self.is_empty
+        return self.is_empty
 
     def set_is_empty(self, empty: bool):
         self.is_empty = empty

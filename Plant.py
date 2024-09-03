@@ -7,6 +7,7 @@ from BulletObject import Pea, SnowPea, Bullet
 from Time import Time
 from Map import Map
 from OtherItem import Sun
+import sys
 
 
 class Plant(ABC): 
@@ -36,7 +37,10 @@ class Plant(ABC):
 
         elif Sunflower.NAME == plant_type:
             return Sunflower.image
-        return None
+        else:
+            print("ERROR:  get_image_by_type_crashed(no type matched),\nplant_type:  ", plant_type)
+            sys.exit(-1)
+            return None
 
     
     def get_row_num(self):
@@ -44,13 +48,9 @@ class Plant(ABC):
     
     def get_col_num(self):
         return self.col_num
-    
-    @abstractmethod
-    def show_plant(self):
-        pass
 
     def is_alive(self):  
-        return self.health != 0  
+        return self.health > 0  
 
     @abstractmethod  
     def got_hit(self):  
@@ -87,10 +87,6 @@ class AttackerPlant(Plant):
     def is_time_to_shoot(self):
         return self.time.get_current_time() - self.last_shot_time >= self.shot_freq
 
-    @abstractmethod
-    def show_plant(self):
-        pass
-        
     def make_bullet(self):  
         self.last_shot_time = self.time.get_current_time()
         
@@ -113,10 +109,6 @@ class ProviderPlant(Plant):
     def is_time_to_provide(self):  
         return self.time.get_current_time() - self.last_production_time >= self.provide_freq
 
-    @abstractmethod
-    def show_plant(self):
-        pass
-
     def update_last_production_time(self):  
         self.last_production_time = self.time.get_current_time()
 
@@ -134,10 +126,6 @@ class DefenderPlant(Plant):
         super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num, ui)  
 
     @abstractmethod
-    def show_plant(self):
-        pass
-
-    @abstractmethod
     def get_rect(self):  
         pass
 
@@ -149,10 +137,6 @@ class DefenderPlant(Plant):
 class OtherPlant(Plant):  
     def __init__(self, health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num, ui):  
         super().__init__(health, cool_down, price, x_pos, y_pos, maap, time, row_num, col_num, ui)  
-
-    @abstractmethod
-    def show_plant(self):
-        pass
 
     @abstractmethod
     def get_rect(self):  
@@ -187,9 +171,6 @@ class PeaShooter(AttackerPlant):
                          x_pos, y_pos, maap, time, row_num, col_num, ui)
         self.image = None
 
-    def show_plant(self):
-        pass
-
     @override
     def make_bullet(self) -> Bullet:  
         super().make_bullet()
@@ -208,8 +189,8 @@ class PeaShooter(AttackerPlant):
     
     def got_hit(self, damage):
         super().got_hit(damage)
-        ##############  
-        if not self.is_alive(self):
+        ##############             
+        if not self.is_alive:
             self.plant_died_handle()##############
     
     def plant_died_handle(self):

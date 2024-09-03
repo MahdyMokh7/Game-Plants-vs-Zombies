@@ -80,7 +80,6 @@ class Bot:
         
     def create_random_zombie(self):
         zombie_name = random.choice(self.weighted_zombie_list)
-        print("debog:  ", zombie_name)#####33###3##333  
         if zombie_name == RegularZombie.NAME:
             return RegularZombie
         elif zombie_name == GiantZombie.NAME:
@@ -97,7 +96,6 @@ class Bot:
         pass
 
     def is_time_to_produce_sun(self):
-        print(self.time.get_current_time() ,  self.last_sun_production_time ,  self.sun_production_freq)
         return self.time.get_current_time() - self.last_sun_production_time >= self.sun_production_freq
     
 

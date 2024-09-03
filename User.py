@@ -14,12 +14,15 @@ class User:
     def place_the_plant(self, plant_type, pos_x, pos_y):
         new_plant = None
         tile = self.maap.find_tile_by_pos(pos_x, pos_y)
+        print("tile:  ", tile)
         if tile is not None:
+            print("tile is not none;")
             if tile.is_tile_empty():
+                print("tile is empty")  
                 if plant_type == PeaShooter.NAME:
                     new_plant = PeaShooter(tile.get_x_center(), tile.get_y_center(), self.maap, 
                                            self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
-                    
+                      
                 elif plant_type == SnowPeaShooter.NAME:
                     new_plant = SnowPeaShooter(tile.get_x_center(), tile.get_y_center(), self.maap, 
                                                self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
@@ -31,6 +34,9 @@ class User:
                 elif plant_type == Sunflower.NAME:
                     new_plant = Sunflower(tile.get_x_center(), tile.get_y_center(), self.maap, 
                                           self.time, tile.get_row_num(), tile.get_col_num(), self.ui)
+                    
+                else:
+                    print("ERROR:  plant type not valid - 39User.py")
 
         self.maap.add_plant(new_plant, tile)
             

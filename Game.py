@@ -159,7 +159,9 @@ class Game:
                     else:
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
                     intended_image = Plant.get_image_by_type(self.selected_plant_type)
+                    print("intended image:  ", intended_image)
                     self.ui.draw_portable_image(intended_image, mouse_pos[0], mouse_pos[1])
 
             if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
@@ -234,7 +236,7 @@ class Game:
                             sys.exit()
 
                         self.user.place_the_plant(self.selected_plant_type, mouse_pos[0], mouse_pos[1])
-                        self.is_picture_on_hold = True
+                        self.is_picture_on_hold = False
                         self.selected_plant_type = None
 
 

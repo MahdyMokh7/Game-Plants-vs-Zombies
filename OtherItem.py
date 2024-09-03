@@ -39,7 +39,7 @@ class Sun(OtherItem):
         self.y_pos += self.speed
 
     def render(self):
-        x = self.x_pos - (Sun.SUN_SIZE // 2)
-        y = self.y_pos - (Sun.SUN_SIZE // 2)
+        x = self.x_pos - (Sun.SUN_SIZE[0] // 2)
+        y = self.y_pos - (Sun.SUN_SIZE[1] // 2)
         self.ui.draw_object(Sun.image, x, y)
 

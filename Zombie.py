@@ -26,8 +26,7 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         self.ui = ui
 
     def is_still_alive(self):  
-        return self.health != 0  
-
+        return self.health > 0  
 
     @abstractmethod  
     def hit(self):  
@@ -77,9 +76,13 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
     @abstractmethod
     def update(self):
         pass
+    
     @abstractmethod
     def render(self):
         pass
+
+    def get_x_pos(self):
+        return self.x_pos
 
 class RegularZombie(Zombie):  
 
@@ -102,7 +105,7 @@ class RegularZombie(Zombie):
         return RegularZombie.image.get_rect()
 
     def did_colide(self, plant):
-        return plant.image.get_rect().colliderect(self.get_rect()) 
+        return self.x_pos - DISTANCE_ZOMBIE_PLANT_EAT <= plant.get_x_pos() <= self.x_pos +  DISTANCE_ZOMBIE_PLANT_EAT 
 
     def got_hit(self, bullet):
         super().got_hit(bullet.get_damage())
@@ -132,7 +135,7 @@ class RegularZombie(Zombie):
 class GiantZombie(Zombie):  
 
     NAME = "GiantZombie"
-    ZOMBIE_SIZE = (150,150)
+    ZOMBIE_SIZE = (150, 150)
     IMAGE_PATH = os.path.join("Image files", "giant zombie.png")
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, ZOMBIE_SIZE)
@@ -148,7 +151,7 @@ class GiantZombie(Zombie):
         return GiantZombie.image.get_rect()
     
     def did_colide(self, plant):
-        return plant.image.get_rect().colliderect(self.get_rect()) 
+        return self.x_pos - DISTANCE_ZOMBIE_PLANT_EAT <= plant.get_x_pos() <= self.x_pos +  DISTANCE_ZOMBIE_PLANT_EAT 
     
 
     def got_hit(self , bullet):
