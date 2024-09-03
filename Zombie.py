@@ -163,8 +163,9 @@ class GiantZombie(Zombie):
             self.last_time_hit_by_snow_pea = self.time.get_current_time()
 
         if not self.is_alive():
+            print("chertffjfj")
             self.zombie_died_handle()##############
-    
+            
     def zombie_died_handle(self):
         ############
         self.maap.remove_zombie(self , self.row_num)

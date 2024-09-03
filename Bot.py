@@ -165,6 +165,7 @@ class Bot:
                 for zombie in self.maap.all_zombies_2d[row_num]:
                     if bullet.did_colide(zombie):   ######################
                         bullet.hit(zombie)
+                        print(zombie.health)
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
     def update_all_zombies(self):   # returns the game state (1: still running 0: lost)

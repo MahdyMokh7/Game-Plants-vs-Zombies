@@ -16,7 +16,7 @@ class Map:
     NUM_OF_COLS = 9
 
     def __init__(self):   
-        self.tiles = [[None for _ in range(9)] for _ in range(5)]  # Create a two-dimensional array  
+        self.tiles = [[] for _ in range(Map. NUM_OF_ROWS)]  # Create a two-dimensional array  
         self.all_zombies_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
         self.all_bullets_2d = [[] for _ in range(Map. NUM_OF_ROWS)]
         self.all_suns_1d = []
@@ -28,28 +28,43 @@ class Map:
         i = 0 
         j = 0
         try: 
-            for x in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
-                print(f"Outer Loop Value: {x}")  
-                for y in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
-                    print(f"    Inner Loop Value: {y}")  
-                    tile = Tile(x , x + Tile.TILE_SIZE[0], y, y + Tile.TILE_SIZE[1], i, j)  
-                    self.tiles[i][j] = tile   
-                    i += 1
-                j += 1
-                i = 0
+            for x in range(Map.START_MAP_POS_Y, Map.END_MAP_POS_Y, Tile.TILE_SIZE[1]): 
+                #print(f"Outer Loop Value: {x}")  
+                for y in range(Map.START_MAP_POS_X, Map.END_MAP_POS_X, Tile.TILE_SIZE[0]): 
+                    #print(f"    Inner Loop Value: {y}")  
+                    tile = Tile(x , x + Tile.TILE_SIZE[0], y, y + Tile.TILE_SIZE[1], i, j)     
+                    self.tiles[i].append(tile)      
+                    j += 1
+                i += 1
+                j = 0
+        
         except Exception as e:
             print(e)
             print(i, j)
+        
+        # try:
+        #     for row in self.tiles:  
+        #         for col in row:
+        #             print(col.row_num , col.col_num, end="---") 
+        #         print()
+        # except Exception as e:
+        #     print(row)
+        #     print(col)
+        #     print("erorrrrrrrrrrr")
+
 
     def find_tile_by_pos(self, x_mos_pos , y_mos_pos) -> Tile:
-        i_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]
-        j_int_temp = (y_mos_pos - Map.START_MAP_POS_Y) // Tile.TILE_SIZE[1]
-
+        i_int_temp = (y_mos_pos - Map.START_MAP_POS_Y) // Tile.TILE_SIZE[1]
+        j_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]
+        print("wwwwwww::",i_int_temp)
+        print("wwwwwww::",j_int_temp)
         if 0 <= i_int_temp < Map.NUM_OF_ROWS and 0 <= j_int_temp < Map.NUM_OF_COLS:
             ###
             print("mouse_click_in_map_pos:  ", f"({i_int_temp} , {j_int_temp})")
+        
             return self.tiles[i_int_temp][j_int_temp] 
         else :
+            print("no tile found")
             return None
         
     def add_plant(self, new_plant, tile):

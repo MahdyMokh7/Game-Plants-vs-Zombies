@@ -292,7 +292,7 @@ class Sunflower(ProviderPlant):
     def got_hit(self, damage):
         super().got_hit(damage)
         ##############  
-        if not self.is_alive(self):
+        if not self.is_alive:
             self.plant_died_handle()##############
     
     def plant_died_handle(self):
