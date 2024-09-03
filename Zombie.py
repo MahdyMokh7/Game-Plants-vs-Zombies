@@ -102,7 +102,7 @@ class RegularZombie(Zombie):
         return RegularZombie.image.get_rect()
 
     def did_colide(self, plant):
-        return plant.get_rect().colliderect(self.get_rect()) 
+        return plant.image.get_rect().colliderect(self.get_rect()) 
 
     def got_hit(self, bullet):
         super().got_hit(bullet.get_damage())
@@ -148,7 +148,7 @@ class GiantZombie(Zombie):
         return GiantZombie.image.get_rect()
     
     def did_colide(self, plant):
-        return plant.get_rect().colliderect(self.get_rect()) 
+        return plant.image.get_rect().colliderect(self.get_rect()) 
     
 
     def got_hit(self , bullet):

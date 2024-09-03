@@ -85,7 +85,7 @@ DICT_Y_POS_ROW = {
 }
 
 # game time (sc)
-GAME_TIME_IN_SEC = 100
+GAME_TIME_IN_SEC = 300
 
 #sun value
 SUN_VALUE = 25

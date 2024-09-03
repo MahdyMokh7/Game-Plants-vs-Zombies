@@ -98,8 +98,6 @@ class Map:
     def add_bullet(self, bullet, row_num):
         self.all_bullets_2d[row_num].append(bullet)
 
-    def add_plant(self, plant, row_num):
-        self.all_plants_2d[row_num].append(plant)
 
     def remove_plant(self, plant, row_num):  
         self.all_plants_2d[row_num].remove(plant)

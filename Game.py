@@ -65,17 +65,17 @@ class Game:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         if event.type == pygame.MOUSEBUTTONDOWN:   ### delete
+            mouse_pos = event.pos
             if event.button == 1:  # Left click
-                mouse_pos = event.pos
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
                     self.ui.set_current_page(UI.LAYOUT_PAGE)
                     self.ui.set_prev_page(UI.START_PAGE)
                     print("Clicked inside the rectangle")
 
         if event.type == pygame.MOUSEBUTTONUP:  
+            mouse_pos = event.pos
             if event.button == 1:  # Left click
-                mouse_pos = event.pos
-
+                pass
 
     def run_layout_page(self, event):
         self.ui.draw_layout_page()
@@ -91,8 +91,8 @@ class Game:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         if event.type == pygame.MOUSEBUTTONDOWN:  
+            mouse_pos = event.pos
             if event.button == 1:  # Left click
-                mouse_pos = event.pos
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION):  # adventure
                     self.ui.set_current_page(UI.IN_GAME_PAGE)
                     self.ui.set_prev_page(UI.LAYOUT_PAGE)
@@ -109,9 +109,9 @@ class Game:
                     print("quit")
 
         if event.type == pygame.MOUSEBUTTONUP:
+            mouse_pos = event.pos
             if event.button == 1:  # Left click
-                mouse_pos = event.pos
-
+                pass
 
     def run_menu_page(self, event):
         self.ui.draw_menu_bar_page()
@@ -125,8 +125,8 @@ class Game:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
             if event.button == 1:
-                mouse_pos = event.pos
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION):  # continue
                     self.ui.set_current_page(self.ui.prev_page)
                     print("continue")
@@ -148,8 +148,8 @@ class Game:
     def run_in_game(self, event):
         if event is not None:
             if event.type == pygame.MOUSEMOTION:
+                mouse_pos = event.pos
                 if not self.is_picture_on_hold:
-                    mouse_pos = event.pos
                     if Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_MENU_BAR, 
                                                     UI.IN_GAME_PAGE_PEASHOOTER_BAR, 
                                                     UI.IN_GAME_PAGE_SIBZAMINI_BAR, 
@@ -163,10 +163,9 @@ class Game:
                     self.ui.draw_portable_image(intended_image, mouse_pos[0], mouse_pos[1])
 
             if event.type == pygame.MOUSEBUTTONDOWN:    # ###################
-
+                mouse_pos = event.pos
                 if not self.is_picture_on_hold:
                     if event.button == 1:  # Left click
-                        mouse_pos = event.pos
                         if Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_MENU_BAR):  # menu-bar
                             self.ui.set_current_page(UI.MENU_BAR_PAGE)
                             self.ui.set_prev_page(UI.IN_GAME_PAGE)
@@ -212,36 +211,37 @@ class Game:
 
                         if PeaShooter.NAME == self.selected_plant_type:   # get gray when not available  # pea-shooter-select
                             PeaShooter.last_time_selected = Time.get_global_time()       
-                            self.user.dicrease_nums_of_sun(self , PEA_SHOOTER_PRICE)
+                            self.user.dicrease_nums_of_sun(PEA_SHOOTER_PRICE)
                             print("peashooter-planted")
 
                         elif SnowPeaShooter.NAME == self.selected_plant_type:  # snowpeashooter-select
                             SnowPeaShooter.last_time_selected = Time.get_global_time()
-                            self.user.dicrease_nums_of_sun(self , SNOW_PEA_SHOOTER_PRICE)
+                            self.user.dicrease_nums_of_sun(SNOW_PEA_SHOOTER_PRICE)
                             print("snowpeashooter-planted")
                         
                         elif Sunflower.NAME == self.selected_plant_type:  # sunflower-select
                             Sunflower.last_time_selected = Time.get_global_time()
-                            self.user.dicrease_nums_of_sun(self , SUN_FLOWER_PRICE)
+                            self.user.dicrease_nums_of_sun(SUN_FLOWER_PRICE)
                             print("sunflower-planted")
 
                         elif Sibzamini.NAME == self.selected_plant_type:  # sibzamini-select
                             Sibzamini.last_time_selected = Time.get_global_time()
-                            self.user.dicrease_nums_of_sun(self , SIB_ZAMINI_PRICE)
+                            self.user.dicrease_nums_of_sun(SIB_ZAMINI_PRICE)
                             print("sibzamini-planted")
 
                         else:
                             print("ERROR: not a plant type got selected in the plant type select section!")
                             sys.exit()
 
-                        self.user.place_the_plant(self.selected_plant_type, mouse_pos.x, mouse_pos.y)
+                        self.user.place_the_plant(self.selected_plant_type, mouse_pos[0], mouse_pos[1])
                         self.is_picture_on_hold = True
                         self.selected_plant_type = None
 
 
             if event.type == pygame.MOUSEBUTTONUP:   
+                mouse_pos = event.pos
                 if event.button == 1:  # Left click
-                    mouse_pos = event.pos
+                    pass
         
 
     ###################################################
