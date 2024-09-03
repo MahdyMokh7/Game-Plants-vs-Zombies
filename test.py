@@ -36,11 +36,11 @@ def main():
     pygame.display.set_caption("1200x700 Window with Background Image")
 
     # Use os.path.join to create the correct path from UI class
-    background_image_path = UI.IN_GAME_PAGE_IMAGE_PATH  
+    background_image_path = UI.IN_GAME_PAGE_IMAGE_PATH     ############ give correct image path
     image_path2 = UI.MENU_BAR_PAGE_IMAGE_PATH
 
     # Load the images
-    background_image = pygame.image.load(background_image_path)
+    background_image = pygame.image.load(background_image_path)   ##############3hereherehere
     foreground_image = pygame.image.load(image_path2)
 
     # Scale and blur the background image
@@ -80,7 +80,7 @@ def main():
                         print("yes")
 
         # Draw the blurred background image
-        screen.blit(blurred_background_image, (0, 0))
+        # screen.blit(blurred_background_image, (0, 0))
 
         # Draw the foreground image on top of the blurred background
         # screen.blit(foreground_image, (x_position, y_position))

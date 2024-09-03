@@ -107,7 +107,7 @@ class Bot:
     def create_sun(self):
         self.last_sun_production_time = self.time.get_current_time()
         x_pos = self.create_random_x_in_map()
-        new_sun = Sun(self.time ,self.maap , SUN_SPEED, x_pos, 0, self.ui)      
+        new_sun = Sun(self.time, self.maap , SUN_SPEED, x_pos, 0, self.ui)      
         self.maap.add_sun(new_sun)
 
     def zombies_attack(self):

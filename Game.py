@@ -201,7 +201,7 @@ class Game:
                                 Sibzamini.last_time_selected = Time.get_global_time()
                                 print("sibzamini-select")
 
-                        elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):
+                        elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):  # sun-pick
                             self.user.increment_nums_of_sun()
                             self.maap.remove_sun(mouse_pos)
                             print("sun picked")
