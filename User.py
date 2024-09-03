@@ -15,7 +15,7 @@ class User:
         new_plant = None
         tile = self.maap.find_tile_by_pos(pos_x, pos_y)
         if tile is not None:
-            if tile.is_empty():
+            if tile.is_tile_empty():
                 if plant_type == PeaShooter.NAME:
                     new_plant = PeaShooter(tile.get_x_center(), tile.get_y_center(), self.maap, 
                                            self.time, tile.get_row_num(), tile.get_col_num(), self.ui)

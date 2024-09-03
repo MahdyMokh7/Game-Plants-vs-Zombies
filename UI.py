@@ -3,7 +3,7 @@ import time
 import math
 from Time import Time
 import os
-
+import sys 
 
 class UI:
 
@@ -55,17 +55,23 @@ class UI:
         "y_up_pos": 0,
         "y_down_pos": 67
     }
+    # IN_GAME_PAGE_SUN_BAR = {
+    #     "x_left_pos": 170,
+    #     "x_right_pos": 306,
+    #     "y_up_pos": 12,
+    #     "y_down_pos": 56
+    # }
+    IN_GAME_PAGE_MENU_BAR = {
+        "x_left_pos": 1025,
+        "x_right_pos": 1200,
+        "y_up_pos": 1,
+        "y_down_pos": 66
+    }
     IN_GAME_PAGE_SUN_BAR = {
         "x_left_pos": 170,
-        "x_right_pos": 306,
+        "x_right_pos": 303,
         "y_up_pos": 12,
-        "y_down_pos": 56
-    }
-    IN_GAME_PAGE_MENU_BAR = {
-        "x_left_pos": 521,
-        "x_right_pos": 671,
-        "y_up_pos": 301,
-        "y_down_pos": 352
+        "y_down_pos": 54
     }
     IN_GAME_PAGE_SUNFLOWER_BAR = {
         "x_left_pos": 2,
@@ -73,12 +79,6 @@ class UI:
         "y_up_pos": 4,
         "y_down_pos": 121
     }
-    IN_GAME_PAGE_SUNFLOWER_BAR = {
-        "x_left_pos": 2,
-        "x_right_pos": 87,
-        "y_up_pos": 4,
-        "y_down_pos": 121
-    } 
     IN_GAME_PAGE_PEASHOOTER_BAR = {
         "x_left_pos": 2,
         "x_right_pos": 87,
@@ -97,6 +97,13 @@ class UI:
         "y_up_pos": 376,
         "y_down_pos": 496
     }
+    IN_GAME_PAGE_TIMER_BAR = {
+        "x_left_pos": 855,
+        "x_right_pos": 1016,
+        "y_up_pos": 2,
+        "y_down_pos": 66
+    }
+
 
     # Image paths
     START_PAGE_IMAGE_PATH = os.path.join("Image files", "start_img.png")
@@ -152,13 +159,43 @@ class UI:
 
     def draw_timer(self):
         """Draw the timer in the upper right corner of the screen."""
-        font = pygame.font.Font(None, 36)  # Use a built-in font with size 36
+        font = pygame.font.Font(None, 50)  # Use a built-in font with size 36
         current_time = self.time.get_current_time()
         minutes = current_time // 60
         seconds = current_time % 60
         time_str = f"{minutes:02}:{seconds:02}"  # Format as mm:ss
-        text_surface = font.render(time_str, True, (255, 255, 255))  # White color text
-        self.screen.blit(text_surface, (self.screen.get_width() - text_surface.get_width() - 10, 10))  # Draw in upper right
+        text_surface = font.render(time_str, True, (0, 0, 0))  # White color text
+        text_rect = ((UI.IN_GAME_PAGE_TIMER_BAR["x_left_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["x_right_pos"]) // 2 - 20, (UI.IN_GAME_PAGE_TIMER_BAR["y_up_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["y_down_pos"]) // 2 - 13) 
+        self.screen.blit(text_surface, text_rect)  # Draw in upper right
+
+    def draw_sun_bar(self, current_sun):
+        # # Calculate the current time in mm:ss format
+        # total_seconds = time_obj.get_current_time()
+        # minutes = total_seconds // 60
+        # seconds = total_seconds % 60
+        # time_string = f"{minutes:02}:{seconds:02}"
+
+        # # Position the timer box using the provided coordinates
+        # box_x = self.x_left_pos
+        # box_y = self.y_up_pos
+
+        # # Draw the white rectangle for the timer box
+        # timer_rect = pygame.Rect(box_x, box_y, self.TIMER_BAR_WIDTH, self.TIMER_BAR_HEIGHT)
+        # pygame.draw.rect(self.screen, (255, 255, 255), timer_rect)
+
+        # # Render the timer text
+        # text_surface = self.font.render(time_string, True, (0, 0, 0))  # Black text
+        # text_rect = text_surface.get_rect(center=timer_rect.center)
+
+
+
+        """Draw the sun-bar in the upper letf corner of the screen."""
+        font = pygame.font.Font(None, 50)  # Use a built-in font with size 36
+        sun_str = f"{current_sun}"  # Format normally
+        text_surface = font.render(sun_str, True, (0, 0, 0))  # White color text
+
+        text_rect = ((UI.IN_GAME_PAGE_SUN_BAR["x_left_pos"] + UI.IN_GAME_PAGE_SUN_BAR["x_right_pos"]) // 2 - 11, (UI.IN_GAME_PAGE_SUN_BAR["y_up_pos"] + UI.IN_GAME_PAGE_SUN_BAR["y_down_pos"]) // 2 - 13) 
+        self.screen.blit(text_surface, text_rect)  # Draw in upper right
 
     def apply_blur(self, surface, scale_factor=0.1):
         """Apply a simple blur effect by scaling down and back up."""

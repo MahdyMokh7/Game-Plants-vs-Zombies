@@ -50,6 +50,13 @@ class Bot:
 
     def __creat_weighted_zombie_list(self):
         return [RegularZombie.NAME] * 3 +  [GiantZombie.NAME]
+    
+    def is_mouse_pos_in_any_sun(self, mouse_pos):
+        for sun in self.maap.all_suns_1d:
+            if sun.colide_with_mouse_click(mouse_pos):
+                return True
+        return False
+
 
     def calc_amount_of_increasment_number_of_zombies_per_10_second(self):
         # Logic to calculate the increase in number of zombies

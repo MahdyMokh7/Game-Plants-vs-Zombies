@@ -31,6 +31,10 @@ class Sun(OtherItem):
         self.x_pos = x_pos
         self.y_pos = y_pos
 
+    def colide_with_mouse_click(self, mouse_pos):
+        return self.x_pos - Sun.SUN_SIZE[0] // 2 <= mouse_pos[0] <= self.x_pos + Sun.SUN_SIZE[0] // 2 and \
+            self.y_pos - Sun.SUN_SIZE[1] // 2 <= mouse_pos[1] <= self.y_pos + Sun.SUN_SIZE[1] // 2
+
     def move(self):
         self.y_pos += self.speed
 
