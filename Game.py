@@ -7,7 +7,7 @@ from AudioManager import AudioManager
 from Bot import Bot
 from Plant import *
 from User import User
-
+import math
 
 class Game:
     def __init__(self):
@@ -199,13 +199,14 @@ class Game:
                                 Sunflower.last_time_selected = Time.get_global_time()
                                 print("sunflower-select")
 
-                        elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sibzamini-select
+                        elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SIBZAMINI_BAR):  # sibzamini-select
+                            print("sibzamini-select1")
                             if Sibzamini.is_available() and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sibzamini.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 Sibzamini.last_time_selected = Time.get_global_time()
-                                print("sibzamini-select")
+                                print("sibzamini-select2")
 
                         elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):  # sun-pick
                             self.user.increment_nums_of_sun()
@@ -287,7 +288,7 @@ class Game:
         return func(event)
     
     def debug(self, cur_time):
-        if self.time.get_current_time() == cur_time:
+        if math.floor(self.time.get_current_time()) == cur_time:
             self.bot.print_all_debug()
             # exit()
 
@@ -302,7 +303,7 @@ class Game:
         clock = pygame.time.Clock()  # Initialize the clock for framerate control
         while self.running:
             self.handle_events()
-            self.debug(20)  #################
+            #self.debug(20)  #################
             clock.tick(15)  # 60FPS
             pygame.display.flip()  # Update screen
 

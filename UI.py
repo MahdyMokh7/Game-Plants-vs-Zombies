@@ -160,7 +160,7 @@ class UI:
     def draw_timer(self):
         """Draw the timer in the upper right corner of the screen."""
         font = pygame.font.Font(None, 50)  # Use a built-in font with size 36
-        current_time = self.time.get_current_time()
+        current_time = math.floor(self.time.get_current_time())
         minutes = current_time // 60
         seconds = current_time % 60
         time_str = f"{minutes:02}:{seconds:02}"  # Format as mm:ss

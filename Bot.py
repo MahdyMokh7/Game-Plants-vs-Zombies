@@ -152,8 +152,10 @@ class Bot:
                 for plant in self.maap.all_plants_2d[row_num]:
                     if zombie.did_colide(plant):   ######################
                         zombie.stop_movement()   #####
-                        zombie.hit(plant)
+                        if zombie.is_time_to_hit():
+                            zombie.hit(plant)
                         if not plant.is_alive():
+                            print("plantttt has died")
                             zombie.start_movement()
 
 
