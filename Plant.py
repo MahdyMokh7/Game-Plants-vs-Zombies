@@ -154,8 +154,13 @@ class PeaShooter(AttackerPlant):
     image = pygame.image.load(IMAGE_PATH)
     IMAGE_SIZE = (70, 90)
     image = pygame.transform.scale(image, IMAGE_SIZE)
+
+    
     NAME = "PeaShooter"
     last_time_selected = 0
+    DISTANCE_MOUTH_TO_PEA_Y = 35
+    DISTANCE_MOUTH_TO_PEA_X = 35
+
     
     @staticmethod
     def is_sun_enough(nums_of_sun):
@@ -174,7 +179,7 @@ class PeaShooter(AttackerPlant):
     @override
     def make_bullet(self) -> Bullet:  
         super().make_bullet()
-        new_bullet = Pea(Pea.SPEED, self.time, self.maap, self.x_pos, self.y_pos, self.row_num , self.damage, self.ui)
+        new_bullet = Pea(Pea.SPEED, self.time, self.maap, self.x_pos + PeaShooter.DISTANCE_MOUTH_TO_PEA_X , self.y_pos - PeaShooter.DISTANCE_MOUTH_TO_PEA_Y, self.row_num , self.damage, self.ui)
         return new_bullet
     
     def get_type(self):  
@@ -190,7 +195,7 @@ class PeaShooter(AttackerPlant):
     def got_hit(self, damage):
         super().got_hit(damage)
         ##############             
-        if not self.is_alive:
+        if not self.is_alive():
             self.plant_died_handle()##############
     
     def plant_died_handle(self):
@@ -209,10 +214,12 @@ class SnowPeaShooter(AttackerPlant):
 
     IMAGE_PATH = os.path.join("Image files", "snow pea shooter.png")
     image = pygame.image.load(IMAGE_PATH)
-    IMAGE_SIZE = (70, 90)
+    IMAGE_SIZE = (90, 90)
     image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SnowPeaShooter"
     last_time_selected = 0
+    DISTANCE_MOUTH_TO_SNOW_PEA_Y = 35
+    DISTANCE_MOUTH_TO_SNOW_PEA_X = 35
 
     @staticmethod
     def is_sun_enough(nums_of_sun):
@@ -227,9 +234,10 @@ class SnowPeaShooter(AttackerPlant):
                           SNOW_PEA_SHOOTER_DAMAGE, SNOW_PEA_SHOOTER_HIT_RATE, SNOW_PEA_SHOOTER_SPEED,
                             x_pos, y_pos, map, time, row_num, col_num, ui)  
 
-    def make_bullet(self, x_pos, y_pos, row_num):  
+    @override
+    def make_bullet(self) -> Bullet:  
         super().make_bullet()
-        new_bullet = SnowPea(SnowPea.SPEED, self.time, self.maap, x_pos, y_pos, row_num , self.damage, self.ui)
+        new_bullet = SnowPea(SnowPea.SPEED, self.time, self.maap, self.x_pos + SnowPeaShooter.DISTANCE_MOUTH_TO_SNOW_PEA_X , self.y_pos - SnowPeaShooter.DISTANCE_MOUTH_TO_SNOW_PEA_Y, self.row_num , self.damage, self.ui)
         return new_bullet
     
 
@@ -242,7 +250,7 @@ class SnowPeaShooter(AttackerPlant):
     def got_hit(self, damage):
         super().got_hit(damage)
         ##############  
-        if not self.is_alive(self):
+        if not self.is_alive():
             self.plant_died_handle()##############
 
     def render(self):
@@ -292,7 +300,7 @@ class Sunflower(ProviderPlant):
     def got_hit(self, damage):
         super().got_hit(damage)
         ##############  
-        if not self.is_alive:
+        if not self.is_alive():
             self.plant_died_handle()##############
     
     def plant_died_handle(self):
@@ -333,7 +341,7 @@ class Sibzamini(DefenderPlant):
     def got_hit(self, damage):
         super().got_hit(damage)
         ##############  
-        if not self.is_alive(self):
+        if not self.is_alive():
             self.plant_died_handle()##############
     
     def plant_died_handle(self):

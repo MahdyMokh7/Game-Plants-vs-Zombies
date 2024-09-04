@@ -9,7 +9,7 @@ from AudioManager import AudioManager
 from Bot import Bot
 from Plant import *
 from User import User
-
+import math
 
 class Game:
     def __init__(self):
@@ -184,6 +184,9 @@ class Game:
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 PeaShooter.last_time_selected = Time.get_global_time()
                                 print("pea-shooter-select")
+                                self.ui.pea_shooter_gray_mod_render()
+                                print("pea_shooter_gray_mod_render")
+                                
 
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR):  # snowpeashooter-select
                             if SnowPeaShooter.is_available() and SnowPeaShooter.is_sun_enough(self.user.get_nums_of_sun()):
@@ -201,13 +204,14 @@ class Game:
                                 Sunflower.last_time_selected = Time.get_global_time()
                                 print("sunflower-select")
 
-                        elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sibzamini-select
+                        elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SIBZAMINI_BAR):  # sibzamini-select
+                            print("sibzamini-select1")
                             if Sibzamini.is_available() and Sibzamini.is_sun_enough(self.user.get_nums_of_sun()):
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sibzamini.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 Sibzamini.last_time_selected = Time.get_global_time()
-                                print("sibzamini-select")
+                                print("sibzamini-select2")
 
                         elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):  # sun-pick
                             self.user.increment_nums_of_sun()
@@ -310,7 +314,7 @@ class Game:
         return func(event)
     
     def debug(self, cur_time):
-        if self.time.get_current_time() == cur_time:
+        if math.floor(self.time.get_current_time()) == cur_time:
             self.bot.print_all_debug()
             # exit()
 

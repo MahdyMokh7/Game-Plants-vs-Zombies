@@ -7,6 +7,26 @@ import sys
 
 class UI:
 
+    PEA_SHOOTER_GRAY_IMAGE_PATH = os.path.join("Image files", "gray peashooter.png")
+    pea_shooter_gray_image = pygame.image.load(PEA_SHOOTER_GRAY_IMAGE_PATH)
+    #IMAGE_SIZE = (70, 90)
+    #gray_image = pygame.transform.scale(gray_image, IMAGE_SIZE)
+
+    SNOW_PEA_SHOOTER_GRAY_IMAGE_PATH = os.path.join("Image files", "gray snowpeashooter.png")
+    snow_pea_shooter_gray_image = pygame.image.load(SNOW_PEA_SHOOTER_GRAY_IMAGE_PATH)
+    #IMAGE_SIZE = (70, 90)
+    #gray_image = pygame.transform.scale(gray_image, IMAGE_SIZE)
+
+    SUNFLOWER_GRAY_IMAGE_PATH = os.path.join("Image files", "gray sunflower.png")
+    sun_flower_gray_image = pygame.image.load(SUNFLOWER_GRAY_IMAGE_PATH)
+    #IMAGE_SIZE = (70, 90)
+    #gray_image = pygame.transform.scale(gray_image, IMAGE_SIZE)
+
+    SIBZAMINI_GRAY_IMAGE_PATH = os.path.join("Image files", "gray sibzamini.png")
+    sibzamini_gray_image = pygame.image.load(SIBZAMINI_GRAY_IMAGE_PATH)
+    #IMAGE_SIZE = (70, 90)
+    #gray_image = pygame.transform.scale(gray_image, IMAGE_SIZE)
+
     START_PAGE_START_BAR_RECTANGLE_POSITION = {
         "x_left_pos": 458,
         "x_right_pos": 738,
@@ -171,8 +191,10 @@ class UI:
 
     def draw_timer(self):
         """Draw the timer in the upper right corner of the screen."""
-        font = pygame.font.Font(None, 50)  # Use a built-in font with size 36
-        current_time = self.time.get_current_time()
+        font_path = "OpenSans-Semibold.ttf"  # Replace with the name of your downloaded font file  
+        font_size = 33
+        font = pygame.font.Font(font_path, font_size)  # Use your custom font  
+        current_time = math.floor(self.time.get_current_time())
         minutes = current_time // 60
         seconds = current_time % 60
         time_str = f"{minutes:02}:{seconds:02}"  # Format as mm:ss
@@ -201,13 +223,27 @@ class UI:
 
 
 
+    
         """Draw the sun-bar in the upper letf corner of the screen."""
-        font = pygame.font.Font(None, 50)  # Use a built-in font with size 36
-        sun_str = f"{current_sun}"  # Format normally
-        text_surface = font.render(sun_str, True, (0, 0, 0))  # White color text
+        # Load your custom font  
+        font_path = "OpenSans-Semibold.ttf"  # Replace with the name of your downloaded font file  
+        font_size = 33
+        font = pygame.font.Font(font_path, font_size)  # Use your custom font  
 
-        text_rect = ((UI.IN_GAME_PAGE_SUN_BAR["x_left_pos"] + UI.IN_GAME_PAGE_SUN_BAR["x_right_pos"]) // 2 - 11, (UI.IN_GAME_PAGE_SUN_BAR["y_up_pos"] + UI.IN_GAME_PAGE_SUN_BAR["y_down_pos"]) // 2 - 13) 
-        self.screen.blit(text_surface, text_rect)  # Draw in upper right
+        # Format the number to be displayed  
+        sun_str = f"{current_sun:,}"  # Format with commas as a thousands separator  
+        text_surface = font.render(sun_str, True, (0, 0, 0))  # Black color text  
+
+        # Calculate the position to display the text  
+        text_rect = (  
+            (UI.IN_GAME_PAGE_SUN_BAR["x_left_pos"] + UI.IN_GAME_PAGE_SUN_BAR["x_right_pos"]) / 2 - 13,  
+            (UI.IN_GAME_PAGE_SUN_BAR["y_up_pos"] + UI.IN_GAME_PAGE_SUN_BAR["y_down_pos"]) / 2 - 23  
+        )  
+
+        # Draw the text on the screen  
+        self.screen.blit(text_surface, text_rect)  # Draw in the specified position   
+
+
 
     def apply_blur(self, surface, scale_factor=0.1):
         """Apply a simple blur effect by scaling down and back up."""
@@ -295,6 +331,13 @@ class UI:
         white = (255,255,255)
         black = (0, 0, 0)
         self.screen.fill(black)
+
+    def pea_shooter_gray_mod_render(self):
+        x = 0
+        y = 125
+        self.draw_object(self.pea_shooter_gray_image, x, y)
+
+        
 
 if __name__ == "__main__":
 

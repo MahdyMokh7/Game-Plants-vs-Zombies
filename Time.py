@@ -29,9 +29,9 @@ class Time:
         """Return the current elapsed time in seconds, rounded down."""
         if self._running:
             # If the timer is running, return the sum of the elapsed time and the time since the last start, rounded down
-            return math.floor(time.time() - self._start_time)
+            return time.time() - self._start_time
         else:
-            return math.floor(self._elapsed_time)
+            return self._elapsed_time
 
 if __name__ == "__main__":
     time.sleep(2)

@@ -56,10 +56,10 @@ class Map:
     def find_tile_by_pos(self, x_mos_pos , y_mos_pos) -> Tile:
         i_int_temp = (y_mos_pos - Map.START_MAP_POS_Y) // Tile.TILE_SIZE[1]
         j_int_temp = (x_mos_pos - Map.START_MAP_POS_X) // Tile.TILE_SIZE[0]
-        print("wwwwwww::",i_int_temp)
-        print("wwwwwww::",j_int_temp)
-        print("y_mos_pos:  ", y_mos_pos)
-        print('x_mox_pos:  ', x_mos_pos)
+        # print("wwwwwww::",i_int_temp)
+        # print("wwwwwww::",j_int_temp)
+        # print("y_mos_pos:  ", y_mos_pos)
+        # print('x_mox_pos:  ', x_mos_pos)
 
         if 0 <= i_int_temp < Map.NUM_OF_ROWS and 0 <= j_int_temp < Map.NUM_OF_COLS:
             ###
@@ -117,7 +117,10 @@ class Map:
         self.all_bullets_2d[row_num].append(bullet)
 
 
-    def remove_plant(self, plant, row_num):  
+    def remove_plant(self, plant, row_num): 
+        print("plant:  ", plant) 
+        print("row plants :  ", self.all_plants_2d[row_num])
+        print("row_num: ", row_num)
         self.all_plants_2d[row_num].remove(plant)
         for tile in self.tiles[row_num]:
             if tile.is_position_in_this_tile(plant.get_x_pos(), plant.get_y_pos()):
@@ -125,7 +128,8 @@ class Map:
                 break
 
     def remove_bullet(self, bullet, row_num):
-        self.all_bullets_2d[row_num].remove(bullet)
+        if bullet in self.all_bullets_2d[row_num]:
+            self.all_bullets_2d[row_num].remove(bullet)
 
     def remove_zombie(self, zombie, row_num):
         print("remove zombie was called")
