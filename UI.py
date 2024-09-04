@@ -110,12 +110,16 @@ class UI:
     LAYOUT_PAGE_IMAGE_PATH = os.path.join("Image files", "layout_page_image1.png")
     IN_GAME_PAGE_IMAGE_PATH = os.path.join("Image files", "background_completed_img.png")
     MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image5.png")
+    VICTORY_PAGE_IMAGE_PATH = os.path.join("Image files", "Victory.png")
+    LOST_PAGE_IMAGE_PATH = os.path.join("Image files", "Game Over Screen1.png")
 
     # Page identifiers
     START_PAGE = "start_section"
     LAYOUT_PAGE = "layout_page"
     IN_GAME_PAGE = "in_game_page"
     MENU_BAR_PAGE = "menu_bar_page"
+    VICTORY_PAGE = "victory"
+    LOST_PAGE = "lost_page"
 
     # Messages
     WINNING_MESSAGE = "Congrats! You won :)"
@@ -138,6 +142,12 @@ class UI:
         self.in_game_image = pygame.image.load(self.IN_GAME_PAGE_IMAGE_PATH)
         self.in_game_image = pygame.transform.scale(self.in_game_image, (self.screen.get_width(), self.screen.get_height()))
 
+        self.victory_image = pygame.image.load(self.VICTORY_PAGE_IMAGE_PATH)
+        # self.victory_image = pygame.transform.scale(self.victory_image, (self.screen.get_width(), self.screen.get_height()))
+
+        self.lost_image = pygame.image.load(self.LOST_PAGE_IMAGE_PATH)
+        # self.lost_image = pygame.transform.scale(self.lost_image, (self.screen.get_width(), self.screen.get_height()))
+
         self.menu_bar_image = pygame.image.load(self.MENU_BAR_PAGE_IMAGE_PATH)
 
         # Dict page -> image
@@ -145,7 +155,9 @@ class UI:
             UI.START_PAGE: self.start_image,
             UI.LAYOUT_PAGE: self.layout_image,
             UI.IN_GAME_PAGE: self.in_game_image,
-            UI.MENU_BAR_PAGE: self.menu_bar_image
+            UI.MENU_BAR_PAGE: self.menu_bar_image,
+            UI.VICTORY_PAGE: self.victory_image,
+            UI.LOST_PAGE: self.lost_image
         } 
 
 
@@ -218,6 +230,31 @@ class UI:
         self.screen.blit(self.in_game_image, (0, 0))
         self.current_page = self.IN_GAME_PAGE
 
+    def draw_victory_page(self):
+        """Draw the won page background."""
+        image_rect = self.victory_image.get_rect()
+        x_position = (self.screen.get_width() - image_rect.width) // 2  # Center horizontally
+        y_position = (self.screen.get_height() - image_rect.height) // 2  # Center vertically
+
+        self.screen.blit(self.victory_image, x_position, y_position)
+        self.current_page = self.VICTORY_PAGE
+
+    def draw_lost_page(self):
+        """Draw the won page background."""
+        image_rect = self.lost_image.get_rect()
+        x_position = (self.screen.get_width() - image_rect.width) // 2  # Center horizontally
+        y_position = (self.screen.get_height() - image_rect.height) // 2  # Center vertically
+
+        self.screen.blit(self.lost_image, x_position, y_position)
+        self.current_page = self.LOST_PAGE
+
+    def draw_end_game_text(self):
+        # Set up text
+        white = (255, 255, 255)
+        text = pygame.font.render("Press any key to Exit", True, white)
+        text_rect = text.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() - 50))
+        self.screen.blit(text, text_rect)
+
     def draw_menu_bar_page(self):
         """Draw the menu bar image on top of the current background without scaling."""
         background_image = self.page_image_dict[self.prev_page]
@@ -256,7 +293,8 @@ class UI:
 
     def clear_screen(self):
         white = (255,255,255)
-        self.screen.fill(white)
+        black = (0, 0, 0)
+        self.screen.fill(black)
 
 if __name__ == "__main__":
 

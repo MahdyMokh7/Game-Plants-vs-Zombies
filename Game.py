@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+import pygame.examples
 from Time import Time
 from UI import UI
 from Map import Map
@@ -251,6 +253,29 @@ class Game:
                 if event.button == 1:  # Left click
                     pass
         
+    def run_victory_page(self, event):
+        print(UI.WINNING_MESSAGE) 
+        self.ui.clear_screen()
+        self.ui.draw_victory_page()
+        self.ui.draw_end_game_text()
+
+        self.audioManager.play_music(AudioManager.VICTORY, loop=False)
+
+        if event.type == pygame.KEYDOWN:
+            pygame.quit()
+
+
+
+    def run_lost_page(self, event):
+        print(UI.LOSING_MESSAGE) 
+        self.ui.clear_screen()
+        self.ui.draw_lost_page()
+        self.ui.draw_end_game_text()
+
+        self.audioManager.play_music(AudioManager.DEFEAT, loop=False)
+
+        if event.type == pygame.KEYDOWN:
+            pygame.quit()
 
     ###################################################
     def run_in_game_automatic(self):
@@ -264,13 +289,9 @@ class Game:
 
         status = self.bot.run()
         if status == Bot.WON_STATE:
-            print("Victory")  # needs page dev. and work to do
-            pygame.quit()
-            sys.exit()
+            self.ui.current_page = UI.VICTORY_PAGE
         elif status == Bot.LOST_STATE:
-            print("Lost")  # needs page dev. and work to do  
-            pygame.quit()
-            sys.exit()
+            self.ui.current_page = UI.LOST_PAGE
         else:
             pass
     
@@ -281,7 +302,9 @@ class Game:
             UI.START_PAGE: self.run_start_page,
             UI.LAYOUT_PAGE: self.run_layout_page,
             UI.IN_GAME_PAGE: self.run_in_game,
-            UI.MENU_BAR_PAGE: self.run_menu_page
+            UI.MENU_BAR_PAGE: self.run_menu_page,
+            UI.VICTORY_PAGE: self.run_victory_page,
+            UI.LOST_PAGE: self.run_lost_page
         }
         func = switcher.get(option, lambda: "ERROR: Invalid option to run page")
         return func(event)
@@ -302,7 +325,7 @@ class Game:
         clock = pygame.time.Clock()  # Initialize the clock for framerate control
         while self.running:
             self.handle_events()
-            self.debug(20)  #################
+            # self.debug(20)  #################
             clock.tick(15)  # 60FPS
             pygame.display.flip()  # Update screen
 
