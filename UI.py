@@ -192,38 +192,17 @@ class UI:
     def draw_timer(self):
         """Draw the timer in the upper right corner of the screen."""
         font_path = "OpenSans-Semibold.ttf"  # Replace with the name of your downloaded font file  
-        font_size = 33
+        font_size = 40
         font = pygame.font.Font(font_path, font_size)  # Use your custom font  
         current_time = math.floor(self.time.get_current_time())
         minutes = current_time // 60
         seconds = current_time % 60
         time_str = f"{minutes:02}:{seconds:02}"  # Format as mm:ss
         text_surface = font.render(time_str, True, (0, 0, 0))  # White color text
-        text_rect = ((UI.IN_GAME_PAGE_TIMER_BAR["x_left_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["x_right_pos"]) // 2 - 20, (UI.IN_GAME_PAGE_TIMER_BAR["y_up_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["y_down_pos"]) // 2 - 13) 
+        text_rect = ((UI.IN_GAME_PAGE_TIMER_BAR["x_left_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["x_right_pos"]) // 2 - 30, (UI.IN_GAME_PAGE_TIMER_BAR["y_up_pos"] + UI.IN_GAME_PAGE_TIMER_BAR["y_down_pos"]) // 2 - 30) 
         self.screen.blit(text_surface, text_rect)  # Draw in upper right
 
     def draw_sun_bar(self, current_sun):
-        # # Calculate the current time in mm:ss format
-        # total_seconds = time_obj.get_current_time()
-        # minutes = total_seconds // 60
-        # seconds = total_seconds % 60
-        # time_string = f"{minutes:02}:{seconds:02}"
-
-        # # Position the timer box using the provided coordinates
-        # box_x = self.x_left_pos
-        # box_y = self.y_up_pos
-
-        # # Draw the white rectangle for the timer box
-        # timer_rect = pygame.Rect(box_x, box_y, self.TIMER_BAR_WIDTH, self.TIMER_BAR_HEIGHT)
-        # pygame.draw.rect(self.screen, (255, 255, 255), timer_rect)
-
-        # # Render the timer text
-        # text_surface = self.font.render(time_string, True, (0, 0, 0))  # Black text
-        # text_rect = text_surface.get_rect(center=timer_rect.center)
-
-
-
-    
         """Draw the sun-bar in the upper letf corner of the screen."""
         # Load your custom font  
         font_path = "OpenSans-Semibold.ttf"  # Replace with the name of your downloaded font file  
@@ -272,7 +251,7 @@ class UI:
         x_position = (self.screen.get_width() - image_rect.width) // 2  # Center horizontally
         y_position = (self.screen.get_height() - image_rect.height) // 2  # Center vertically
 
-        self.screen.blit(self.victory_image, x_position, y_position)
+        self.screen.blit(self.victory_image, (x_position, y_position))
         self.current_page = self.VICTORY_PAGE
 
     def draw_lost_page(self):
@@ -281,13 +260,16 @@ class UI:
         x_position = (self.screen.get_width() - image_rect.width) // 2  # Center horizontally
         y_position = (self.screen.get_height() - image_rect.height) // 2  # Center vertically
 
-        self.screen.blit(self.lost_image, x_position, y_position)
+        self.screen.blit(self.lost_image, (x_position, y_position))
         self.current_page = self.LOST_PAGE
 
     def draw_end_game_text(self):
-        # Set up text
+        # Set up 
+        # Set up font
+        font_size = 50
+        font = pygame.font.SysFont('Arial', font_size, italic=True)
         white = (255, 255, 255)
-        text = pygame.font.render("Press any key to Exit", True, white)
+        text = font.render("Press any key to Exit", True, white)
         text_rect = text.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() - 50))
         self.screen.blit(text, text_rect)
 

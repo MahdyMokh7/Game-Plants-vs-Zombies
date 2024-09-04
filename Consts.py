@@ -9,7 +9,7 @@ with open("consts.json", "r") as file:
 # print(salam["mahdy"])
 
 #scale
-SCALE = 0.1
+SCALE = 0.15
 
 #sun value
 SUN_VALUE = 25
@@ -88,7 +88,7 @@ DICT_Y_POS_ROW = {
 }
 
 # game time (sc)
-GAME_TIME_IN_SEC = 300
+GAME_TIME_IN_SEC = 100
 
 
 

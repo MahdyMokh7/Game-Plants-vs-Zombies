@@ -265,8 +265,9 @@ class Game:
 
         self.audioManager.play_music(AudioManager.VICTORY, loop=False)
 
-        if event.type == pygame.KEYDOWN:
-            pygame.quit()
+        if event is not None:
+            if event.type == pygame.KEYDOWN:
+                pygame.quit()
 
 
 
@@ -278,8 +279,9 @@ class Game:
 
         self.audioManager.play_music(AudioManager.DEFEAT, loop=False)
 
-        if event.type == pygame.KEYDOWN:
-            pygame.quit()
+        if event is not None:
+            if event.type == pygame.KEYDOWN:
+                pygame.quit()
 
     ###################################################
     def run_in_game_automatic(self):
@@ -294,8 +296,12 @@ class Game:
         status = self.bot.run()
         if status == Bot.WON_STATE:
             self.ui.current_page = UI.VICTORY_PAGE
+            self.audioManager.stop_music()
+            self.run_victory_page(None)
         elif status == Bot.LOST_STATE:
             self.ui.current_page = UI.LOST_PAGE
+            self.audioManager.stop_music()
+            self.run_lost_page(None)
         else:
             pass
     
