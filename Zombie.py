@@ -24,13 +24,14 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         self.last_time_hit_by_snow_pea = 0
         self.is_using_temp_speed = False
         self.ui = ui
+        self.last_time_hit_plant = 0 
 
     def is_still_alive(self):  
         return self.health > 0  
 
-    @abstractmethod  
-    def hit(self, plant):  
-        pass
+     
+    def hit(self): 
+        self.last_time_hit_plant = self.time.get_current_time() 
     
     def move(self):
         if self.is_moving:
@@ -66,7 +67,8 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
         self.is_moving = True
 
     def got_hit(self, damage):
-        self.health-=damage
+        self.health -= damage
+        
 
     def did_arrive_home(self):
         if self.x_pos <= Map.START_MAP_POS_X:
@@ -84,6 +86,9 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
     def get_x_pos(self):
         return self.x_pos
 
+    def is_time_to_hit(self):
+        return (self.time.get_current_time() - self.last_time_hit_plant) >= self.hit_rate
+
 class RegularZombie(Zombie):  
 
     NAME = "RegularZombie"
@@ -95,8 +100,8 @@ class RegularZombie(Zombie):
 
     def __init__(self, maap, time, x_pos , y_pos, row_num, ui):  
         super().__init__(REGULAR_ZOMBIE_DAMAGE, REGULAR_ZOMBIE_HEALTH, REGULAR_ZOMBIE_HIT_RATE, REGULAR_ZOMBIE_SPEED, maap, time, x_pos , y_pos, row_num , ui)  
-
-    def hit(self, plant):  
+    def hit(self, plant):
+        super().hit()
         plant.got_hit(self.damage)
 
 
@@ -110,9 +115,14 @@ class RegularZombie(Zombie):
         super().got_hit(bullet.get_damage())
         if bullet.NAME == SnowPea.NAME:
             if self.is_using_temp_speed == False:
-                (self.speed) = (self.speed) // SnowPea.SPEED_ACCELERATE
+                (self.speed) = (self.speed) / SnowPea.SPEED_ACCELERATE
               
             self.last_time_hit_by_snow_pea = self.time.get_current_time()
+            self.is_using_temp_speed = True
+ 
+        if not self.is_alive():
+            print("RRR zombie died now   ", self.row_num)
+            self.zombie_died_handle()##############
     
     def zombie_died_handle(self):
         ############
@@ -129,6 +139,7 @@ class RegularZombie(Zombie):
         y = self.y_pos - int(RegularZombie.image.get_rect().height * (1/2)) - 20
         self.ui.draw_object(RegularZombie.image, x, y)
 
+    
 
 
 class GiantZombie(Zombie):  
@@ -142,7 +153,8 @@ class GiantZombie(Zombie):
     def __init__(self, maap, time,  x_pos , y_pos, row_num, ui):  
         super().__init__(GIANT_ZOMBIE_DAMAGE, GIANT_ZOMBIE_HEALTH, GIANT_ZOMBIE_HIT_RATE, GIANT_ZOMBIE_SPEED, maap, time, x_pos , y_pos, row_num, ui)  
 
-    def hit(self, plant):  
+    def hit(self, plant):
+        super().hit()
         plant.got_hit(self.damage)
 
     def get_rect(self):
@@ -156,11 +168,12 @@ class GiantZombie(Zombie):
         super().got_hit(bullet.get_damage())
         if bullet.NAME == SnowPea.NAME:
             if self.is_using_temp_speed == False:
-                (self.speed) = (self.speed) // SnowPea.SPEED_ACCELERATE
+                (self.speed) = (self.speed) / SnowPea.SPEED_ACCELERATE
               
             self.last_time_hit_by_snow_pea = self.time.get_current_time()
-
+            self.is_using_temp_speed = True
         if not self.is_alive():
+            print("zombie died now   ", self.row_num)
             self.zombie_died_handle()##############
             
     def zombie_died_handle(self):

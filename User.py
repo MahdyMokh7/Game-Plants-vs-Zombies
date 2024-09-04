@@ -37,7 +37,7 @@ class User:
                 else:
                     print("ERROR:  plant type not valid - 39User.py")
 
-            self.maap.add_plant(new_plant, tile)
+                self.maap.add_plant(new_plant, tile)
             
 
     def increment_nums_of_sun(self):
