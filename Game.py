@@ -182,6 +182,9 @@ class Game:
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 PeaShooter.last_time_selected = Time.get_global_time()
                                 print("pea-shooter-select")
+                                self.ui.pea_shooter_gray_mod_render()
+                                print("pea_shooter_gray_mod_render")
+                                
 
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR):  # snowpeashooter-select
                             if SnowPeaShooter.is_available() and SnowPeaShooter.is_sun_enough(self.user.get_nums_of_sun()):

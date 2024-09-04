@@ -154,6 +154,8 @@ class PeaShooter(AttackerPlant):
     image = pygame.image.load(IMAGE_PATH)
     IMAGE_SIZE = (70, 90)
     image = pygame.transform.scale(image, IMAGE_SIZE)
+
+    
     NAME = "PeaShooter"
     last_time_selected = 0
     DISTANCE_MOUTH_TO_PEA_Y = 35

@@ -1,35 +1,21 @@
-import pygame  
-import sys  
 
-# Initialize Pygame  
-pygame.init()  
+        # Load your custom font  
+        font_path = "OpenSans-Semibold.ttf"  # Replace with the name of your downloaded font file  
+        font_size = 33
+        font = pygame.font.Font(font_path, font_size)  # Use your custom font  
 
-# Set up the display  
-width, height = 700, 700  
-window = pygame.display.set_mode((width, height))  
-pygame.display.set_caption("Rectangle in Center")  
+        # Format the number to be displayed  
+        sun_str = f"{current_sun:,}"  # Format with commas as a thousands separator  
+        text_surface = font.render(sun_str, True, (0, 0, 0))  # Black color text  
 
-# Define colors  
-background_color = (255, 255, 255)  # White  
-rectangle_color = (255, 0, 0)  # Red  
+        # Calculate the position to display the text  
+        text_rect = (  
+            (UI.IN_GAME_PAGE_SUN_BAR["x_left_pos"] + UI.IN_GAME_PAGE_SUN_BAR["x_right_pos"]) / 2 - 13,  
+            (UI.IN_GAME_PAGE_SUN_BAR["y_up_pos"] + UI.IN_GAME_PAGE_SUN_BAR["y_down_pos"]) / 2 - 23  
+        )  
 
-# Rectangle properties  
-rectangle_width = 50  
-rectangle_height = 100  
-rectangle_position = (width // 2 - rectangle_width // 2, height // 2 - rectangle_height // 2)  # Center of the window  
+        # Draw the text on the screen  
+        self.screen.blit(text_surface, text_rect)  # Draw in the specified position   
 
-# Main loop  
-while True:  
-    for event in pygame.event.get():  
-        if event.type == pygame.QUIT:  
-            pygame.quit()  
-            sys.exit()  
-
-    # Fill the background  
-    window.fill(background_color)  
-
-    # Draw the rectangle  
-    pygame.draw.rect(window, rectangle_color, (rectangle_position[0], rectangle_position[1], rectangle_width, rectangle_height))  
-
-    # Update the display  
-    pygame.display.flip()
+        # Don't forget to update the display after blitting  
+        pygame.display.flip()
