@@ -58,7 +58,7 @@ class Game:
         return False
 
     def run_start_page(self, event):
-        self.ui.draw_start_page()
+        self.ui.draw_start_page()  
         # self.audioManager.play_music(AudioManager.DEFEAT)
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
