@@ -295,6 +295,7 @@ class Game:
 
         status = self.bot.run()
         if status == Bot.WON_STATE:
+            print("fjvfdlkvkfkfkffkkkkkkkkkk")
             self.ui.current_page = UI.VICTORY_PAGE
             self.audioManager.stop_music()
             self.run_victory_page(None)

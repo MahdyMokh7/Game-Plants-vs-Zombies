@@ -10,7 +10,7 @@ from Plant import *
 
 class Bot:
 
-    TOTAL_GAME_TIME = 100  # (sc)
+    TOTAL_GAME_TIME = GAME_TIME_IN_SEC  # (sc)
     WON_STATE = "won" 
     LOST_STATE = "lost"
     IN_GAME_STATE = "in_game"
@@ -26,7 +26,7 @@ class Bot:
         self.total_attack_time = 0
         self.number_of_zombies_per_10_second = 3  # Initial zombies per 10 seconds
         self.number_of_zombies_added_per_10_second = 1  
-        self.zombie_production_freq = 10 / self.number_of_zombies_per_10_second 
+        self.zombie_production_freq = DISTANCE_ZOMBIE_PLANT_EAT / self.number_of_zombies_per_10_second 
         self.sun_production_freq = SUN_INTERVAL  # Sun production frequency in (sec)
         self.time = time
         self.maap = maap
@@ -39,10 +39,10 @@ class Bot:
         self.ui = ui
 
     def upadate_zombie_produciton_freq(self):  # its called when the number of zombies get changed per 10 seconds
-        self.zombie_production_freq = 10 / self.number_of_zombies_per_10_second
+        self.zombie_production_freq = TIME_ZOMBIE_CREATION_UPDATE / self.number_of_zombies_per_10_second
 
     def update_number_of_zombies_per_second(self):
-        if self.time.get_current_time() - self.last_10sec_update_time >= 10:
+        if self.time.get_current_time() - self.last_10sec_update_time >= TIME_ZOMBIE_CREATION_UPDATE:
             self.last_10sec_update_time = self.time.get_current_time()
             self.number_of_zombies_per_10_second += self.number_of_zombies_added_per_10_second
             self.upadate_zombie_produciton_freq()
@@ -164,6 +164,7 @@ class Bot:
             for bullet in self.maap.all_bullets_2d[row_num]:
                 for zombie in self.maap.all_zombies_2d[row_num]:
                     if bullet.did_colide(zombie):   ######################
+                        print(zombie.health)
                         bullet.hit(zombie)
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
@@ -175,7 +176,7 @@ class Bot:
                     self.game_state = Bot.LOST_STATE
 
     def get_game_state(self):
-        if self.time_spent >= Bot.TOTAL_GAME_TIME:
+        if self.time.get_current_time() >= Bot.TOTAL_GAME_TIME:
             self.game_state = Bot.WON_STATE
 
         return self.game_state
