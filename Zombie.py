@@ -92,7 +92,7 @@ class Zombie(ABC):     ### i can make did_colide a method for Zombie (check self
 class RegularZombie(Zombie):  
 
     NAME = "RegularZombie"
-    ZOMBIE_SIZE = (60,110)
+    ZOMBIE_SIZE = (80,130)
     IMAGE_PATH = os.path.join("Image files", "regular zombie.png")
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, ZOMBIE_SIZE)
@@ -145,7 +145,7 @@ class RegularZombie(Zombie):
 class GiantZombie(Zombie):  
 
     NAME = "GiantZombie"
-    ZOMBIE_SIZE = (150, 150)
+    ZOMBIE_SIZE = (190, 170)
     IMAGE_PATH = os.path.join("Image files", "giant zombie.png")
     image = pygame.image.load(IMAGE_PATH)
     image = pygame.transform.scale(image, ZOMBIE_SIZE)
