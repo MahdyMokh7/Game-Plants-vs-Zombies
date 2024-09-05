@@ -11,7 +11,7 @@ class User:
         self.maap = maap
         self.ui = ui
 
-    def place_the_plant(self, plant_type, pos_x, pos_y):
+    def place_the_plant(self, plant_type, pos_x, pos_y):  # if succeeded returns True
         new_plant = None
         tile = self.maap.find_tile_by_pos(pos_x, pos_y)
         if tile is not None:
@@ -38,6 +38,11 @@ class User:
                     print("ERROR:  plant type not valid - 39User.py")
 
                 self.maap.add_plant(new_plant, tile)
+
+        if new_plant is not None:
+            return True
+        else:
+            return False
             
 
     def increment_nums_of_sun(self):
@@ -52,3 +57,23 @@ class User:
 
     def get_nums_of_sun(self):
         return self.nums_of_sun
+    
+    def lack_of_sun_gray_mode(self):
+        if not PeaShooter.is_sun_enough(self.nums_of_sun):
+            self.ui.pea_shooter_gray_mode_render()
+        if not SnowPeaShooter.is_sun_enough(self.nums_of_sun):
+            self.ui.snow_pea_shooter_gray_mode_render()
+        if not Sunflower.is_sun_enough(self.nums_of_sun):
+            self.ui.sunflower_gray_mode_render()
+        if not Sibzamini.is_sun_enough(self.nums_of_sun):
+            self.ui.sibzamini_gray_mode_render()
+
+    def cool_down_gray_mode(self):
+        if not PeaShooter.is_available():
+            self.ui.pea_shooter_gray_mode_render()
+        if not SnowPeaShooter.is_available():
+            self.ui.snow_pea_shooter_gray_mode_render()
+        if not Sunflower.is_available():
+            self.ui.sunflower_gray_mode_render()
+        if not Sibzamini.is_available():
+            self.ui.sibzamini_gray_mode_render()

@@ -154,6 +154,7 @@ class PeaShooter(AttackerPlant):
     image = pygame.image.load(IMAGE_PATH)
     IMAGE_SIZE = (70, 90)
     image = pygame.transform.scale(image, IMAGE_SIZE)
+    PRICE = 100
 
     
     NAME = "PeaShooter"
@@ -220,6 +221,7 @@ class SnowPeaShooter(AttackerPlant):
     last_time_selected = 0
     DISTANCE_MOUTH_TO_SNOW_PEA_Y = 35
     DISTANCE_MOUTH_TO_SNOW_PEA_X = 35
+    PRICE = 175
 
     @staticmethod
     def is_sun_enough(nums_of_sun):
@@ -273,6 +275,7 @@ class Sunflower(ProviderPlant):
     image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "SunFlower"
     last_time_selected = 0
+    PRICE = 50
 
     @staticmethod
     def is_sun_enough(nums_of_sun):
@@ -322,6 +325,7 @@ class Sibzamini(DefenderPlant):
     image = pygame.transform.scale(image, IMAGE_SIZE)
     NAME = "Sibzamini"
     last_time_selected = 0
+    PRICE = 50
 
     @staticmethod
     def is_sun_enough(nums_of_sun):

@@ -129,7 +129,7 @@ class UI:
     START_PAGE_IMAGE_PATH = os.path.join("Image files", "start_img.png")
     LAYOUT_PAGE_IMAGE_PATH = os.path.join("Image files", "layout_page_image1.png")
     IN_GAME_PAGE_IMAGE_PATH = os.path.join("Image files", "background_completed_img.png")
-    MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image5.png")
+    MENU_BAR_PAGE_IMAGE_PATH = os.path.join("Image files", "menu_bar_image6.png")
     VICTORY_PAGE_IMAGE_PATH = os.path.join("Image files", "Victory.png")
     LOST_PAGE_IMAGE_PATH = os.path.join("Image files", "Game Over Screen1.png")
 
@@ -169,6 +169,7 @@ class UI:
         # self.lost_image = pygame.transform.scale(self.lost_image, (self.screen.get_width(), self.screen.get_height()))
 
         self.menu_bar_image = pygame.image.load(self.MENU_BAR_PAGE_IMAGE_PATH)
+        self.menu_bar_image = pygame.transform.scale(self.menu_bar_image, (510, 600))
 
         # Dict page -> image
         self.page_image_dict = {
@@ -221,8 +222,6 @@ class UI:
 
         # Draw the text on the screen  
         self.screen.blit(text_surface, text_rect)  # Draw in the specified position   
-
-
 
     def apply_blur(self, surface, scale_factor=0.1):
         """Apply a simple blur effect by scaling down and back up."""
@@ -314,10 +313,25 @@ class UI:
         black = (0, 0, 0)
         self.screen.fill(black)
 
-    def pea_shooter_gray_mod_render(self):
-        x = 0
-        y = 125
+    def pea_shooter_gray_mode_render(self):
+        x = UI.IN_GAME_PAGE_PEASHOOTER_BAR['x_left_pos']
+        y = UI.IN_GAME_PAGE_PEASHOOTER_BAR['y_up_pos']
         self.draw_object(self.pea_shooter_gray_image, x, y)
+    
+    def snow_pea_shooter_gray_mode_render(self):
+        x = UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR['x_left_pos']
+        y = UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR['y_up_pos']
+        self.draw_object(self.snow_pea_shooter_gray_image, x, y)
+    
+    def sibzamini_gray_mode_render(self):
+        x = UI.IN_GAME_PAGE_SIBZAMINI_BAR['x_left_pos']
+        y = UI.IN_GAME_PAGE_SIBZAMINI_BAR['y_up_pos']
+        self.draw_object(self.sibzamini_gray_image, x, y)
+    
+    def sunflower_gray_mode_render(self):
+        x = UI.IN_GAME_PAGE_SUNFLOWER_BAR['x_left_pos']
+        y = UI.IN_GAME_PAGE_SUNFLOWER_BAR['y_up_pos']
+        self.draw_object(self.sun_flower_gray_image, x, y)
 
         
 

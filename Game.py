@@ -184,8 +184,6 @@ class Game:
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
                                 PeaShooter.last_time_selected = Time.get_global_time()
                                 print("pea-shooter-select")
-                                self.ui.pea_shooter_gray_mod_render()
-                                print("pea_shooter_gray_mod_render")
                                 
 
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SNOWPEASHOOTER_BAR):  # snowpeashooter-select
@@ -222,31 +220,28 @@ class Game:
                     if event.button == 1:  # Left click
                         mouse_pos = event.pos
 
-                        if PeaShooter.NAME == self.selected_plant_type:   # get gray when not available  # pea-shooter-select
+                        plant_success_status = self.user.place_the_plant(self.selected_plant_type, mouse_pos[0], mouse_pos[1])
+
+                        if PeaShooter.NAME == self.selected_plant_type and plant_success_status:   # get gray when not available  # pea-shooter-plant
                             PeaShooter.last_time_selected = Time.get_global_time()       
                             self.user.dicrease_nums_of_sun(PEA_SHOOTER_PRICE)
                             print("peashooter-planted")
 
-                        elif SnowPeaShooter.NAME == self.selected_plant_type:  # snowpeashooter-select
+                        elif SnowPeaShooter.NAME == self.selected_plant_type and plant_success_status:  # snowpeashooter-plant
                             SnowPeaShooter.last_time_selected = Time.get_global_time()
                             self.user.dicrease_nums_of_sun(SNOW_PEA_SHOOTER_PRICE)
                             print("snowpeashooter-planted")
                         
-                        elif Sunflower.NAME == self.selected_plant_type:  # sunflower-select
+                        elif Sunflower.NAME == self.selected_plant_type and plant_success_status:  # sunflower-plant
                             Sunflower.last_time_selected = Time.get_global_time()
                             self.user.dicrease_nums_of_sun(SUN_FLOWER_PRICE)
                             print("sunflower-planted")
 
-                        elif Sibzamini.NAME == self.selected_plant_type:  # sibzamini-select
+                        elif Sibzamini.NAME == self.selected_plant_type and plant_success_status:  # sibzamini-plant
                             Sibzamini.last_time_selected = Time.get_global_time()
                             self.user.dicrease_nums_of_sun(SIB_ZAMINI_PRICE)
                             print("sibzamini-planted")
 
-                        else:
-                            print("ERROR: not a plant type got selected in the plant type select section!")
-                            sys.exit()
-
-                        self.user.place_the_plant(self.selected_plant_type, mouse_pos[0], mouse_pos[1])
                         self.is_picture_on_hold = False
                         self.selected_plant_type = None
                         self.selected_plant_image = None
@@ -292,6 +287,9 @@ class Game:
         self.ui.draw_sun_bar(self.user.get_nums_of_sun())
         self.audioManager.play_music(AudioManager.IN_GAME)
         self.time.start_time_counting()
+
+        self.user.lack_of_sun_gray_mode()
+        self.user.cool_down_gray_mode()
 
         status = self.bot.run()
         if status == Bot.WON_STATE:
