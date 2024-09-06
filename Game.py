@@ -19,7 +19,7 @@ class Game:
         self.ui = UI(time=self.time, maap=self.maap)   
         self.audioManager = AudioManager()
         self.user = User(self.maap, self.time, self.ui)
-        self.bot = Bot(time=self.time, maap=self.maap, ui=self.ui)
+        self.bot = Bot(time=self.time, maap=self.maap, ui=self.ui, audioManager=self.audioManager)
 
         self.is_picture_on_hold = False  # picture is on hold but hasnt yet be planted
         self.selected_plant_type = None  # the picture (plant type) on hold 
@@ -71,7 +71,7 @@ class Game:
         if event.type == pygame.MOUSEBUTTONDOWN:   ### delete
             mouse_pos = event.pos
             if event.button == 1:  # Left click
-                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION):
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.START_PAGE_START_BAR_RECTANGLE_POSITION): 
                     self.ui.set_current_page(UI.LAYOUT_PAGE)
                     self.ui.set_prev_page(UI.START_PAGE)
                     print("Clicked inside the rectangle")
@@ -97,10 +97,11 @@ class Game:
         if event.type == pygame.MOUSEBUTTONDOWN:  
             mouse_pos = event.pos
             if event.button == 1:  # Left click
-                if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION):  # adventure
+                if Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_ADVENTURE_BAR_RECTANGLE_POSITION):  # adventure/go to game
                     self.ui.set_current_page(UI.IN_GAME_PAGE)
                     self.ui.set_prev_page(UI.LAYOUT_PAGE)
                     self.audioManager.stop_music()
+                    self.audioManager.play_music_and_wait(AudioManager.START_GAME)
                     print("adventure")
 
                 elif Game.is_mouse_within_rectangles(mouse_pos, UI.LAYOUT_PAGE_OPTIONS_BAR_RECTANGLE_POSITION):  # options
@@ -118,6 +119,9 @@ class Game:
                 pass
 
     def run_menu_page(self, event):
+        if not self.audioManager.sound_got_played:
+            self.audioManager.play_sound_effect(AudioManager.PAUSE)
+            self.audioManager.sound_got_played = True
         self.ui.draw_menu_bar_page()
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
@@ -133,6 +137,7 @@ class Game:
             if event.button == 1:
                 if Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_CONTINUE_BAR_RECTABGLE_POSITION):  # continue
                     self.ui.set_current_page(self.ui.prev_page)
+                    self.audioManager.sound_got_played = False
                     print("continue")
 
                 elif Game.is_mouse_within_rectangles(mouse_pos, UI.MENU_PAGE_SPEED_BAR_RECTABGLE_POSITION):  # speed
@@ -222,22 +227,26 @@ class Game:
                         if PeaShooter.NAME == self.selected_plant_type and plant_success_status:   # get gray when not available  # pea-shooter-plant
                             PeaShooter.last_time_selected = Time.get_global_time()       
                             self.user.dicrease_nums_of_sun(PEA_SHOOTER_PRICE)
+                            self.audioManager.play_sound_effect(AudioManager.PLACE_PLANT)
                             print("peashooter-planted")
 
                         elif SnowPeaShooter.NAME == self.selected_plant_type and plant_success_status:  # snowpeashooter-plant
                             SnowPeaShooter.last_time_selected = Time.get_global_time()
                             self.user.dicrease_nums_of_sun(SNOW_PEA_SHOOTER_PRICE)
+                            self.audioManager.play_sound_effect(AudioManager.PLACE_PLANT)
                             print("snowpeashooter-planted")
                         
                         elif Sunflower.NAME == self.selected_plant_type and plant_success_status:  # sunflower-plant
                             Sunflower.last_time_selected = Time.get_global_time()
                             self.user.dicrease_nums_of_sun(SUN_FLOWER_PRICE)
+                            self.audioManager.play_sound_effect(AudioManager.PLACE_PLANT)
                             print("sunflower-planted")
 
                         elif Sibzamini.NAME == self.selected_plant_type and plant_success_status:  # sibzamini-plant
                             Sibzamini.last_time_selected = Time.get_global_time()
                             print("lastttt time selected: ", Sibzamini.last_time_selected)
                             self.user.dicrease_nums_of_sun(SIB_ZAMINI_PRICE)
+                            self.audioManager.play_sound_effect(AudioManager.PLACE_PLANT)
                             print("sibzamini-planted")
 
                         self.is_picture_on_hold = False
@@ -291,7 +300,6 @@ class Game:
 
         status = self.bot.run()
         if status == Bot.WON_STATE:
-            print("fjvfdlkvkfkfkffkkkkkkkkkk")
             self.ui.current_page = UI.VICTORY_PAGE
             self.audioManager.stop_music()
             self.run_victory_page(None)

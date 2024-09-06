@@ -6,6 +6,8 @@ from Consts import *
 from OtherItem import Sun
 from User import User
 from Plant import *
+from UI import UI
+from AudioManager import AudioManager
 
 
 class Bot:
@@ -15,12 +17,13 @@ class Bot:
     LOST_STATE = "lost"
     IN_GAME_STATE = "in_game"
 
-    def __init__(self, maap: Map, time: Time, ui):
+    def __init__(self, maap: Map, time: Time, ui: UI, audioManager: AudioManager):
         self.types_of_zombies = {
             RegularZombie.NAME: RegularZombie,
             GiantZombie.NAME: GiantZombie
         }  # Dictionary to hold types of zombies
 
+        self.audioManager = audioManager
 
         self.weighted_zombie_list = self.__creat_weighted_zombie_list()
         self.total_attack_time = 0
@@ -37,6 +40,9 @@ class Bot:
         self.game_state = Bot.IN_GAME_STATE
         self.time_spent = self.time.get_current_time()
         self.ui = ui
+
+        self.did_first_zombie_came = False
+        self.did_game_start = False
 
     def upadate_zombie_produciton_freq(self):  # its called when the number of zombies get changed per 10 seconds
         self.zombie_production_freq = TIME_ZOMBIE_CREATION_UPDATE / self.number_of_zombies_per_10_second
@@ -65,13 +71,17 @@ class Bot:
     def is_time_to_produce_zombie(self):
         return self.time.get_current_time() - self.last_zombie_production_time >= self.zombie_production_freq
 
-    def create_zombie(self):
-        try: 
+    def create_zombie(self): 
+        try:
+            if not self.did_first_zombie_came:
+                self.audioManager.play_sound_effect(AudioManager.ZOMBIES_COMING)
+                self.did_first_zombie_came = True
             row_num = self.create_random_position_for_zombie()
             new_zombie = self.create_random_zombie()(
                 self.maap, self.time, Zombie.X_START_POS, DICT_ROW_Y_POS[row_num], row_num, self.ui)
             self.maap.add_zombie(zombie=new_zombie, row_num=row_num)
             self.last_zombie_production_time = self.time.get_current_time()
+
         except Exception as e:
             print(e)
             print("ERROR:  Could not create random zombie")
@@ -154,6 +164,7 @@ class Bot:
                         zombie.stop_movement()   #####
                         if zombie.is_time_to_hit():
                             zombie.hit(plant)
+                            self.audioManager.play_sound_effect(AudioManager.EATING_PLANT)
                         if not plant.is_alive():
                             print("plantttt has died")
                             zombie.start_movement()
@@ -166,6 +177,7 @@ class Bot:
                     if bullet.did_colide(zombie):   ######################
                         print(zombie.health)
                         bullet.hit(zombie)
+                        # self.audioManager.play_sound_effect(AudioManager.BULLET_HIT_ZOMBIE)
                         self.maap.remove_bullet(bullet, row_num)   #####
                         
     def update_all_zombies(self):   # returns the game state (1: still running 0: lost)
@@ -227,9 +239,12 @@ class Bot:
         """
         if its time for creating zombie or sun then create (check the condition here)
         move all the zombies and suns available
-        
-        
         """
+        if not self.did_game_start:
+            self.audioManager.play_sound_effect(AudioManager.IN_GAME_STARTED)
+            self.did_game_start = True
+
+
         if self.is_time_to_produce_sun():
             print("sun added")
             self.create_sun()
