@@ -13,12 +13,34 @@ class AudioManager:
     EATING_PLANT = "eating_plant"
     LAYOUT_PAGE_MUSIC = "layout_page_music"
 
+    NUMBER_OF_IN_GAME_MUSIC = 11
+
     VICTORY_AUDIO_PATH = os.path.join("Audio files", "plants-vs-zombies-victory-theme-made-with-Voicemod.mp3")
     DEFEAT_AUDIO_PATH = os.path.join("Audio files", "game-over-from-plants-vs-zombies-made-with-Voicemod.mp3")
     IN_GAME_AUDIO_PATH = os.path.join("Audio files", "Plants_vs_Zombies_Soundtrack_(Day_Stage).mp3")
     LAYOUT_PAGE_MUSIC_AUDIO_PATH = os.path.join("Audio files", "plants-vs-zombies-main-theme-made-with-Voicemod.mp3")
     SUN_PICKUP_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-sun-pickup.mp3")
     EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-eating-sfx-made-with-Voicemod.mp3")
+
+    IN_GAME_AUDIO_PATH_1 = os.path.join("Audio files", "Main Music 00.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 01.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 02.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 04.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 06.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 07.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 09.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 10.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 11.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "Main Music 12.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "puase.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "start-game-evil-laugh.mp3")
+    EATING_PLANT_EFFECT_PATH = os.path.join("Audio files", "the-zombies-are-coming-sound-effect-made-with-Voicemod.mp3")
+
+
+    @staticmethod
+    def __process_background_music():
+        for _ in range(AudioManager.NUMBER_OF_IN_GAME_MUSIC):
+
 
     def __init__(self):
         self.is_sound_enable = True
