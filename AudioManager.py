@@ -36,7 +36,6 @@ class AudioManager:
     IN_GAME_STARTED_EFFECT_PATH = os.path.join("Audio files", "plants-vs-zombies-ready-set-plant.mp3")
 
 
-
     @staticmethod
     def __process_background_music():
         temp = []
