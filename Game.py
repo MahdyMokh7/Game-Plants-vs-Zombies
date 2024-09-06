@@ -182,7 +182,6 @@ class Game:
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = PeaShooter.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
-                                PeaShooter.last_time_selected = Time.get_global_time()
                                 print("pea-shooter-select")
                                 
 
@@ -191,7 +190,6 @@ class Game:
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = SnowPeaShooter.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
-                                SnowPeaShooter.last_time_selected = Time.get_global_time()
                                 print("snowpeashooter-select")
                             
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SUNFLOWER_BAR):  # sunflower-select
@@ -199,7 +197,6 @@ class Game:
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sunflower.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
-                                Sunflower.last_time_selected = Time.get_global_time()
                                 print("sunflower-select")
 
                         elif Game.is_mouse_within_rectangles(mouse_pos, UI.IN_GAME_PAGE_SIBZAMINI_BAR):  # sibzamini-select
@@ -208,12 +205,12 @@ class Game:
                                 self.is_picture_on_hold = True
                                 self.selected_plant_type = Sibzamini.NAME
                                 self.selected_plant_image = Plant.get_image_by_type(self.selected_plant_type)
-                                Sibzamini.last_time_selected = Time.get_global_time()
                                 print("sibzamini-select2")
 
                         elif self.bot.is_mouse_pos_in_any_sun(mouse_pos):  # sun-pick
                             self.user.increment_nums_of_sun()
                             self.maap.remove_sun(mouse_pos)
+                            self.audioManager.play_sound_effect(AudioManager.SUN_PICKUP)
                             print("sun picked")
 
                 else:
@@ -239,6 +236,7 @@ class Game:
 
                         elif Sibzamini.NAME == self.selected_plant_type and plant_success_status:  # sibzamini-plant
                             Sibzamini.last_time_selected = Time.get_global_time()
+                            print("lastttt time selected: ", Sibzamini.last_time_selected)
                             self.user.dicrease_nums_of_sun(SIB_ZAMINI_PRICE)
                             print("sibzamini-planted")
 

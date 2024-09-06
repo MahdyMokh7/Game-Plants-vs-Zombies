@@ -229,7 +229,7 @@ class SnowPeaShooter(AttackerPlant):
     
     @staticmethod
     def is_available():
-        return Time.get_global_time() - PeaShooter.last_time_selected >= SNOW_PEA_SHOOTER_COOL_DOWN
+        return Time.get_global_time() - SnowPeaShooter.last_time_selected >= SNOW_PEA_SHOOTER_COOL_DOWN
 
     def __init__(self, x_pos, y_pos, map, time, row_num, col_num, ui):  
         super().__init__(SNOW_PEA_SHOOTER_HEALTH, SNOW_PEA_SHOOTER_COOL_DOWN, SNOW_PEA_SHOOTER_PRICE,
@@ -283,7 +283,7 @@ class Sunflower(ProviderPlant):
     
     @staticmethod
     def is_available():
-        return Time.get_global_time() - PeaShooter.last_time_selected >= SUN_FLOWER_COOL_DOWN
+        return Time.get_global_time() - Sunflower.last_time_selected >= SUN_FLOWER_COOL_DOWN
 
     def __init__(self, x_pos, y_pos, maap, time, row_num, col_num, ui):  
         super().__init__(SUN_FLOWER_HEALTH, SUN_FLOWER_COOL_DOWN, SUN_FLOWER_PRICE, 
@@ -333,7 +333,12 @@ class Sibzamini(DefenderPlant):
     
     @staticmethod
     def is_available():
-        return Time.get_global_time() - PeaShooter.last_time_selected >= SIB_ZAMINI_COOL_DOWN
+        # if Time.get_global_time() - PeaShooter.last_time_selected >= SIB_ZAMINI_COOL_DOWN:
+        #     print("is available sib zamini")
+        #     print("global time:  ",Time.get_global_time())
+        #     print("last time selected", PeaShooter.last_time_selected)
+        #     print("sib zamini cool down: ",SIB_ZAMINI_COOL_DOWN )
+        return Time.get_global_time() - Sibzamini.last_time_selected >= SIB_ZAMINI_COOL_DOWN
 
     def __init__(self, x_pos, y_pos, maap, time, row_num, col_num, ui):  
         super().__init__(SIB_ZAMINI_HEALTH, SIB_ZAMINI_COOL_DOWN, SIB_ZAMINI_PRICE, 
