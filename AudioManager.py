@@ -40,9 +40,9 @@ class AudioManager:
     @staticmethod
     def __process_background_music():
         temp = []
-        for i in range(10):
+        for i in range(9):
             temp.append(os.path.join("Audio files", f"Main Music 0{i}.mp3"))
-        temp.append(os.path.join("Audio files", f"Main Music 10.mp3"))
+
         return temp
     
     IN_GAME_AUDIO_PATHS = __process_background_music()
